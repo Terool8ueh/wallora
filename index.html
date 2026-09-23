@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Wallora | والورا</title>
+<meta name="description" content="Wallora – curated wallpapers in every resolution / والورا – والپیپرهای منتخب در همه رزولوشن‌ها">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&family=Inter:wght@400;600;800&family=Aref+Ruqaa:wght@700&family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f4fb;--fg:#181530;--mut:#6b6885;--card:#fff;--bd:#e3e1f0;--ac:#6f5cff;--ac2:#ff8a5b;--gl:rgba(255,255,255,.62);--sh:0 10px 30px rgba(60,40,140,.12);--r:18px;--f:'Vazirmatn','Inter',system-ui,sans-serif}
+[data-theme=dark]{--bg:#0d0e1d;--fg:#f0eefc;--mut:#9b98b8;--card:#171830;--bd:#272848;--gl:rgba(24,25,52,.62);--sh:0 10px 30px rgba(0,0,0,.45)}
+:lang(en){--f:'Inter','Vazirmatn',system-ui,sans-serif}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth;padding-top:env(safe-area-inset-top,0px)}
+body{background:var(--bg);color:var(--fg);font-family:var(--f);line-height:1.7;min-height:100vh;padding-bottom:calc(84px + env(safe-area-inset-bottom,0px));transition:background .3s,color .3s}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none}
+:focus-visible{outline:3px solid var(--ac);outline-offset:2px}
+svg{display:block}
+.wrap{max-width:1180px;margin:auto;padding:0 18px}
+header{position:sticky;top:0;z-index:20;backdrop-filter:blur(16px);background:var(--gl);border-bottom:1px solid var(--bd)}
+.hd{display:flex;align-items:center;gap:12px;padding:10px 0}
+.logo{font-size:1.9rem;font-weight:700;background:linear-gradient(90deg,var(--ac),var(--ac2));-webkit-background-clip:text;background-clip:text;color:transparent;font-family:'Aref Ruqaa',serif;line-height:1.3}
+:lang(en) .logo{font-family:'Playfair Display',serif;font-style:italic;letter-spacing:.5px}
+.sb{flex:1;display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--bd);border-radius:99px;padding:0 14px;max-width:420px;margin-inline-start:auto}
+.sb input{flex:1;background:none;border:0;padding:9px 0;outline:0;min-width:0}
+.ib{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:var(--card);border:1px solid var(--bd);transition:transform .2s}
+.ib:hover{transform:scale(1.08)}
+.btn{background:linear-gradient(120deg,var(--ac),var(--ac2));color:#fff;padding:10px 20px;border-radius:99px;font-weight:600;transition:transform .2s,box-shadow .2s;display:inline-flex;align-items:center;gap:8px;justify-content:center}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(111,92,255,.4)}
+.btn.o{background:var(--card);color:var(--fg);border:1px solid var(--bd)}
+nav{display:flex;gap:4px}
+nav button{padding:8px 14px;border-radius:99px;color:var(--mut);font-weight:600}
+nav button.on,nav button:hover{color:var(--fg);background:var(--card)}
+@media(max-width:820px){nav{position:fixed;inset-inline:12px;bottom:calc(10px + env(safe-area-inset-bottom,0px));background:var(--gl);backdrop-filter:blur(18px);border:1px solid var(--bd);border-radius:24px;justify-content:space-around;padding:6px;z-index:25;box-shadow:var(--sh)}nav button{padding:8px 10px;font-size:.85rem}.hd{flex-wrap:wrap}.sb{order:9;flex-basis:100%;max-width:none}.logo{margin-inline-end:auto}}
+.hero{display:grid;grid-template-columns:1.05fr 1fr;gap:32px;align-items:center;padding:44px 0 20px}
+.hero h1{font-size:clamp(2rem,5vw,3.4rem);line-height:1.25;font-weight:800;margin-bottom:12px}
+.hero p{color:var(--mut);font-size:1.08rem;max-width:46ch;margin-bottom:22px}
+.stack{position:relative;height:340px}
+.stack .card{position:absolute;width:56%;box-shadow:var(--sh)}
+.stack .card:nth-child(1){inset-inline-start:0;top:30px;transform:rotate(-6deg);animation:fl 7s ease-in-out infinite}
+.stack .card:nth-child(2){inset-inline-end:0;top:0;transform:rotate(5deg);animation:fl 8s ease-in-out -2s infinite}
+.stack .card:nth-child(3){inset-inline-start:22%;bottom:0;transform:rotate(-1deg);animation:fl 9s ease-in-out -4s infinite}
+@keyframes fl{50%{translate:0 -12px}}
+@media(max-width:820px){.hero{grid-template-columns:1fr;padding-top:24px}.stack{height:280px}}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:14px 0;scrollbar-width:none}
+.chip{white-space:nowrap;padding:8px 18px;border-radius:99px;border:1px solid var(--bd);background:var(--card);font-weight:600;transition:.2s}
+.chip.on{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+h2{font-size:1.5rem;font-weight:800;margin:26px 0 14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.card{position:relative;border-radius:var(--r);overflow:hidden;background:var(--card);border:1px solid var(--bd)}
+.card .th{width:100%;aspect-ratio:16/10;overflow:hidden}
+.card .th svg{width:100%;height:100%;transition:transform .5s}
+.card:hover .th svg{transform:scale(1.06)}
+.card .mt{display:flex;justify-content:space-between;padding:10px 14px;font-size:.92rem}
+.card .mt span{color:var(--mut)}
+.fv{position:absolute;top:10px;inset-inline-end:10px;width:38px;height:38px;border-radius:50%;background:rgba(0,0,0,.35);backdrop-filter:blur(8px);display:grid;place-items:center;color:#fff}
+.fv.on{background:#ff4d79}.fv.on svg{fill:#fff}
+.fv svg{fill:none;stroke:currentColor;stroke-width:2}
+.em{text-align:center;color:var(--mut);padding:50px 10px}
+.ov{position:fixed;inset:0;z-index:50;display:grid;place-items:center;padding:16px;background:rgba(8,6,24,.55);backdrop-filter:blur(6px);animation:fi .25s}
+.ov[hidden]{display:none}
+@keyframes fi{from{opacity:0}}
+.glass{width:min(460px,100%);max-height:92vh;overflow:auto;background:var(--gl);backdrop-filter:blur(26px) saturate(1.5);border:1px solid rgba(255,255,255,.35);border-radius:26px;padding:26px;box-shadow:0 24px 70px rgba(0,0,0,.4);position:relative;animation:pop .3s cubic-bezier(.2,1.2,.4,1)}
+.glass.big{width:min(760px,100%)}
+@keyframes pop{from{transform:scale(.94) translateY(12px);opacity:0}}
+.x{position:absolute;top:14px;inset-inline-end:14px}
+.glass h3{font-size:1.4rem;margin-bottom:12px;padding-inline-end:44px}
+.aurora{position:fixed;inset:0;z-index:-1;background:radial-gradient(40% 40% at 20% 20%,rgba(111,92,255,.25),transparent),radial-gradient(35% 40% at 85% 70%,rgba(255,138,91,.2),transparent)}
+.fld{display:block;margin-bottom:12px;font-size:.9rem;color:var(--mut)}
+.fld input,.fld select{width:100%;margin-top:4px;padding:11px 14px;border-radius:14px;border:1px solid var(--bd);background:rgba(127,127,160,.12);color:var(--fg);outline:0}
+.fld input:focus{border-color:var(--ac)}
+.tabs{display:flex;background:rgba(127,127,160,.15);border-radius:99px;padding:4px;margin-bottom:16px}
+.tabs button{flex:1;padding:8px;border-radius:99px;font-weight:600;color:var(--mut)}
+.tabs .on{background:var(--card);color:var(--fg)}
+.err{color:#ff5470;min-height:1.5em;font-size:.88rem;margin-bottom:6px}
+.pv{border-radius:18px;overflow:hidden;margin-bottom:14px;aspect-ratio:16/9}.pv svg{width:100%;height:100%}
+.rs{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;margin:12px 0}
+.rs button{display:flex;justify-content:space-between;align-items:center;padding:11px 14px;border-radius:14px;border:1px solid var(--bd);background:var(--card);transition:.2s}
+.rs button:hover{border-color:var(--ac);transform:translateY(-2px)}
+.rs small{color:var(--mut)}
+.row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--bd)}
+.sw{width:50px;height:28px;border-radius:99px;background:var(--bd);position:relative;flex:none}
+.sw::after{content:"";position:absolute;top:3px;inset-inline-start:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:.25s}
+.sw.on{background:var(--ac)}.sw.on::after{inset-inline-start:25px}
+.seg{display:flex;gap:4px}.seg button{padding:6px 14px;border-radius:99px;border:1px solid var(--bd)}.seg .on{background:var(--ac);color:#fff;border-color:var(--ac)}
+.dots{display:flex;gap:6px;justify-content:center;margin:14px 0}.dots i{width:8px;height:8px;border-radius:9px;background:var(--bd);transition:.3s}.dots i.on{width:24px;background:var(--ac)}
+.ob{text-align:center;padding:10px 0}.ob b{font-size:2.6rem;display:block}.ob p{color:var(--mut)}
+.pg{max-width:760px;padding:40px 0}.pg p{color:var(--mut);font-size:1.08rem;margin-bottom:14px}
+.cc{display:grid;gap:12px;margin-top:20px}.cc a{display:flex;gap:14px;align-items:center;padding:16px;border-radius:var(--r);background:var(--card);border:1px solid var(--bd);color:var(--fg);text-decoration:none;font-weight:600}
+.toast{position:fixed;bottom:110px;inset-inline:0;margin:auto;width:max-content;max-width:90%;background:var(--fg);color:var(--bg);padding:10px 20px;border-radius:99px;z-index:90;opacity:0;pointer-events:none;transition:.3s;translate:0 20px}
+.toast.on{opacity:1;translate:0 0}
+footer{text-align:center;color:var(--mut);padding:30px 0;font-size:.9rem}
+[hidden]{display:none!important}
+.noan *{animation:none!important;transition:none!important}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="aurora"></div>
+<header><div class="wrap hd">
+<div class="logo" id="logo">والورا</div>
+<label class="sb"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input id="q" type="search" data-ph="search" autocomplete="off"></label>
+<button class="ib" id="bSet" data-al="settings"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3h0a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8v0a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
+<button class="btn" id="bAcc"></button>
+<nav id="nav"></nav>
+</div></header>
+
+<main class="wrap">
+<section data-v="home">
+<div class="hero" id="hero"><div><h1 data-t="h1"></h1><p data-t="h1s"></p><button class="btn" id="cta" data-t="explore"></button></div><div class="stack" id="stack" aria-hidden="true"></div></div>
+<div class="chips" id="chips" role="tablist"></div>
+<div id="home"><h2 data-t="trend"></h2><div class="grid" id="gT"></div><h2 data-t="newest"></h2><div class="grid" id="gN"></div></div>
+<div id="res" hidden><h2 data-t="results"></h2><div class="grid" id="gR"></div></div>
+</section>
+<section data-v="saved" hidden><h2 data-t="savedT"></h2><div id="sv"></div></section>
+<section data-v="about" hidden class="pg"><h2 data-t="aboutT"></h2><p data-t="aboutP"></p></section>
+<section data-v="contact" hidden class="pg"><h2 data-t="contactT"></h2><p data-t="contactP"></p><div class="cc"><a href="mailto:teroolm@gmail.com">✉️ <span dir="ltr">teroolm@gmail.com</span></a><a href="tel:09913262905">📞 <span dir="ltr">09913262905</span></a></div></section>
+</main>
+<footer>© <span id="yr"></span> Wallora · <span dir="ltr">teroolm@gmail.com</span></footer>
+
+<div class="ov" id="mDl" hidden><div class="glass big" role="dialog" aria-modal="true"><button class="ib x" data-close data-al="close">✕</button><div class="pv" id="dlPv"></div><h3 id="dlT"></h3><div class="rs" id="dlR"></div><button class="btn o" id="dlS"></button></div></div>
+
+<div class="ov" id="mAuth" hidden><div class="glass" role="dialog" aria-modal="true"><button class="ib x" data-close data-al="close">✕</button><div class="tabs"><button id="tL" class="on" data-t="login"></button><button id="tR" data-t="register"></button></div>
+<label class="fld" id="fN" hidden><span data-t="name"></span><input id="aN" autocomplete="name"></label>
+<label class="fld"><span data-t="email"></span><input id="aE" type="email" autocomplete="email" dir="ltr"></label>
+<label class="fld"><span data-t="pass"></span><input id="aP" type="password" autocomplete="current-password" dir="ltr"></label>
+<div class="err" id="aErr" role="alert"></div><button class="btn" style="width:100%" id="aGo"></button></div></div>
+
+<div class="ov" id="mSet" hidden><div class="glass" role="dialog" aria-modal="true"><button class="ib x" data-close data-al="close">✕</button><h3 data-t="settings"></h3>
+<div class="row"><span data-t="lang"></span><div class="seg" id="sL"><button data-l="fa">فارسی</button><button data-l="en">English</button></div></div>
+<div class="row"><span data-t="dark"></span><button class="sw" id="sT" role="switch" data-al="dark"></button></div>
+<div class="row"><span data-t="anim"></span><button class="sw" id="sA" role="switch" data-al="anim"></button></div>
+<div class="row"><span data-t="defq"></span><select id="sQ" class="fld" style="margin:0;padding:8px;border-radius:12px;background:var(--card);border:1px solid var(--bd)"></select></div>
+<div class="row" style="border:0"><span data-t="tour"></span><button class="btn o" id="sTour" data-t="show"></button></div>
+<button class="btn" style="width:100%;margin-top:8px" id="bOut" hidden data-t="logout"></button></div></div>
+
+<div class="ov" id="mOn" hidden><div class="glass" role="dialog" aria-modal="true" dir="rtl" lang="fa"><div class="ob" id="obB"></div><div class="dots" id="obD"></div><div style="display:flex;gap:8px"><button class="btn o" id="obS">رد کردن</button><button class="btn" style="flex:1" id="obN">بعدی</button></div></div></div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(()=>{
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const ls={g(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},s(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const T={fa:{settings:'تنظیمات',login:'ورود',register:'ثبت‌نام',logout:'خروج از حساب',home:'خانه',saved:'ذخیره‌شده‌ها',about:'درباره ما',contact:'تماس',search:'جستجوی والپیپر…',h1:'والپیپر مناسب صفحه‌ات را پیدا کن',h1s:'مجموعه‌ای دست‌چین از تصاویر باکیفیت برای موبایل، دسکتاپ و 4K؛ رایگان و بدون محدودیت.',explore:'کشف والپیپرها',trend:'پرطرفدارها',newest:'تازه‌ترین‌ها',results:'نتایج',none:'والپیپری پیدا نشد. عبارت یا دسته دیگری را امتحان کنید.',all:'همه',download:'دانلود',save:'ذخیره',unsave:'حذف از ذخیره‌ها',close:'بستن',name:'نام',email:'ایمیل',pass:'رمز عبور (حداقل ۶ کاراکتر)',lang:'زبان',dark:'حالت تاریک',anim:'انیمیشن‌ها',defq:'کیفیت پیش‌فرض',tour:'راهنمای شروع',show:'نمایش',savedT:'ذخیره‌شده‌ها',savedE:'هنوز چیزی ذخیره نکرده‌اید. روی قلب هر والپیپر بزنید تا اینجا بماند.',needLogin:'برای ذخیره کردن وارد شوید.',loginFirst:'برای دیدن ذخیره‌شده‌ها وارد شوید.',hi:'سلام',aboutT:'درباره ما',aboutP:'ما سال‌هاست در این حوزه فعالیت می‌کنیم و با دقت، بهترین والپیپرها را از نظر کیفیت برای کاربران خود انتخاب می‌کنیم.',contactT:'پشتیبانی و تماس',contactP:'برای پرسش، پیشنهاد یا گزارش مشکل از راه‌های زیر با ما در ارتباط باشید.',eBad:'ایمیل معتبر وارد کنید.',pBad:'رمز عبور باید حداقل ۶ کاراکتر باشد.',nBad:'نام خود را وارد کنید.',eUsed:'این ایمیل قبلاً ثبت شده است. وارد شوید.',eWrong:'ایمیل یا رمز عبور اشتباه است.',dlOk:'دانلود شروع شد',dlErr:'ساخت تصویر ناموفق بود. دوباره تلاش کنید.',saved1:'ذخیره شد',unsaved:'از ذخیره‌ها حذف شد',rs:['موبایل','تبلت','دسکتاپ','2K','4K'],mood:['آرام','غروب','شب','رؤیا']},
+en:{settings:'Settings',login:'Log in',register:'Sign up',logout:'Log out',home:'Home',saved:'Saved',about:'About',contact:'Contact',search:'Search wallpapers…',h1:'Find the wallpaper your screen deserves',h1s:'A hand-picked collection of high-quality images for mobile, desktop and 4K. Free, no limits.',explore:'Explore wallpapers',trend:'Trending',newest:'Newest',results:'Results',none:'No wallpapers found. Try another word or category.',all:'All',download:'Download',save:'Save',unsave:'Remove from saved',close:'Close',name:'Name',email:'Email',pass:'Password (min. 6 characters)',lang:'Language',dark:'Dark mode',anim:'Animations',defq:'Default quality',tour:'Getting started guide',show:'Show',savedT:'Saved',savedE:"You haven't saved anything yet. Tap the heart on any wallpaper to keep it here.",needLogin:'Log in to save wallpapers.',loginFirst:'Log in to see your saved wallpapers.',hi:'Hi',aboutT:'About us',aboutP:'We have been active in this field for several years and carefully select the best quality wallpapers for our users.',contactT:'Support & contact',contactP:'For questions, suggestions or to report a problem, reach us through the channels below.',eBad:'Enter a valid email address.',pBad:'Password must be at least 6 characters.',nBad:'Enter your name.',eUsed:'This email is already registered. Log in instead.',eWrong:'Incorrect email or password.',dlOk:'Download started',dlErr:'Could not create the image. Please try again.',saved1:'Saved',unsaved:'Removed from saved',rs:['Mobile','Tablet','Desktop','2K','4K'],mood:['Calm','Dusk','Night','Dream']}};
+const C=[['nature','طبیعت','Nature',140],['abstract','انتزاعی','Abstract',275],['minimal','مینیمال','Minimal',28],['dark','تیره','Dark',235],['anime','انیمه','Anime',330],['cars','خودرو','Cars',8],['space','فضا','Space',255]];
+const RES=[[1080,1920],[1620,2160],[1920,1080],[2560,1440],[3840,2160]];
+const OB=[['👋','به والورا خوش آمدید','در چند ثانیه با امکانات سایت آشنا شوید.'],['⬇️','دانلود رایگان','روی هر تصویر بزنید و رزولوشن دلخواه (موبایل، دسکتاپ، 4K و…) را دانلود کنید.'],['❤️','ذخیره کنید','با ساخت حساب کاربری، والپیپرهای موردعلاقه را با قلب ذخیره کنید و در بخش «ذخیره‌شده‌ها» ببینید.'],['⚙️','زبان و حالت تاریک','از دکمه‌ی تنظیمات، زبان را بین فارسی و انگلیسی و حالت روشن یا تاریک را تغییر دهید.']];
+// wallpapers
+const rnd=s=>()=>(s=s*16807%2147483647)/2147483647;
+const W=[];C.forEach((c,ci)=>{for(let m=0;m<4;m++)W.push({id:ci*4+m,c:c[0],ci,m,h:(c[3]+m*38)%360,likes:Math.floor(rnd(ci*4+m+5)()*9000+800)})});
+const title=(w,l)=>C[w.ci][l=='fa'?1:2]+(l=='fa'?' ':' · ')+T[l].mood[w.m];
+function art(w,p,Wd=1600,Ht=1000){
+const r=rnd(w.id*131+7),h=w.h,k=w.c,dk=k=='dark'||k=='space',id=p+w.id,H=(d,s,l)=>`hsl(${(h+d+360)%360},${s}%,${l}%)`;
+let s=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="${Wd}" height="${Ht}" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="g${id}" x1="0" y1="0" x2=".5" y2="1"><stop offset="0" stop-color="${H(0,70,dk?9:66)}"/><stop offset=".6" stop-color="${H(35,72,dk?20:46)}"/><stop offset="1" stop-color="${H(-30,80,dk?32:76)}"/></linearGradient><radialGradient id="r${id}"><stop offset="0" stop-color="#fff" stop-opacity=".95"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient></defs><rect width="1600" height="1000" fill="url(#g${id})"/>`;
+const glow=(x,y,rr,o)=>`<circle cx="${x}" cy="${y}" r="${rr}" fill="url(#r${id})" opacity="${o}"/>`;
+if(k=='nature'){s+=glow(1100,330,260,.9);for(let i=0;i<4;i++){let y=470+i*130,d=`M0 1000V${y}`;for(let x=0;x<=1600;x+=100)d+=`L${x} ${y-r()*170*(1-i*.15)}`;s+=`<path d="${d}V1000Z" fill="${H(i*9,52,44-i*10)}" opacity="${.55+i*.15}"/>`}}
+else if(k=='space'){for(let i=0;i<110;i++)s+=`<circle cx="${r()*1600}" cy="${r()*1000}" r="${r()*2.4+.4}" fill="#fff" opacity="${r()*.8+.2}"/>`;s+=glow(1080,430,330,.35)+`<circle cx="1080" cy="430" r="150" fill="${H(60,70,55)}"/><circle cx="1030" cy="390" r="120" fill="${H(0,70,40)}" opacity=".6"/><ellipse cx="1080" cy="450" rx="290" ry="42" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="7" transform="rotate(-18 1080 450)"/>`}
+else if(k=='abstract'){for(let i=0;i<6;i++)s+=`<circle cx="${r()*1600}" cy="${r()*1000}" r="${150+r()*260}" fill="${H(i*50,85,58)}" opacity=".38"/>`;s+=glow(500,300,420,.35)}
+else if(k=='minimal'){s+=`<circle cx="800" cy="470" r="${170+w.m*25}" fill="#fff" opacity=".88"/><rect x="560" y="760" width="480" height="6" rx="3" fill="#fff" opacity=".6"/>`}
+else if(k=='dark'){s+=glow(800,520,560,.28);for(let i=0;i<9;i++)s+=`<path d="M${i*220-300} 1000L${i*220+350} 0" stroke="#fff" stroke-opacity=".06" stroke-width="${8+r()*40}"/>`;s+=`<circle cx="800" cy="500" r="${120+w.m*18}" fill="none" stroke="${H(60,90,65)}" stroke-width="5" opacity=".9"/>`}
+else if(k=='anime'){s+=glow(800,380,300,.8)+`<circle cx="800" cy="380" r="170" fill="#fff" opacity=".9"/>`;let x=0;while(x<1600){const bw=70+r()*90,bh=140+r()*300;s+=`<rect x="${x}" y="${1000-bh}" width="${bw}" height="${bh}" fill="${H(20,45,14+r()*8)}"/>`;for(let j=0;j<4;j++)s+=`<rect x="${x+12}" y="${1000-bh+20+j*46}" width="10" height="14" fill="#ffd37a" opacity="${r()>.5?.9:.1}"/>`;x+=bw}for(let i=0;i<28;i++)s+=`<ellipse cx="${r()*1600}" cy="${r()*700}" rx="9" ry="5" fill="#ffc2dd" opacity=".85" transform="rotate(${r()*180} 0 0)"/>`}
+else{s+=glow(800,470,380,.6)+`<path d="M0 1000V560H1600V1000Z" fill="${H(0,30,10)}"/><path d="M640 560H960L1500 1000H100Z" fill="${H(0,20,15)}"/>`;for(let i=0;i<5;i++)s+=`<path d="M${790-i*.4} ${590+i*70}h${20+i*8}l${6+i*6} 40h-${32+i*20}z" fill="#fff" opacity=".7"/>`;s+=`<g transform="translate(650 700)"><path d="M0 90L40 40L110 10H210L270 45L300 90V110H0Z" fill="${H(0,85,50)}"/><circle cx="70" cy="112" r="26" fill="#111"/><circle cx="235" cy="112" r="26" fill="#111"/></g>`;for(let i=0;i<10;i++)s+=`<rect x="${r()*1400}" y="${620+r()*300}" width="${120+r()*200}" height="3" fill="#fff" opacity=".25"/>`}
+return s+'</svg>'}
+// state
+let lang=ls.g('wl_lang','fa'),theme=ls.g('wl_theme',matchMedia('(prefers-color-scheme:light)').matches?'light':'dark'),anim=ls.g('wl_anim',true),defq=ls.g('wl_q',2),view='home',cat='all',open=null;
+let users=ls.g('wl_users',{}),me=ls.g('wl_me',null),mode='login';
+const t=k=>T[lang][k];
+const toast=m=>{const e=$('#toast');e.textContent=m;e.classList.add('on');clearTimeout(toast.i);toast.i=setTimeout(()=>e.classList.remove('on'),2200)};
+const saves=()=>me&&users[me]?users[me].saves:[];
+const heart='<svg width="18" height="18" viewBox="0 0 24 24"><path d="M12 21s-8-5.2-8-11a4.6 4.6 0 0 1 8-3 4.6 4.6 0 0 1 8 3c0 5.8-8 11-8 11z"/></svg>';
+function card(w,p){const on=saves().includes(w.id);return `<div class="card"><button class="th" data-o="${w.id}" style="display:block" aria-label="${title(w,lang)}">${art(w,p,800,500)}</button><button class="fv ${on?'on':''}" data-f="${w.id}" aria-pressed="${on}" aria-label="${t('save')}">${heart}</button><div class="mt"><b>${title(w,lang)}</b><span>♥ ${w.likes.toLocaleString(lang=='fa'?'fa-IR':'en-US')}</span></div></div>`}
+const grid=(el,list,p)=>{$(el).innerHTML=list.length?list.map(w=>card(w,p)).join(''):`<div class="em" style="grid-column:1/-1">${t('none')}</div>`};
+function render(){
+const q=$('#q').value.trim().toLowerCase();
+$('#chips').innerHTML=[['all',t('all')],...C.map(c=>[c[0],c[lang=='fa'?1:2]])].map(c=>`<button class="chip ${cat==c[0]?'on':''}" data-c="${c[0]}">${c[1]}</button>`).join('');
+const f=W.filter(w=>(cat=='all'||w.c==cat)&&(!q||(title(w,'fa')+' '+title(w,'en')).toLowerCase().includes(q)));
+const flt=q||cat!='all';$('#home').hidden=flt;$('#res').hidden=!flt;$('#hero').hidden=!!flt;
+if(flt)grid('#gR',f,'r');else{grid('#gT',[...W].sort((a,b)=>b.likes-a.likes).slice(0,8),'t');grid('#gN',[...W].reverse().slice(0,8),'n')}
+$('#stack').innerHTML=[W[2],W[9],W[22]].map(w=>`<div class="card"><div class="th">${art(w,'h',800,500)}</div></div>`).join('');
+renderSaved()}
+function renderSaved(){const el=$('#sv');if(!me){el.innerHTML=`<div class="em">${t('loginFirst')}<br><br><button class="btn" id="svL">${t('login')}</button></div>`;return}
+const l=W.filter(w=>saves().includes(w.id));el.innerHTML=`<p style="color:var(--mut);margin-bottom:12px">${t('hi')} ${users[me].name} 👋</p>`+(l.length?`<div class="grid">${l.map(w=>card(w,'s')).join('')}</div>`:`<div class="em">${t('savedE')}</div>`)}
+function ui(){
+const h=document.documentElement;h.lang=lang;h.dir=lang=='fa'?'rtl':'ltr';h.dataset.theme=theme;document.body.classList.toggle('noan',!anim);
+$('#logo').textContent=lang=='fa'?'والورا':'Wallora';document.title=lang=='fa'?'والورا | Wallora':'Wallora';
+$$('[data-t]').forEach(e=>e.textContent=t(e.dataset.t));$$('[data-ph]').forEach(e=>e.placeholder=t(e.dataset.ph));$$('[data-al]').forEach(e=>e.setAttribute('aria-label',t(e.dataset.al)));
+$('#nav').innerHTML=['home','saved','about','contact'].map(v=>`<button data-v="${v}" class="${v==view?'on':''}">${t(v)}</button>`).join('');
+$('#bAcc').textContent=me?users[me].name.split(' ')[0]:t('login');
+$('#bOut').hidden=!me;
+$$('#sL button').forEach(b=>b.classList.toggle('on',b.dataset.l==lang));
+$('#sT').classList.toggle('on',theme=='dark');$('#sT').setAttribute('aria-checked',theme=='dark');$('#sA').classList.toggle('on',anim);$('#sA').setAttribute('aria-checked',anim);
+$('#sQ').innerHTML=RES.map((r,i)=>`<option value="${i}" ${i==defq?'selected':''}>${t('rs')[i]} · ${r[0]}×${r[1]}</option>`).join('');
+$('#aGo').textContent=t(mode);$('#fN').hidden=mode!='register';$('#tL').classList.toggle('on',mode=='login');$('#tR').classList.toggle('on',mode=='register');
+render();if(open!==null)dl(open)}
+function go(v){view=v;$$('[data-v]').forEach(e=>{if(e.tagName=='SECTION')e.hidden=e.dataset.v!=v});$$('#nav button').forEach(b=>b.classList.toggle('on',b.dataset.v==v));scrollTo({top:0});if(v=='saved')renderSaved()}
+const show=id=>{const e=$(id);e.hidden=false;const b=e.querySelector('button,input');b&&b.focus()};
+const hide=e=>{e.hidden=true;if(e.id=='mDl')open=null};
+function dl(id){open=id;const w=W[id],on=saves().includes(id);$('#dlPv').innerHTML=art(w,'m',1280,720);$('#dlT').textContent=title(w,lang);
+$('#dlR').innerHTML=RES.map((r,i)=>`<button data-d="${i}"><span>⬇ ${t('download')} · ${t('rs')[i]}</span><small dir="ltr">${r[0]}×${r[1]}</small></button>`).join('');
+$('#dlS').textContent=(on?'♥ '+t('unsave'):'♡ '+t('save'));$('#mDl').hidden=false}
+function download(i){const w=W[open],[a,b]=RES[i],img=new Image();
+img.onload=()=>{try{const c=document.createElement('canvas');c.width=a;c.height=b;c.getContext('2d').drawImage(img,0,0,a,b);c.toBlob(bl=>{const u=URL.createObjectURL(bl),l=document.createElement('a');l.href=u;l.download=`wallora-${w.c}-${w.id+1}-${a}x${b}.png`;document.body.appendChild(l);l.click();l.remove();setTimeout(()=>URL.revokeObjectURL(u),4000);toast(t('dlOk'))},'image/png')}catch(e){toast(t('dlErr'))}};
+img.onerror=()=>toast(t('dlErr'));img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(art(w,'d',a,b))}
+function fav(id){if(!me){toast(t('needLogin'));mode='login';ui();show('#mAuth');return}
+const u=users[me],i=u.saves.indexOf(id);i<0?u.saves.push(id):u.saves.splice(i,1);ls.s('wl_users',users);toast(i<0?t('saved1'):t('unsaved'));render();if(open===id)dl(id)}
+async function hash(s){try{const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode('wl:'+s));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}catch(e){return btoa(unescape(encodeURIComponent(s)))}}
+async function auth(){const n=$('#aN').value.trim(),e=$('#aE').value.trim().toLowerCase(),p=$('#aP').value,er=$('#aErr');er.textContent='';
+if(!/^\S+@\S+\.\S+$/.test(e))return er.textContent=t('eBad');
+if(mode=='register'){if(!n)return er.textContent=t('nBad');if(p.length<6)return er.textContent=t('pBad');if(users[e])return er.textContent=t('eUsed');users[e]={name:n,h:await hash(p),saves:[]}}
+else{if(!users[e]||users[e].h!==await hash(p))return er.textContent=t('eWrong')}
+me=e;ls.s('wl_users',users);ls.s('wl_me',me);hide($('#mAuth'));$('#aP').value='';ui();toast(t('hi')+' '+users[e].name+' 👋')}
+// onboarding
+let ob=0;function obR(){const s=OB[ob];$('#obB').innerHTML=`<b>${s[0]}</b><h3 style="padding:0;margin:8px 0">${s[1]}</h3><p>${s[2]}</p>`;$('#obD').innerHTML=OB.map((_,i)=>`<i class="${i==ob?'on':''}"></i>`).join('');$('#obN').textContent=ob==OB.length-1?'شروع کنید':'بعدی'}
+const obOpen=()=>{ob=0;obR();show('#mOn')},obEnd=()=>{hide($('#mOn'));ls.s('wl_seen',1)};
+// events
+document.addEventListener('click',e=>{const g=s=>e.target.closest(s);let x;
+if(x=g('[data-f]'))return fav(+x.dataset.f);
+if(x=g('[data-o]'))return dl(+x.dataset.o);
+if(x=g('[data-c]')){cat=x.dataset.c;return render()}
+if(x=g('[data-d]'))return download(+x.dataset.d);
+if(x=g('#nav [data-v]'))return go(x.dataset.v);
+if(x=g('[data-l]')){lang=x.dataset.l;ls.s('wl_lang',lang);return ui()}
+if(x=g('[data-close]'))return hide(x.closest('.ov'));
+if(e.target.classList.contains('ov')&&e.target.id!='mOn')hide(e.target)});
+document.addEventListener('keydown',e=>{if(e.key=='Escape')$$('.ov:not([hidden])').forEach(o=>o.id!='mOn'&&hide(o))});
+$('#logo').onclick=()=>{cat='all';$('#q').value='';go('home');render()};
+$('#q').oninput=()=>{if(view!='home')go('home');render()};
+$('#cta').onclick=()=>$('#chips').scrollIntoView({behavior:'smooth'});
+$('#bSet').onclick=()=>show('#mSet');
+$('#bAcc').onclick=()=>me?go('saved'):(mode='login',ui(),show('#mAuth'));
+$('#bOut').onclick=()=>{me=null;ls.s('wl_me',null);hide($('#mSet'));ui();go('home')};
+$('#sT').onclick=()=>{theme=theme=='dark'?'light':'dark';ls.s('wl_theme',theme);ui()};
+$('#sA').onclick=()=>{anim=!anim;ls.s('wl_anim',anim);ui()};
+$('#sQ').onchange=e=>{defq=+e.target.value;ls.s('wl_q',defq)};
+$('#sTour').onclick=()=>{hide($('#mSet'));obOpen()};
+$('#tL').onclick=()=>{mode='login';$('#aErr').textContent='';ui()};$('#tR').onclick=()=>{mode='register';$('#aErr').textContent='';ui()};
+$('#aGo').onclick=auth;$('#mAuth').addEventListener('keydown',e=>{if(e.key=='Enter')auth()});
+$('#dlS').onclick=()=>fav(open);
+document.addEventListener('click',e=>{if(e.target.id=='svL'){mode='login';ui();show('#mAuth')}});
+$('#obN').onclick=()=>{ob<OB.length-1?(ob++,obR()):obEnd()};$('#obS').onclick=obEnd;
+$('#yr').textContent=new Date().getFullYear();
+if(me&&!users[me]){me=null;ls.s('wl_me',null)}
+ui();
+if(!ls.g('wl_seen',0))setTimeout(obOpen,600);
+})();
+</script>
+</body>
+</html>
