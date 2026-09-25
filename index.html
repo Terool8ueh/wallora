@@ -173,7 +173,13 @@ let lang=ls.g('wl_lang','fa'),theme=ls.g('wl_theme',matchMedia('(prefers-color-s
 let me=null,mode='login';
 const t=k=>T[lang][k];
 const toast=m=>{const e=$('#toast');e.textContent=m;e.classList.add('on');clearTimeout(toast.i);toast.i=setTimeout(()=>e.classList.remove('on'),2200)};
-const saves=()=>me&&users[me]?users[me].saves:[];
+let savedIds = [];
+async function loadSaves(){
+  if(!me){ savedIds = []; return; }
+  const { data } = await supabase.from('favorites').select('wallpaper_id').eq('user_id', me.id);
+  savedIds = data ? data.map(r => r.wallpaper_id) : [];
+}
+const saves = () => savedIds;
 const heart='<svg width="18" height="18" viewBox="0 0 24 24"><path d="M12 21s-8-5.2-8-11a4.6 4.6 0 0 1 8-3 4.6 4.6 0 0 1 8 3c0 5.8-8 11-8 11z"/></svg>';
 function card(w,p){const on=saves().includes(w.id);return `<div class="card"><button class="th" data-o="${w.id}" style="display:block" aria-label="${title(w,lang)}">${art(w,p,800,500)}</button><button class="fv ${on?'on':''}" data-f="${w.id}" aria-pressed="${on}" aria-label="${t('save')}">${heart}</button><div class="mt"><b>${title(w,lang)}</b><span>♥ ${w.likes.toLocaleString(lang=='fa'?'fa-IR':'en-US')}</span></div></div>`}
 const grid=(el,list,p)=>{$(el).innerHTML=list.length?list.map(w=>card(w,p)).join(''):`<div class="em" style="grid-column:1/-1">${t('none')}</div>`};
