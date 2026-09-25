@@ -170,7 +170,7 @@ else{s+=glow(800,470,380,.6)+`<path d="M0 1000V560H1600V1000Z" fill="${H(0,30,10
 return s+'</svg>'}
 // state
 let lang=ls.g('wl_lang','fa'),theme=ls.g('wl_theme',matchMedia('(prefers-color-scheme:light)').matches?'light':'dark'),anim=ls.g('wl_anim',true),defq=ls.g('wl_q',2),view='home',cat='all',open=null;
-let users=ls.g('wl_users',{}),me=ls.g('wl_me',null),mode='login';
+let me=null,mode='login';
 const t=k=>T[lang][k];
 const toast=m=>{const e=$('#toast');e.textContent=m;e.classList.add('on');clearTimeout(toast.i);toast.i=setTimeout(()=>e.classList.remove('on'),2200)};
 const saves=()=>me&&users[me]?users[me].saves:[];
