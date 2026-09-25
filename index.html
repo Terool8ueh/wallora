@@ -192,7 +192,7 @@ if(flt)grid('#gR',f,'r');else{grid('#gT',[...W].sort((a,b)=>b.likes-a.likes).sli
 $('#stack').innerHTML=[W[2],W[9],W[22]].map(w=>`<div class="card"><div class="th">${art(w,'h',800,500)}</div></div>`).join('');
 renderSaved()}
 function renderSaved(){const el=$('#sv');if(!me){el.innerHTML=`<div class="em">${t('loginFirst')}<br><br><button class="btn" id="svL">${t('login')}</button></div>`;return}
-const l=W.filter(w=>saves().includes(w.id));el.innerHTML=`<p style="color:var(--mut);margin-bottom:12px">${t('hi')} ${users[me].name} 👋</p>`+(l.length?`<div class="grid">${l.map(w=>card(w,'s')).join('')}</div>`:`<div class="em">${t('savedE')}</div>`)}
+const l=W.filter(w=>saves().includes(w.id));el.innerHTML=`<p style="color:var(--mut);margin-bottom:12px">${t('hi')} ${(me.user_metadata?.name || me.email)} 👋</p>`+(l.length?`<div class="grid">${l.map(w=>card(w,'s')).join('')}</div>`:`<div class="em">${t('savedE')}</div>`)}
 function ui(){
 const h=document.documentElement;h.lang=lang;h.dir=lang=='fa'?'rtl':'ltr';h.dataset.theme=theme;document.body.classList.toggle('noan',!anim);
 $('#logo').textContent=lang=='fa'?'والورا':'Wallora';document.title=lang=='fa'?'والورا | Wallora':'Wallora';
