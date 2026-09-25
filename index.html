@@ -248,6 +248,14 @@ async function auth(){
                      err.message.includes('Invalid') ? t('eWrong') : err.message;
   }
 }
+  async function checkUser(){
+  const { data: { session } } = await supabase.auth.getSession();
+  if(session?.user){
+    me = session.user;
+  } else {
+    me = null;
+  }
+}
 // onboarding
 let ob=0;function obR(){const s=OB[ob];$('#obB').innerHTML=`<b>${s[0]}</b><h3 style="padding:0;margin:8px 0">${s[1]}</h3><p>${s[2]}</p>`;$('#obD').innerHTML=OB.map((_,i)=>`<i class="${i==ob?'on':''}"></i>`).join('');$('#obN').textContent=ob==OB.length-1?'شروع کنید':'بعدی'}
 const obOpen=()=>{ob=0;obR();show('#mOn')},obEnd=()=>{hide($('#mOn'));ls.s('wl_seen',1)};
