@@ -211,11 +211,43 @@ img.onerror=()=>toast(t('dlErr'));img.src='data:image/svg+xml;charset=utf-8,'+en
 function fav(id){if(!me){toast(t('needLogin'));mode='login';ui();show('#mAuth');return}
 const u=users[me],i=u.saves.indexOf(id);i<0?u.saves.push(id):u.saves.splice(i,1);ls.s('wl_users',users);toast(i<0?t('saved1'):t('unsaved'));render();if(open===id)dl(id)}
 async function hash(s){try{const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode('wl:'+s));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}catch(e){return btoa(unescape(encodeURIComponent(s)))}}
-async function auth(){const n=$('#aN').value.trim(),e=$('#aE').value.trim().toLowerCase(),p=$('#aP').value,er=$('#aErr');er.textContent='';
-if(!/^\S+@\S+\.\S+$/.test(e))return er.textContent=t('eBad');
-if(mode=='register'){if(!n)return er.textContent=t('nBad');if(p.length<6)return er.textContent=t('pBad');if(users[e])return er.textContent=t('eUsed');users[e]={name:n,h:await hash(p),saves:[]}}
-else{if(!users[e]||users[e].h!==await hash(p))return er.textContent=t('eWrong')}
-me=e;ls.s('wl_users',users);ls.s('wl_me',me);hide($('#mAuth'));$('#aP').value='';ui();toast(t('hi')+' '+users[e].name+' 👋')}
+async function auth(){
+  const n = $('#aN').value.trim();
+  const e = $('#aE').value.trim().toLowerCase();
+  const p = $('#aP').value;
+  const er = $('#aErr');
+  er.textContent = '';
+
+  if(!/^\S+@\S+\.\S+$/.test(e)) return er.textContent = t('eBad');
+  if(p.length < 6) return er.textContent = t('pBad');
+
+  try {
+    if(mode === 'register'){
+      if(!n) return er.textContent = t('nBad');
+      const { data, error } = await supabase.auth.signUp({
+        email: e,
+        password: p,
+        options: { data: { name: n } }
+      });
+      if(error) throw error;
+      toast(t('hi') + ' ' + n + ' 👋');
+    } else {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: e,
+        password: p
+      });
+      if(error) throw error;
+      toast(t('hi') + ' ' + (data.user.user_metadata?.name || e) + ' 👋');
+    }
+    hide($('#mAuth'));
+    $('#aP').value = '';
+    await checkUser();
+    ui();
+  } catch(err) {
+    er.textContent = err.message.includes('already') ? t('eUsed') : 
+                     err.message.includes('Invalid') ? t('eWrong') : err.message;
+  }
+}
 // onboarding
 let ob=0;function obR(){const s=OB[ob];$('#obB').innerHTML=`<b>${s[0]}</b><h3 style="padding:0;margin:8px 0">${s[1]}</h3><p>${s[2]}</p>`;$('#obD').innerHTML=OB.map((_,i)=>`<i class="${i==ob?'on':''}"></i>`).join('');$('#obN').textContent=ob==OB.length-1?'شروع کنید':'بعدی'}
 const obOpen=()=>{ob=0;obR();show('#mOn')},obEnd=()=>{hide($('#mOn'));ls.s('wl_seen',1)};
