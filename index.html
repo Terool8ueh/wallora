@@ -318,9 +318,11 @@ $('#dlS').onclick=()=>fav(open);
 document.addEventListener('click',e=>{if(e.target.id=='svL'){mode='login';ui();show('#mAuth')}});
 $('#obN').onclick=()=>{ob<OB.length-1?(ob++,obR()):obEnd()};$('#obS').onclick=obEnd;
 $('#yr').textContent=new Date().getFullYear();
-if(me&&!users[me]){me=null;ls.s('wl_me',null)}
-ui();
-if(!ls.g('wl_seen',0))setTimeout(obOpen,600);
+checkUser().then(async () => {
+  await loadSaves();
+  ui();
+  if(!ls.g('wl_seen',0)) setTimeout(obOpen,600);
+});
 })();
 </script>
 </body>
