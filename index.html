@@ -214,8 +214,27 @@ $('#dlS').textContent=(on?'♥ '+t('unsave'):'♡ '+t('save'));$('#mDl').hidden=
 function download(i){const w=W[open],[a,b]=RES[i],img=new Image();
 img.onload=()=>{try{const c=document.createElement('canvas');c.width=a;c.height=b;c.getContext('2d').drawImage(img,0,0,a,b);c.toBlob(bl=>{const u=URL.createObjectURL(bl),l=document.createElement('a');l.href=u;l.download=`wallora-${w.c}-${w.id+1}-${a}x${b}.png`;document.body.appendChild(l);l.click();l.remove();setTimeout(()=>URL.revokeObjectURL(u),4000);toast(t('dlOk'))},'image/png')}catch(e){toast(t('dlErr'))}};
 img.onerror=()=>toast(t('dlErr'));img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(art(w,'d',a,b))}
-function fav(id){if(!me){toast(t('needLogin'));mode='login';ui();show('#mAuth');return}
-const u=users[me],i=u.saves.indexOf(id);i<0?u.saves.push(id):u.saves.splice(i,1);ls.s('wl_users',users);toast(i<0?t('saved1'):t('unsaved'));render();if(open===id)dl(id)}
+async function fav(id){
+  if(!me){ 
+    toast(t('needLogin')); 
+    mode='login'; 
+    ui(); 
+    show('#mAuth'); 
+    return; 
+  }
+  const isSaved = savedIds.includes(id);
+  if(isSaved){
+    await supabase.from('favorites').delete().eq('user_id', me.id).eq('wallpaper_id', id);
+    savedIds = savedIds.filter(x => x !== id);
+    toast(t('unsaved'));
+  } else {
+    await supabase.from('favorites').insert({ user_id: me.id, wallpaper_id: id });
+    savedIds.push(id);
+    toast(t('saved1'));
+  }
+  render();
+  if(open === id) dl(id);
+}
 async function hash(s){try{const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode('wl:'+s));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}catch(e){return btoa(unescape(encodeURIComponent(s)))}}
 async function auth(){
   const n = $('#aN').value.trim();
