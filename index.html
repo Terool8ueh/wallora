@@ -246,28 +246,34 @@ async function auth(){
   try {
     if(mode === 'register'){
       if(!n) return er.textContent = t('nBad');
-      const { data, error } = await supabase.auth.signUp({
-        email: e,
-        password: p,
-        options: { data: { name: n } }
+      const res = await fetch(API + '/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: n, email: e, password: p })
       });
-      if(error) throw error;
+      const data = await res.json();
+      if(!res.ok) throw new Error(data.error || 'خطا');
+      me = data.user;
+      localStorage.setItem('wl_token', data.token);
       toast(t('hi') + ' ' + n + ' 👋');
     } else {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email: e,
-        password: p
+      const res = await fetch(API + '/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: e, password: p })
       });
-      if(error) throw error;
-      toast(t('hi') + ' ' + (data.user.user_metadata?.name || e) + ' 👋');
+      const data = await res.json();
+      if(!res.ok) throw new Error(data.error || 'خطا');
+      me = data.user;
+      localStorage.setItem('wl_token', data.token);
+      toast(t('hi') + ' ' + data.user.name + ' 👋');
     }
     hide($('#mAuth'));
     $('#aP').value = '';
-    await checkUser();
+    await loadSaves();
     ui();
   } catch(err) {
-    er.textContent = err.message.includes('already') ? t('eUsed') : 
-                     err.message.includes('Invalid') ? t('eWrong') : err.message;
+    er.textContent = err.message;
   }
 }
   async function checkUser(){
