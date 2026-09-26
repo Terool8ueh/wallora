@@ -198,7 +198,7 @@ const h=document.documentElement;h.lang=lang;h.dir=lang=='fa'?'rtl':'ltr';h.data
 $('#logo').textContent=lang=='fa'?'والورا':'Wallora';document.title=lang=='fa'?'والورا | Wallora':'Wallora';
 $$('[data-t]').forEach(e=>e.textContent=t(e.dataset.t));$$('[data-ph]').forEach(e=>e.placeholder=t(e.dataset.ph));$$('[data-al]').forEach(e=>e.setAttribute('aria-label',t(e.dataset.al)));
 $('#nav').innerHTML=['home','saved','about','contact'].map(v=>`<button data-v="${v}" class="${v==view?'on':''}">${t(v)}</button>`).join('');
-$('#bAcc').textContent=me?users[me].name.split(' ')[0]:t('login');
+$('#bAcc').textContent = me ? (me.user_metadata?.name || me.email).split(' ')[0] : t('login');
 $('#bOut').hidden=!me;
 $$('#sL button').forEach(b=>b.classList.toggle('on',b.dataset.l==lang));
 $('#sT').classList.toggle('on',theme=='dark');$('#sT').setAttribute('aria-checked',theme=='dark');$('#sA').classList.toggle('on',anim);$('#sA').setAttribute('aria-checked',anim);
