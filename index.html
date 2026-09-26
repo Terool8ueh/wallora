@@ -299,6 +299,7 @@ $('#logo').onclick=()=>{cat='all';$('#q').value='';go('home');render()};
 $('#q').oninput=()=>{if(view!='home')go('home');render()};
 $('#cta').onclick=()=>$('#chips').scrollIntoView({behavior:'smooth'});
 $('#bSet').onclick=()=>show('#mSet');
+  $('#bAcc').onclick=()=>me?go('saved'):(mode='login',ui(),show('#mAuth'));
 $('#bAcc').textContent = me ? (me.user_metadata?.name || me.email).split(' ')[0] : t('login');
 $('#bOut').onclick=async()=>{
   await supabase.auth.signOut();
