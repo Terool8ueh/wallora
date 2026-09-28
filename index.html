@@ -173,8 +173,16 @@ const toast=m=>{const e=$('#toast');e.textContent=m;e.classList.add('on');clearT
 let savedIds = [];
 async function loadSaves(){
   if(!me){ savedIds = []; return; }
-  const { data } = await supabase.from('favorites').select('wallpaper_id').eq('user_id', me.id);
-  savedIds = data ? data.map(r => r.wallpaper_id) : [];
+  try {
+    const token = localStorage.getItem('wl_token');
+    const res = await fetch(API + '/favorites', {
+      headers: { 'Authorization': 'Bearer ' + token }
+    });
+    const data = await res.json();
+    savedIds = data.favorites || [];
+  } catch(e) {
+    savedIds = [];
+  }
 }
 const saves = () => savedIds;
 const heart='<svg width="18" height="18" viewBox="0 0 24 24"><path d="M12 21s-8-5.2-8-11a4.6 4.6 0 0 1 8-3 4.6 4.6 0 0 1 8 3c0 5.8-8 11-8 11z"/></svg>';
