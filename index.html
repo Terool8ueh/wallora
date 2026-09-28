@@ -197,13 +197,13 @@ if(flt)grid('#gR',f,'r');else{grid('#gT',[...W].sort((a,b)=>b.likes-a.likes).sli
 $('#stack').innerHTML=[W[2],W[9],W[22]].map(w=>`<div class="card"><div class="th">${art(w,'h',800,500)}</div></div>`).join('');
 renderSaved()}
 function renderSaved(){const el=$('#sv');if(!me){el.innerHTML=`<div class="em">${t('loginFirst')}<br><br><button class="btn" id="svL">${t('login')}</button></div>`;return}
-const l=W.filter(w=>saves().includes(w.id));el.innerHTML=`<p style="color:var(--mut);margin-bottom:12px">${t('hi')} ${(me.user_metadata?.name || me.email)} 👋</p>`+(l.length?`<div class="grid">${l.map(w=>card(w,'s')).join('')}</div>`:`<div class="em">${t('savedE')}</div>`)}
+const l=W.filter(w=>saves().includes(w.id));el.innerHTML=`<p style="color:var(--mut);margin-bottom:12px">${t('hi')} ${(me.name || me.email)} 👋</p>`+(l.length?`<div class="grid">${l.map(w=>card(w,'s')).join('')}</div>`:`<div class="em">${t('savedE')}</div>`)}
 function ui(){
 const h=document.documentElement;h.lang=lang;h.dir=lang=='fa'?'rtl':'ltr';h.dataset.theme=theme;document.body.classList.toggle('noan',!anim);
 $('#logo').textContent=lang=='fa'?'والورا':'Wallora';document.title=lang=='fa'?'والورا | Wallora':'Wallora';
 $$('[data-t]').forEach(e=>e.textContent=t(e.dataset.t));$$('[data-ph]').forEach(e=>e.placeholder=t(e.dataset.ph));$$('[data-al]').forEach(e=>e.setAttribute('aria-label',t(e.dataset.al)));
 $('#nav').innerHTML=['home','saved','about','contact'].map(v=>`<button data-v="${v}" class="${v==view?'on':''}">${t(v)}</button>`).join('');
-$('#bAcc').textContent = me ? (me.user_metadata?.name || me.email).split(' ')[0] : t('login');
+$('#bAcc').textContent = me ? (me.name || me.email).split(' ')[0] : t('login');
 $('#bOut').hidden=!me;
 $$('#sL button').forEach(b=>b.classList.toggle('on',b.dataset.l==lang));
 $('#sT').classList.toggle('on',theme=='dark');$('#sT').setAttribute('aria-checked',theme=='dark');$('#sA').classList.toggle('on',anim);$('#sA').setAttribute('aria-checked',anim);
@@ -329,9 +329,9 @@ $('#q').oninput=()=>{if(view!='home')go('home');render()};
 $('#cta').onclick=()=>$('#chips').scrollIntoView({behavior:'smooth'});
 $('#bSet').onclick=()=>show('#mSet');
   $('#bAcc').onclick=()=>me?go('saved'):(mode='login',ui(),show('#mAuth'));
-$('#bAcc').textContent = me ? (me.user_metadata?.name || me.email).split(' ')[0] : t('login');
+$('#bAcc').textContent = me ? (me.name || me.email).split(' ')[0] : t('login');
 $('#bOut').onclick=async()=>{
-  await supabase.auth.signOut();
+  localStorage.removeItem('wl_token');
   me=null;
   savedIds=[];
   hide($('#mSet'));
