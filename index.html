@@ -228,17 +228,31 @@ async function fav(id){
     return; 
   }
   const isSaved = savedIds.includes(id);
-  if(isSaved){
-    await supabase.from('favorites').delete().eq('user_id', me.id).eq('wallpaper_id', id);
-    savedIds = savedIds.filter(x => x !== id);
-    toast(t('unsaved'));
-  } else {
-    await supabase.from('favorites').insert({ user_id: me.id, wallpaper_id: id });
-    savedIds.push(id);
-    toast(t('saved1'));
+  const token = localStorage.getItem('wl_token');
+  try {
+    await fetch(API + '/favorites', {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token 
+      },
+      body: JSON.stringify({ 
+        wallpaper_id: id, 
+        action: isSaved ? 'remove' : 'add' 
+      })
+    });
+    if(isSaved){
+      savedIds = savedIds.filter(x => x !== id);
+      toast(t('unsaved'));
+    } else {
+      savedIds.push(id);
+      toast(t('saved1'));
+    }
+    render();
+    if(open === id) dl(id);
+  } catch(e) {
+    toast('خطا در ذخیره');
   }
-  render();
-  if(open === id) dl(id);
 }
 async function hash(s){try{const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode('wl:'+s));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}catch(e){return btoa(unescape(encodeURIComponent(s)))}}
 async function auth(){
