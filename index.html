@@ -276,12 +276,16 @@ async function auth(){
     er.textContent = err.message;
   }
 }
-  async function checkUser(){
-  const { data: { session } } = await supabase.auth.getSession();
-  if(session?.user){
-    me = session.user;
-  } else {
+async function checkUser(){
+  const token = localStorage.getItem('wl_token');
+  if(!token){ me = null; return; }
+  try {
+    const decoded = atob(token);
+    const [id, email] = decoded.split(':');
+    me = { id: parseInt(id), email, name: email.split('@')[0] };
+  } catch(e) {
     me = null;
+    localStorage.removeItem('wl_token');
   }
 }
 // onboarding
