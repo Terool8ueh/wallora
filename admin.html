@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>پنل ادمین | والورا</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0d0e1d;
+  --fg: #f0eefc;
+  --mut: #9b98b8;
+  --card: #171830;
+  --bd: #272848;
+  --ac: #6f5cff;
+  --ac2: #ff8a5b;
+  --danger: #ff5470;
+  --ok: #2dd4a8;
+}
+* { box-sizing: border-box; margin: 0; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: 'Vazirmatn', system-ui, sans-serif;
+  line-height: 1.7;
+  min-height: 100vh;
+  padding: 20px;
+}
+.wrap { max-width: 900px; margin: 0 auto; }
+h1 { font-size: 1.8rem; margin-bottom: 8px; }
+h2 { font-size: 1.3rem; margin: 28px 0 14px; }
+.mut { color: var(--mut); font-size: 0.95rem; }
+.card {
+  background: var(--card);
+  border: 1px solid var(--bd);
+  border-radius: 16px;
+  padding: 22px;
+  margin-bottom: 16px;
+}
+label { display: block; margin-bottom: 14px; font-size: 0.9rem; color: var(--mut); }
+input, select, textarea {
+  width: 100%;
+  margin-top: 4px;
+  padding: 11px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--bd);
+  background: rgba(127,127,160,.12);
+  color: var(--fg);
+  font: inherit;
+  outline: none;
+}
+input:focus, select:focus, textarea:focus { border-color: var(--ac); }
+.btn {
+  background: linear-gradient(120deg, var(--ac), var(--ac2));
+  color: #fff;
+  border: 0;
+  padding: 11px 22px;
+  border-radius: 99px;
+  font-weight: 600;
+  font: inherit;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn:hover { opacity: 0.9; }
+.btn.danger { background: var(--danger); }
+.btn.o {
+  background: transparent;
+  border: 1px solid var(--bd);
+  color: var(--fg);
+}
+.err { color: var(--danger); margin-top: 10px; min-height: 1.4em; }
+.ok { color: var(--ok); margin-top: 10px; }
+.row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.list { display: grid; gap: 12px; }
+.item {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  background: var(--card);
+  border: 1px solid var(--bd);
+  border-radius: 14px;
+  padding: 12px;
+}
+.item img {
+  width: 90px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 8px;
+  background: #222;
+}
+.item .info { flex: 1; min-width: 0; }
+.item .info b { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.item .info small { color: var(--mut); }
+.hidden { display: none !important; }
+.login-box {
+  max-width: 380px;
+  margin: 80px auto;
+}
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+a { color: var(--ac); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- صفحه ورود -->
+  <div id="loginView" class="login-box card">
+    <h1>پنل ادمین</h1>
+    <p class="mut" style="margin-bottom:18px">والورا · مدیریت والپیپرها</p>
+    <label>رمز ادمین
+      <input type="password" id="adminPass" placeholder="رمز را وارد کنید" dir="ltr">
+    </label>
+    <button class="btn" id="btnLogin" style="width:100%">ورود</button>
+    <div class="err" id="loginErr"></div>
+  </div>
+
+  <!-- پنل اصلی -->
+  <div id="adminView" class="hidden">
+    <div class="topbar">
+      <div>
+        <h1>پنل ادمین والورا</h1>
+        <p class="mut">مدیریت والپیپرها</p>
+      </div>
+      <div class="row">
+        <a href="index.html" class="btn o">مشاهده سایت</a>
+        <button class="btn o" id="btnLogout">خروج</button>
+      </div>
+    </div>
+
+    <!-- فرم اضافه کردن -->
+    <div class="card">
+      <h2>➕ اضافه کردن والپیپر جدید</h2>
+      <label>عنوان فارسی *
+        <input id="titleFa" placeholder="مثلاً غروب کوهستان">
+      </label>
+      <label>عنوان انگلیسی
+        <input id="titleEn" placeholder="Mountain Sunset" dir="ltr">
+      </label>
+      <label>دسته‌بندی
+        <select id="category">
+          <option value="nature">طبیعت</option>
+          <option value="abstract">انتزاعی</option>
+          <option value="minimal">مینیمال</option>
+          <option value="dark">تیره</option>
+          <option value="anime">انیمه</option>
+          <option value="cars">خودرو</option>
+          <option value="space">فضا</option>
+          <option value="other">سایر</option>
+        </select>
+      </label>
+      <label>لینک عکس * (مستقیم به فایل تصویر)
+        <input id="imageUrl" placeholder="https://example.com/photo.jpg" dir="ltr">
+      </label>
+      <p class="mut" style="margin-bottom:12px;font-size:0.85rem">
+        فعلاً باید لینک مستقیم عکس را وارد کنید (مثلاً از Imgur، Postimages یا سرور خودتان).
+        آپلود مستقیم فایل در مرحله بعد اضافه می‌شود.
+      </p>
+      <button class="btn" id="btnAdd">اضافه کردن</button>
+      <div class="err" id="addErr"></div>
+      <div class="ok hidden" id="addOk">با موفقیت اضافه شد ✓</div>
+    </div>
+
+    <!-- لیست والپیپرها -->
+    <h2>والپیپرهای موجود</h2>
+    <div id="list" class="list">
+      <p class="mut">در حال بارگذاری...</p>
+    </div>
+  </div>
+</div>
+
+<script>
+const API = 'https://wollora-api.teroolm.workers.dev';
+let adminToken = localStorage.getItem('wl_admin_token') || null;
+
+const $ = s => document.querySelector(s);
+
+function show(id) {
+  $('#loginView').classList.toggle('hidden', id !== 'login');
+  $('#adminView').classList.toggle('hidden', id !== 'admin');
+}
+
+async function login() {
+  const password = $('#adminPass').value;
+  $('#loginErr').textContent = '';
+  try {
+    const res = await fetch(API + '/admin/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'خطا');
+    adminToken = data.token;
+    localStorage.setItem('wl_admin_token', adminToken);
+    show('admin');
+    loadList();
+  } catch (e) {
+    $('#loginErr').textContent = e.message;
+  }
+}
+
+function logout() {
+  adminToken = null;
+  localStorage.removeItem('wl_admin_token');
+  show('login');
+  $('#adminPass').value = '';
+}
+
+async function loadList() {
+  const el = $('#list');
+  el.innerHTML = '<p class="mut">در حال بارگذاری...</p>';
+  try {
+    const res = await fetch(API + '/wallpapers');
+    const data = await res.json();
+    const items = data.wallpapers || [];
+    if (!items.length) {
+      el.innerHTML = '<p class="mut">هنوز والپیپری اضافه نشده.</p>';
+      return;
+    }
+    el.innerHTML = items.map(w => `
+      <div class="item">
+        <img src="${w.image_url}" alt="" onerror="this.style.opacity=0.3">
+        <div class="info">
+          <b>${w.title_fa}</b>
+          <small>${w.category || '—'} · ${w.title_en || ''}</small>
+        </div>
+        <button class="btn danger" data-del="${w.id}">حذف</button>
+      </div>
+    `).join('');
+  } catch (e) {
+    el.innerHTML = '<p class="err">خطا در بارگذاری لیست</p>';
+  }
+}
+
+async function addWallpaper() {
+  const title_fa = $('#titleFa').value.trim();
+  const title_en = $('#titleEn').value.trim();
+  const category = $('#category').value;
+  const image_url = $('#imageUrl').value.trim();
+  $('#addErr').textContent = '';
+  $('#addOk').classList.add('hidden');
+
+  if (!title_fa || !image_url) {
+    $('#addErr').textContent = 'عنوان فارسی و لینک عکس الزامی است';
+    return;
+  }
+
+  try {
+    const res = await fetch(API + '/admin/wallpapers', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + adminToken
+      },
+      body: JSON.stringify({ title_fa, title_en, category, image_url })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'خطا');
+    $('#addOk').classList.remove('hidden');
+    $('#titleFa').value = '';
+    $('#titleEn').value = '';
+    $('#imageUrl').value = '';
+    loadList();
+  } catch (e) {
+    $('#addErr').textContent = e.message;
+  }
+}
+
+async function deleteWallpaper(id) {
+  if (!confirm('این والپیپر حذف شود؟')) return;
+  try {
+    const res = await fetch(API + '/admin/wallpapers', {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + adminToken
+      },
+      body: JSON.stringify({ id })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'خطا');
+    loadList();
+  } catch (e) {
+    alert(e.message);
+  }
+}
+
+$('#btnLogin').onclick = login;
+$('#adminPass').onkeydown = e => { if (e.key === 'Enter') login(); };
+$('#btnLogout').onclick = logout;
+$('#btnAdd').onclick = addWallpaper;
+document.addEventListener('click', e => {
+  const btn = e.target.closest('[data-del]');
+  if (btn) deleteWallpaper(+btn.dataset.del);
+});
+
+// اگر قبلاً وارد شده
+if (adminToken) {
+  show('admin');
+  loadList();
+} else {
+  show('login');
+}
+</script>
+</body>
+</html>
