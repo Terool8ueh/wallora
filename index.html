@@ -95,6 +95,23 @@ footer{text-align:center;color:var(--mut);padding:30px 0;font-size:.9rem}
 [hidden]{display:none!important}
 .noan *{animation:none!important;transition:none!important}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+.stats{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.stat{background:var(--card);border:1px solid var(--bd);border-radius:99px;padding:6px 14px;font-size:.9rem;color:var(--mut)}
+.stat b{color:var(--fg);font-weight:700}
+.hero .btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px}
+.badge{position:absolute;top:10px;inset-inline-start:10px;background:rgba(0,0,0,.55);color:#fff;font-size:.72rem;padding:3px 8px;border-radius:99px;backdrop-filter:blur(6px);pointer-events:none;z-index:2}
+.card{position:relative}
+.card .th{overflow:hidden}
+.card:hover .th img,.card:hover .th svg{transform:scale(1.04)}
+.card .th img,.card .th svg{transition:transform .35s ease;width:100%;height:100%;object-fit:cover}
+.fv{transition:transform .2s}
+.fv.on{animation:pop .35s ease}
+@keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.25)}100%{transform:scale(1)}}
+#toTop{position:fixed;bottom:calc(90px + env(safe-area-inset-bottom,0px));inset-inline-end:16px;z-index:15;width:46px;height:46px;border-radius:50%;background:var(--card);border:1px solid var(--bd);box-shadow:var(--sh);display:grid;place-items:center;opacity:0;pointer-events:none;transition:opacity .25s,transform .2s;font-size:1.2rem}
+#toTop.show{opacity:1;pointer-events:auto}
+#toTop:hover{transform:translateY(-3px)}
+
 </style>
 </head>
 <body>
@@ -109,7 +126,7 @@ footer{text-align:center;color:var(--mut);padding:30px 0;font-size:.9rem}
 
 <main class="wrap">
 <section data-v="home">
-<div class="hero" id="hero"><div><h1 data-t="h1"></h1><p data-t="h1s"></p><button class="btn" id="cta" data-t="explore"></button></div><div class="stack" id="stack" aria-hidden="true"></div></div>
+<div class="hero" id="hero"><div><h1 data-t="h1"></h1><p data-t="h1s"></p><div class="btn-row"><button class="btn" id="cta" data-t="explore"></button><button class="btn o" id="btnRandom" data-t="random"></button></div><div class="stats"><span class="stat" id="statCount"><b>—</b> <span data-t="count"></span></span></div></div><div class="stack" id="stack" aria-hidden="true"></div></div>
 <div class="chips" id="chips" role="tablist"></div>
 <div id="home"><h2 data-t="trend"></h2><div class="grid" id="gT"></div><h2 data-t="newest"></h2><div class="grid" id="gN"></div></div>
 <div id="res" hidden><h2 data-t="results"></h2><div class="grid" id="gR"></div></div>
@@ -144,8 +161,8 @@ footer{text-align:center;color:var(--mut);padding:30px 0;font-size:.9rem}
 const API = 'https://wollora-api.teroolm.workers.dev';
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const ls={g(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},s(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
-const T={fa:{settings:'تنظیمات',login:'ورود',register:'ثبت‌نام',logout:'خروج از حساب',home:'خانه',saved:'ذخیره‌شده‌ها',about:'درباره ما',contact:'تماس',search:'جستجوی والپیپر…',h1:'والپیپر مناسب صفحه‌ات را پیدا کن',h1s:'مجموعه‌ای دست‌چین از تصاویر باکیفیت برای موبایل، دسکتاپ و 4K؛ رایگان و بدون محدودیت.',explore:'کشف والپیپرها',trend:'پرطرفدارها',newest:'تازه‌ترین‌ها',results:'نتایج',none:'والپیپری پیدا نشد. عبارت یا دسته دیگری را امتحان کنید.',all:'همه',download:'دانلود',save:'ذخیره',unsave:'حذف از ذخیره‌ها',close:'بستن',name:'نام',email:'ایمیل',pass:'رمز عبور (حداقل ۶ کاراکتر)',lang:'زبان',dark:'حالت تاریک',anim:'انیمیشن‌ها',defq:'کیفیت پیش‌فرض',tour:'راهنمای شروع',show:'نمایش',savedT:'ذخیره‌شده‌ها',savedE:'هنوز چیزی ذخیره نکرده‌اید. روی قلب هر والپیپر بزنید تا اینجا بماند.',needLogin:'برای ذخیره کردن وارد شوید.',loginFirst:'برای دیدن ذخیره‌شده‌ها وارد شوید.',hi:'سلام',aboutT:'درباره ما',aboutP:'ما سال‌هاست در این حوزه فعالیت می‌کنیم و با دقت، بهترین والپیپرها را از نظر کیفیت برای کاربران خود انتخاب می‌کنیم.',contactT:'پشتیبانی و تماس',contactP:'برای پرسش، پیشنهاد یا گزارش مشکل از راه‌های زیر با ما در ارتباط باشید.',eBad:'ایمیل معتبر وارد کنید.',pBad:'رمز عبور باید حداقل ۶ کاراکتر باشد.',nBad:'نام خود را وارد کنید.',eUsed:'این ایمیل قبلاً ثبت شده است. وارد شوید.',eWrong:'ایمیل یا رمز عبور اشتباه است.',dlOk:'دانلود شروع شد',dlErr:'ساخت تصویر ناموفق بود. دوباره تلاش کنید.',saved1:'ذخیره شد',unsaved:'از ذخیره‌ها حذف شد',rs:['موبایل','تبلت','دسکتاپ','2K','4K'],mood:['آرام','غروب','شب','رؤیا'],loading:'در حال بارگذاری…'},
-en:{settings:'Settings',login:'Log in',register:'Sign up',logout:'Log out',home:'Home',saved:'Saved',about:'About',contact:'Contact',search:'Search wallpapers…',h1:'Find the wallpaper your screen deserves',h1s:'A hand-picked collection of high-quality images for mobile, desktop and 4K. Free, no limits.',explore:'Explore wallpapers',trend:'Trending',newest:'Newest',results:'Results',none:'No wallpapers found. Try another word or category.',all:'All',download:'Download',save:'Save',unsave:'Remove from saved',close:'Close',name:'Name',email:'Email',pass:'Password (min. 6 characters)',lang:'Language',dark:'Dark mode',anim:'Animations',defq:'Default quality',tour:'Getting started guide',show:'Show',savedT:'Saved',savedE:"You haven't saved anything yet. Tap the heart on any wallpaper to keep it here.",needLogin:'Log in to save wallpapers.',loginFirst:'Log in to see your saved wallpapers.',hi:'Hi',aboutT:'About us',aboutP:'We have been active in this field for several years and carefully select the best quality wallpapers for our users.',contactT:'Support & contact',contactP:'For questions, suggestions or to report a problem, reach us through the channels below.',eBad:'Enter a valid email address.',pBad:'Password must be at least 6 characters.',nBad:'Enter your name.',eUsed:'This email is already registered. Log in instead.',eWrong:'Incorrect email or password.',dlOk:'Download started',dlErr:'Could not create the image. Please try again.',saved1:'Saved',unsaved:'Removed from saved',rs:['Mobile','Tablet','Desktop','2K','4K'],mood:['Calm','Dusk','Night','Dream'],loading:'Loading…'}};
+const T={fa:{settings:'تنظیمات',login:'ورود',register:'ثبت‌نام',logout:'خروج از حساب',home:'خانه',saved:'ذخیره‌شده‌ها',about:'درباره ما',contact:'تماس',search:'جستجوی والپیپر…',h1:'والپیپر مناسب صفحه‌ات را پیدا کن',h1s:'مجموعه‌ای دست‌چین از تصاویر باکیفیت برای موبایل، دسکتاپ و 4K؛ رایگان و بدون محدودیت.',explore:'کشف والپیپرها',trend:'پرطرفدارها',newest:'تازه‌ترین‌ها',results:'نتایج',none:'والپیپری پیدا نشد. عبارت یا دسته دیگری را امتحان کنید.',all:'همه',download:'دانلود',save:'ذخیره',unsave:'حذف از ذخیره‌ها',close:'بستن',name:'نام',email:'ایمیل',pass:'رمز عبور (حداقل ۶ کاراکتر)',lang:'زبان',dark:'حالت تاریک',anim:'انیمیشن‌ها',defq:'کیفیت پیش‌فرض',tour:'راهنمای شروع',show:'نمایش',savedT:'ذخیره‌شده‌ها',savedE:'هنوز چیزی ذخیره نکرده‌اید. روی قلب هر والپیپر بزنید تا اینجا بماند.',needLogin:'برای ذخیره کردن وارد شوید.',loginFirst:'برای دیدن ذخیره‌شده‌ها وارد شوید.',hi:'سلام',aboutT:'درباره ما',aboutP:'والورا یک گالری رایگان والپیپر برای موبایل، تبلت و دسکتاپ است. هدف ما این است که با چند کلیک تصویر مناسب صفحه نمایش خود را پیدا و دانلود کنید — بدون ثبت‌نام اجباری برای دانلود، بدون تبلیغ مزاحم و با کیفیت بالا. می‌توانید در دسته‌های مختلف بگردید، جستجو کنید، در رزولوشن دلخواه (از موبایل تا 4K) دانلود کنید و با ساخت حساب، موارد موردعلاقه را ذخیره کنید. والورا دو زبانه (فارسی و انگلیسی) است و حالت تاریک و روشن دارد.',contactT:'پشتیبانی و تماس',contactP:'برای پرسش، پیشنهاد یا گزارش مشکل از راه‌های زیر با ما در ارتباط باشید.',eBad:'ایمیل معتبر وارد کنید.',pBad:'رمز عبور باید حداقل ۶ کاراکتر باشد.',nBad:'نام خود را وارد کنید.',eUsed:'این ایمیل قبلاً ثبت شده است. وارد شوید.',eWrong:'ایمیل یا رمز عبور اشتباه است.',dlOk:'دانلود شروع شد',dlErr:'ساخت تصویر ناموفق بود. دوباره تلاش کنید.',saved1:'ذخیره شد',unsaved:'از ذخیره‌ها حذف شد',rs:['موبایل','تبلت','دسکتاپ','2K','4K'],mood:['آرام','غروب','شب','رؤیا'],loading:'در حال بارگذاری…',random:'والپیپر تصادفی',share:'اشتراک‌گذاری',count:'والپیپر',backTop:'بالا'},
+en:{settings:'Settings',login:'Log in',register:'Sign up',logout:'Log out',home:'Home',saved:'Saved',about:'About',contact:'Contact',search:'Search wallpapers…',h1:'Find the wallpaper your screen deserves',h1s:'A hand-picked collection of high-quality images for mobile, desktop and 4K. Free, no limits.',explore:'Explore wallpapers',trend:'Trending',newest:'Newest',results:'Results',none:'No wallpapers found. Try another word or category.',all:'All',download:'Download',save:'Save',unsave:'Remove from saved',close:'Close',name:'Name',email:'Email',pass:'Password (min. 6 characters)',lang:'Language',dark:'Dark mode',anim:'Animations',defq:'Default quality',tour:'Getting started guide',show:'Show',savedT:'Saved',savedE:"You haven't saved anything yet. Tap the heart on any wallpaper to keep it here.",needLogin:'Log in to save wallpapers.',loginFirst:'Log in to see your saved wallpapers.',hi:'Hi',aboutT:'About us',aboutP:'Wallora is a free wallpaper gallery for mobile, tablet and desktop. Find and download the right image for your screen in a few taps — no forced sign-up for downloads, no annoying ads, high quality. Browse categories, search, download in the resolution you need (phone to 4K), and save favorites with a free account. Wallora is bilingual (Persian & English) and supports light and dark mode.',contactT:'Support & contact',contactP:'For questions, suggestions or to report a problem, reach us through the channels below.',eBad:'Enter a valid email address.',pBad:'Password must be at least 6 characters.',nBad:'Enter your name.',eUsed:'This email is already registered. Log in instead.',eWrong:'Incorrect email or password.',dlOk:'Download started',dlErr:'Could not create the image. Please try again.',saved1:'Saved',unsaved:'Removed from saved',rs:['Mobile','Tablet','Desktop','2K','4K'],mood:['Calm','Dusk','Night','Dream'],loading:'Loading…',random:'Random wallpaper',share:'Share',count:'wallpapers',backTop:'Top'}};
 const C=[['nature','طبیعت','Nature',140],['abstract','انتزاعی','Abstract',275],['minimal','مینیمال','Minimal',28],['dark','تیره','Dark',235],['anime','انیمه','Anime',330],['cars','خودرو','Cars',8],['space','فضا','Space',255]];
 const RES=[[1080,1920],[1620,2160],[1920,1080],[2560,1440],[3840,2160]];
 const OB=[['👋','به والورا خوش آمدید','در چند ثانیه با امکانات سایت آشنا شوید.'],['⬇️','دانلود رایگان','روی هر تصویر بزنید و رزولوشن دلخواه (موبایل، دسکتاپ، 4K و…) را دانلود کنید.'],['❤️','ذخیره کنید','با ساخت حساب کاربری، والپیپرهای موردعلاقه را با قلب ذخیره کنید و در بخش «ذخیره‌شده‌ها» ببینید.'],['⚙️','زبان و حالت تاریک','از دکمه‌ی تنظیمات، زبان را بین فارسی و انگلیسی و حالت روشن یا تاریک را تغییر دهید.']];
@@ -193,7 +210,8 @@ const saves = () => savedIds;
 const heart='<svg width="18" height="18" viewBox="0 0 24 24"><path d="M12 21s-8-5.2-8-11a4.6 4.6 0 0 1 8-3 4.6 4.6 0 0 1 8 3c0 5.8-8 11-8 11z"/></svg>';
 function card(w,p){
   const on=saves().includes(w.id);
-  return `<div class="card"><button class="th" data-o="${w.id}" style="display:block" aria-label="${title(w,lang)}">${thumb(w,p)}</button><button class="fv ${on?'on':''}" data-f="${w.id}" aria-pressed="${on}" aria-label="${t('save')}">${heart}</button><div class="mt"><b>${title(w,lang)}</b><span>♥ ${(w.likes||0).toLocaleString(lang=='fa'?'fa-IR':'en-US')}</span></div></div>`;
+  const badge = w.real ? '<span class="badge">HD</span>' : '';
+  return `<div class="card">${badge}<button class="th" data-o="${w.id}" style="display:block" aria-label="${title(w,lang)}">${thumb(w,p)}</button><button class="fv ${on?'on':''}" data-f="${w.id}" aria-pressed="${on}" aria-label="${t('save')}">${heart}</button><div class="mt"><b>${title(w,lang)}</b><span>♥ ${(w.likes||0).toLocaleString(lang=='fa'?'fa-IR':'en-US')}</span></div></div>`;
 }
 const grid=(el,list,p)=>{$(el).innerHTML=list.length?list.map(w=>card(w,p)).join(''):`<div class="em" style="grid-column:1/-1">${t('none')}</div>`};
 function render(){
@@ -204,6 +222,7 @@ const f=W.filter(w=>{
   const matchQ = !q || (title(w,'fa')+' '+title(w,'en')+(w.category||'')).toLowerCase().includes(q);
   return matchCat && matchQ;
 });
+const sc=$('#statCount');if(sc)sc.innerHTML='<b>'+W.length+'</b> <span>'+t('count')+'</span>';
 const flt=q||cat!='all';$('#home').hidden=flt;$('#res').hidden=!flt;$('#hero').hidden=!!flt;
 if(flt)grid('#gR',f,'r');else{
   const sorted=[...W].sort((a,b)=>(b.likes||0)-(a.likes||0)).slice(0,8);
@@ -247,6 +266,10 @@ function dl(id){
   $('#dlT').textContent=title(w,lang);
   $('#dlR').innerHTML=RES.map((r,i)=>`<button data-d="${i}"><span>⬇ ${t('download')} · ${t('rs')[i]}</span><small dir="ltr">${r[0]}×${r[1]}</small></button>`).join('');
   $('#dlS').textContent=(on?'♥ '+t('unsave'):'♡ '+t('save'));
+  let shareBtn=$('#dlShare');
+  if(!shareBtn){shareBtn=document.createElement('button');shareBtn.id='dlShare';shareBtn.className='btn o';shareBtn.style.cssText='margin-top:8px;width:100%';const parent=$('#dlS').parentNode;parent.appendChild(shareBtn);}
+  shareBtn.textContent='🔗 '+t('share');
+  shareBtn.onclick=async()=>{const url=location.href.split('?')[0].split('#')[0]+'?w='+id;try{if(navigator.share)await navigator.share({title:title(w,lang),url});else{await navigator.clipboard.writeText(url);toast(lang=='fa'?'لینک کپی شد':'Link copied');}}catch(e){}};
   $('#mDl').hidden=false;
 }
 function download(i){
@@ -391,12 +414,17 @@ $('#dlS').onclick=()=>fav(open);
 document.addEventListener('click',e=>{if(e.target.id=='svL'){mode='login';ui();show('#mAuth')}});
 $('#obN').onclick=()=>{ob<OB.length-1?(ob++,obR()):obEnd()};$('#obS').onclick=obEnd;
 $('#yr').textContent=new Date().getFullYear();
+if($('#btnRandom'))$('#btnRandom').onclick=()=>{if(!W.length)return;const w=W[Math.floor(Math.random()*W.length)];dl(w.id)};
+const toTop=$('#toTop');
+if(toTop){window.addEventListener('scroll',()=>toTop.classList.toggle('show',scrollY>400),{passive:true});toTop.onclick=()=>scrollTo({top:0,behavior:'smooth'});}
+
 (async()=>{
   await loadWallpapers();
   await checkUser();
   await loadSaves();
   ui();
   if(!ls.g('wl_seen',0)) setTimeout(obOpen,600);
+  const wp=new URLSearchParams(location.search).get('w');if(wp&&W.some(x=>x.id==+wp))setTimeout(()=>dl(+wp),500);
 })();
 })();
 </script>
