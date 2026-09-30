@@ -144,15 +144,19 @@ footer{text-align:center;color:var(--mut);padding:30px 0;font-size:.9rem}
 const API = 'https://wollora-api.teroolm.workers.dev';
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const ls={g(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},s(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
-const T={fa:{settings:'تنظیمات',login:'ورود',register:'ثبت‌نام',logout:'خروج از حساب',home:'خانه',saved:'ذخیره‌شده‌ها',about:'درباره ما',contact:'تماس',search:'جستجوی والپیپر…',h1:'والپیپر مناسب صفحه‌ات را پیدا کن',h1s:'مجموعه‌ای دست‌چین از تصاویر باکیفیت برای موبایل، دسکتاپ و 4K؛ رایگان و بدون محدودیت.',explore:'کشف والپیپرها',trend:'پرطرفدارها',newest:'تازه‌ترین‌ها',results:'نتایج',none:'والپیپری پیدا نشد. عبارت یا دسته دیگری را امتحان کنید.',all:'همه',download:'دانلود',save:'ذخیره',unsave:'حذف از ذخیره‌ها',close:'بستن',name:'نام',email:'ایمیل',pass:'رمز عبور (حداقل ۶ کاراکتر)',lang:'زبان',dark:'حالت تاریک',anim:'انیمیشن‌ها',defq:'کیفیت پیش‌فرض',tour:'راهنمای شروع',show:'نمایش',savedT:'ذخیره‌شده‌ها',savedE:'هنوز چیزی ذخیره نکرده‌اید. روی قلب هر والپیپر بزنید تا اینجا بماند.',needLogin:'برای ذخیره کردن وارد شوید.',loginFirst:'برای دیدن ذخیره‌شده‌ها وارد شوید.',hi:'سلام',aboutT:'درباره ما',aboutP:'ما سال‌هاست در این حوزه فعالیت می‌کنیم و با دقت، بهترین والپیپرها را از نظر کیفیت برای کاربران خود انتخاب می‌کنیم.',contactT:'پشتیبانی و تماس',contactP:'برای پرسش، پیشنهاد یا گزارش مشکل از راه‌های زیر با ما در ارتباط باشید.',eBad:'ایمیل معتبر وارد کنید.',pBad:'رمز عبور باید حداقل ۶ کاراکتر باشد.',nBad:'نام خود را وارد کنید.',eUsed:'این ایمیل قبلاً ثبت شده است. وارد شوید.',eWrong:'ایمیل یا رمز عبور اشتباه است.',dlOk:'دانلود شروع شد',dlErr:'ساخت تصویر ناموفق بود. دوباره تلاش کنید.',saved1:'ذخیره شد',unsaved:'از ذخیره‌ها حذف شد',rs:['موبایل','تبلت','دسکتاپ','2K','4K'],mood:['آرام','غروب','شب','رؤیا']},
-en:{settings:'Settings',login:'Log in',register:'Sign up',logout:'Log out',home:'Home',saved:'Saved',about:'About',contact:'Contact',search:'Search wallpapers…',h1:'Find the wallpaper your screen deserves',h1s:'A hand-picked collection of high-quality images for mobile, desktop and 4K. Free, no limits.',explore:'Explore wallpapers',trend:'Trending',newest:'Newest',results:'Results',none:'No wallpapers found. Try another word or category.',all:'All',download:'Download',save:'Save',unsave:'Remove from saved',close:'Close',name:'Name',email:'Email',pass:'Password (min. 6 characters)',lang:'Language',dark:'Dark mode',anim:'Animations',defq:'Default quality',tour:'Getting started guide',show:'Show',savedT:'Saved',savedE:"You haven't saved anything yet. Tap the heart on any wallpaper to keep it here.",needLogin:'Log in to save wallpapers.',loginFirst:'Log in to see your saved wallpapers.',hi:'Hi',aboutT:'About us',aboutP:'We have been active in this field for several years and carefully select the best quality wallpapers for our users.',contactT:'Support & contact',contactP:'For questions, suggestions or to report a problem, reach us through the channels below.',eBad:'Enter a valid email address.',pBad:'Password must be at least 6 characters.',nBad:'Enter your name.',eUsed:'This email is already registered. Log in instead.',eWrong:'Incorrect email or password.',dlOk:'Download started',dlErr:'Could not create the image. Please try again.',saved1:'Saved',unsaved:'Removed from saved',rs:['Mobile','Tablet','Desktop','2K','4K'],mood:['Calm','Dusk','Night','Dream']}};
+const T={fa:{settings:'تنظیمات',login:'ورود',register:'ثبت‌نام',logout:'خروج از حساب',home:'خانه',saved:'ذخیره‌شده‌ها',about:'درباره ما',contact:'تماس',search:'جستجوی والپیپر…',h1:'والپیپر مناسب صفحه‌ات را پیدا کن',h1s:'مجموعه‌ای دست‌چین از تصاویر باکیفیت برای موبایل، دسکتاپ و 4K؛ رایگان و بدون محدودیت.',explore:'کشف والپیپرها',trend:'پرطرفدارها',newest:'تازه‌ترین‌ها',results:'نتایج',none:'والپیپری پیدا نشد. عبارت یا دسته دیگری را امتحان کنید.',all:'همه',download:'دانلود',save:'ذخیره',unsave:'حذف از ذخیره‌ها',close:'بستن',name:'نام',email:'ایمیل',pass:'رمز عبور (حداقل ۶ کاراکتر)',lang:'زبان',dark:'حالت تاریک',anim:'انیمیشن‌ها',defq:'کیفیت پیش‌فرض',tour:'راهنمای شروع',show:'نمایش',savedT:'ذخیره‌شده‌ها',savedE:'هنوز چیزی ذخیره نکرده‌اید. روی قلب هر والپیپر بزنید تا اینجا بماند.',needLogin:'برای ذخیره کردن وارد شوید.',loginFirst:'برای دیدن ذخیره‌شده‌ها وارد شوید.',hi:'سلام',aboutT:'درباره ما',aboutP:'ما سال‌هاست در این حوزه فعالیت می‌کنیم و با دقت، بهترین والپیپرها را از نظر کیفیت برای کاربران خود انتخاب می‌کنیم.',contactT:'پشتیبانی و تماس',contactP:'برای پرسش، پیشنهاد یا گزارش مشکل از راه‌های زیر با ما در ارتباط باشید.',eBad:'ایمیل معتبر وارد کنید.',pBad:'رمز عبور باید حداقل ۶ کاراکتر باشد.',nBad:'نام خود را وارد کنید.',eUsed:'این ایمیل قبلاً ثبت شده است. وارد شوید.',eWrong:'ایمیل یا رمز عبور اشتباه است.',dlOk:'دانلود شروع شد',dlErr:'ساخت تصویر ناموفق بود. دوباره تلاش کنید.',saved1:'ذخیره شد',unsaved:'از ذخیره‌ها حذف شد',rs:['موبایل','تبلت','دسکتاپ','2K','4K'],mood:['آرام','غروب','شب','رؤیا'],loading:'در حال بارگذاری…'},
+en:{settings:'Settings',login:'Log in',register:'Sign up',logout:'Log out',home:'Home',saved:'Saved',about:'About',contact:'Contact',search:'Search wallpapers…',h1:'Find the wallpaper your screen deserves',h1s:'A hand-picked collection of high-quality images for mobile, desktop and 4K. Free, no limits.',explore:'Explore wallpapers',trend:'Trending',newest:'Newest',results:'Results',none:'No wallpapers found. Try another word or category.',all:'All',download:'Download',save:'Save',unsave:'Remove from saved',close:'Close',name:'Name',email:'Email',pass:'Password (min. 6 characters)',lang:'Language',dark:'Dark mode',anim:'Animations',defq:'Default quality',tour:'Getting started guide',show:'Show',savedT:'Saved',savedE:"You haven't saved anything yet. Tap the heart on any wallpaper to keep it here.",needLogin:'Log in to save wallpapers.',loginFirst:'Log in to see your saved wallpapers.',hi:'Hi',aboutT:'About us',aboutP:'We have been active in this field for several years and carefully select the best quality wallpapers for our users.',contactT:'Support & contact',contactP:'For questions, suggestions or to report a problem, reach us through the channels below.',eBad:'Enter a valid email address.',pBad:'Password must be at least 6 characters.',nBad:'Enter your name.',eUsed:'This email is already registered. Log in instead.',eWrong:'Incorrect email or password.',dlOk:'Download started',dlErr:'Could not create the image. Please try again.',saved1:'Saved',unsaved:'Removed from saved',rs:['Mobile','Tablet','Desktop','2K','4K'],mood:['Calm','Dusk','Night','Dream'],loading:'Loading…'}};
 const C=[['nature','طبیعت','Nature',140],['abstract','انتزاعی','Abstract',275],['minimal','مینیمال','Minimal',28],['dark','تیره','Dark',235],['anime','انیمه','Anime',330],['cars','خودرو','Cars',8],['space','فضا','Space',255]];
 const RES=[[1080,1920],[1620,2160],[1920,1080],[2560,1440],[3840,2160]];
 const OB=[['👋','به والورا خوش آمدید','در چند ثانیه با امکانات سایت آشنا شوید.'],['⬇️','دانلود رایگان','روی هر تصویر بزنید و رزولوشن دلخواه (موبایل، دسکتاپ، 4K و…) را دانلود کنید.'],['❤️','ذخیره کنید','با ساخت حساب کاربری، والپیپرهای موردعلاقه را با قلب ذخیره کنید و در بخش «ذخیره‌شده‌ها» ببینید.'],['⚙️','زبان و حالت تاریک','از دکمه‌ی تنظیمات، زبان را بین فارسی و انگلیسی و حالت روشن یا تاریک را تغییر دهید.']];
-// wallpapers
 const rnd=s=>()=>(s=s*16807%2147483647)/2147483647;
-const W=[];C.forEach((c,ci)=>{for(let m=0;m<4;m++)W.push({id:ci*4+m,c:c[0],ci,m,h:(c[3]+m*38)%360,likes:Math.floor(rnd(ci*4+m+5)()*9000+800)})});
-const title=(w,l)=>C[w.ci][l=='fa'?1:2]+(l=='fa'?' ':' · ')+T[l].mood[w.m];
+// procedural fallback wallpapers
+const Wproc=[];C.forEach((c,ci)=>{for(let m=0;m<4;m++)Wproc.push({id:ci*4+m,c:c[0],ci,m,h:(c[3]+m*38)%360,likes:Math.floor(rnd(ci*4+m+5)()*9000+800),real:false})});
+let W = [...Wproc]; // will be replaced by API data if available
+const title=(w,l)=>{
+  if(w.real) return (l==='fa' ? (w.title_fa||w.title_en) : (w.title_en||w.title_fa)) || 'Wallpaper';
+  return C[w.ci][l=='fa'?1:2]+(l=='fa'?' ':' · ')+T[l].mood[w.m];
+};
 function art(w,p,Wd=1600,Ht=1000){
 const r=rnd(w.id*131+7),h=w.h,k=w.c,dk=k=='dark'||k=='space',id=p+w.id,H=(d,s,l)=>`hsl(${(h+d+360)%360},${s}%,${l}%)`;
 let s=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="${Wd}" height="${Ht}" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="g${id}" x1="0" y1="0" x2=".5" y2="1"><stop offset="0" stop-color="${H(0,70,dk?9:66)}"/><stop offset=".6" stop-color="${H(35,72,dk?20:46)}"/><stop offset="1" stop-color="${H(-30,80,dk?32:76)}"/></linearGradient><radialGradient id="r${id}"><stop offset="0" stop-color="#fff" stop-opacity=".95"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient></defs><rect width="1600" height="1000" fill="url(#g${id})"/>`;
@@ -165,7 +169,12 @@ else if(k=='dark'){s+=glow(800,520,560,.28);for(let i=0;i<9;i++)s+=`<path d="M${
 else if(k=='anime'){s+=glow(800,380,300,.8)+`<circle cx="800" cy="380" r="170" fill="#fff" opacity=".9"/>`;let x=0;while(x<1600){const bw=70+r()*90,bh=140+r()*300;s+=`<rect x="${x}" y="${1000-bh}" width="${bw}" height="${bh}" fill="${H(20,45,14+r()*8)}"/>`;for(let j=0;j<4;j++)s+=`<rect x="${x+12}" y="${1000-bh+20+j*46}" width="10" height="14" fill="#ffd37a" opacity="${r()>.5?.9:.1}"/>`;x+=bw}for(let i=0;i<28;i++)s+=`<ellipse cx="${r()*1600}" cy="${r()*700}" rx="9" ry="5" fill="#ffc2dd" opacity=".85" transform="rotate(${r()*180} 0 0)"/>`}
 else{s+=glow(800,470,380,.6)+`<path d="M0 1000V560H1600V1000Z" fill="${H(0,30,10)}"/><path d="M640 560H960L1500 1000H100Z" fill="${H(0,20,15)}"/>`;for(let i=0;i<5;i++)s+=`<path d="M${790-i*.4} ${590+i*70}h${20+i*8}l${6+i*6} 40h-${32+i*20}z" fill="#fff" opacity=".7"/>`;s+=`<g transform="translate(650 700)"><path d="M0 90L40 40L110 10H210L270 45L300 90V110H0Z" fill="${H(0,85,50)}"/><circle cx="70" cy="112" r="26" fill="#111"/><circle cx="235" cy="112" r="26" fill="#111"/></g>`;for(let i=0;i<10;i++)s+=`<rect x="${r()*1400}" y="${620+r()*300}" width="${120+r()*200}" height="3" fill="#fff" opacity=".25"/>`}
 return s+'</svg>'}
-// state
+function thumb(w,p){
+  if(w.real && w.image_url){
+    return `<img src="${w.image_url}" alt="${title(w,lang)}" style="width:100%;height:100%;object-fit:cover;display:block" loading="lazy" onerror="this.parentNode.innerHTML='${art(w,p,800,500).replace(/'/g,"\\'")}'">`;
+  }
+  return art(w,p,800,500);
+}
 let lang=ls.g('wl_lang','fa'),theme=ls.g('wl_theme',matchMedia('(prefers-color-scheme:light)').matches?'light':'dark'),anim=ls.g('wl_anim',true),defq=ls.g('wl_q',2),view='home',cat='all',open=null;
 let me=null,mode='login';
 const t=k=>T[lang][k];
@@ -175,35 +184,47 @@ async function loadSaves(){
   if(!me){ savedIds = []; return; }
   try {
     const token = localStorage.getItem('wl_token');
-    const res = await fetch(API + '/favorites', {
-      headers: { 'Authorization': 'Bearer ' + token }
-    });
+    const res = await fetch(API + '/favorites', { headers: { 'Authorization': 'Bearer ' + token } });
     const data = await res.json();
     savedIds = data.favorites || [];
-  } catch(e) {
-    savedIds = [];
-  }
+  } catch(e) { savedIds = []; }
 }
 const saves = () => savedIds;
 const heart='<svg width="18" height="18" viewBox="0 0 24 24"><path d="M12 21s-8-5.2-8-11a4.6 4.6 0 0 1 8-3 4.6 4.6 0 0 1 8 3c0 5.8-8 11-8 11z"/></svg>';
-function card(w,p){const on=saves().includes(w.id);return `<div class="card"><button class="th" data-o="${w.id}" style="display:block" aria-label="${title(w,lang)}">${art(w,p,800,500)}</button><button class="fv ${on?'on':''}" data-f="${w.id}" aria-pressed="${on}" aria-label="${t('save')}">${heart}</button><div class="mt"><b>${title(w,lang)}</b><span>♥ ${w.likes.toLocaleString(lang=='fa'?'fa-IR':'en-US')}</span></div></div>`}
+function card(w,p){
+  const on=saves().includes(w.id);
+  return `<div class="card"><button class="th" data-o="${w.id}" style="display:block" aria-label="${title(w,lang)}">${thumb(w,p)}</button><button class="fv ${on?'on':''}" data-f="${w.id}" aria-pressed="${on}" aria-label="${t('save')}">${heart}</button><div class="mt"><b>${title(w,lang)}</b><span>♥ ${(w.likes||0).toLocaleString(lang=='fa'?'fa-IR':'en-US')}</span></div></div>`;
+}
 const grid=(el,list,p)=>{$(el).innerHTML=list.length?list.map(w=>card(w,p)).join(''):`<div class="em" style="grid-column:1/-1">${t('none')}</div>`};
 function render(){
 const q=$('#q').value.trim().toLowerCase();
 $('#chips').innerHTML=[['all',t('all')],...C.map(c=>[c[0],c[lang=='fa'?1:2]])].map(c=>`<button class="chip ${cat==c[0]?'on':''}" data-c="${c[0]}">${c[1]}</button>`).join('');
-const f=W.filter(w=>(cat=='all'||w.c==cat)&&(!q||(title(w,'fa')+' '+title(w,'en')).toLowerCase().includes(q)));
+const f=W.filter(w=>{
+  const matchCat = cat=='all'||w.c==cat||w.category==cat;
+  const matchQ = !q || (title(w,'fa')+' '+title(w,'en')+(w.category||'')).toLowerCase().includes(q);
+  return matchCat && matchQ;
+});
 const flt=q||cat!='all';$('#home').hidden=flt;$('#res').hidden=!flt;$('#hero').hidden=!!flt;
-if(flt)grid('#gR',f,'r');else{grid('#gT',[...W].sort((a,b)=>b.likes-a.likes).slice(0,8),'t');grid('#gN',[...W].reverse().slice(0,8),'n')}
-$('#stack').innerHTML=[W[2],W[9],W[22]].map(w=>`<div class="card"><div class="th">${art(w,'h',800,500)}</div></div>`).join('');
+if(flt)grid('#gR',f,'r');else{
+  const sorted=[...W].sort((a,b)=>(b.likes||0)-(a.likes||0)).slice(0,8);
+  const newest=[...W].slice().reverse().slice(0,8);
+  grid('#gT',sorted,'t');grid('#gN',newest,'n');
+}
+const stackItems = W.filter(w=>w.real).slice(0,3);
+if(stackItems.length>=3){
+  $('#stack').innerHTML=stackItems.map(w=>`<div class="card"><div class="th">${thumb(w,'h')}</div></div>`).join('');
+} else {
+  $('#stack').innerHTML=[Wproc[2],Wproc[9],Wproc[22]].map(w=>`<div class="card"><div class="th">${art(w,'h',800,500)}</div></div>`).join('');
+}
 renderSaved()}
 function renderSaved(){const el=$('#sv');if(!me){el.innerHTML=`<div class="em">${t('loginFirst')}<br><br><button class="btn" id="svL">${t('login')}</button></div>`;return}
-const l=W.filter(w=>saves().includes(w.id));el.innerHTML=`<p style="color:var(--mut);margin-bottom:12px">${t('hi')} ${(me.name || me.email)} 👋</p>`+(l.length?`<div class="grid">${l.map(w=>card(w,'s')).join('')}</div>`:`<div class="em">${t('savedE')}</div>`)}
+const l=W.filter(w=>saves().includes(w.id));el.innerHTML=`<p style="color:var(--mut);margin-bottom:12px">${t('hi')} ${me.name||me.email} 👋</p>`+(l.length?`<div class="grid">${l.map(w=>card(w,'s')).join('')}</div>`:`<div class="em">${t('savedE')}</div>`)}
 function ui(){
 const h=document.documentElement;h.lang=lang;h.dir=lang=='fa'?'rtl':'ltr';h.dataset.theme=theme;document.body.classList.toggle('noan',!anim);
 $('#logo').textContent=lang=='fa'?'والورا':'Wallora';document.title=lang=='fa'?'والورا | Wallora':'Wallora';
 $$('[data-t]').forEach(e=>e.textContent=t(e.dataset.t));$$('[data-ph]').forEach(e=>e.placeholder=t(e.dataset.ph));$$('[data-al]').forEach(e=>e.setAttribute('aria-label',t(e.dataset.al)));
 $('#nav').innerHTML=['home','saved','about','contact'].map(v=>`<button data-v="${v}" class="${v==view?'on':''}">${t(v)}</button>`).join('');
-$('#bAcc').textContent = me ? (me.name || me.email).split(' ')[0] : t('login');
+$('#bAcc').textContent = me ? (me.name || me.email || '').split(' ')[0] : t('login');
 $('#bOut').hidden=!me;
 $$('#sL button').forEach(b=>b.classList.toggle('on',b.dataset.l==lang));
 $('#sT').classList.toggle('on',theme=='dark');$('#sT').setAttribute('aria-checked',theme=='dark');$('#sA').classList.toggle('on',anim);$('#sA').setAttribute('aria-checked',anim);
@@ -213,90 +234,103 @@ render();if(open!==null)dl(open)}
 function go(v){view=v;$$('[data-v]').forEach(e=>{if(e.tagName=='SECTION')e.hidden=e.dataset.v!=v});$$('#nav button').forEach(b=>b.classList.toggle('on',b.dataset.v==v));scrollTo({top:0});if(v=='saved')renderSaved()}
 const show=id=>{const e=$(id);e.hidden=false;const b=e.querySelector('button,input');b&&b.focus()};
 const hide=e=>{e.hidden=true;if(e.id=='mDl')open=null};
-function dl(id){open=id;const w=W[id],on=saves().includes(id);$('#dlPv').innerHTML=art(w,'m',1280,720);$('#dlT').textContent=title(w,lang);
-$('#dlR').innerHTML=RES.map((r,i)=>`<button data-d="${i}"><span>⬇ ${t('download')} · ${t('rs')[i]}</span><small dir="ltr">${r[0]}×${r[1]}</small></button>`).join('');
-$('#dlS').textContent=(on?'♥ '+t('unsave'):'♡ '+t('save'));$('#mDl').hidden=false}
-function download(i){const w=W[open],[a,b]=RES[i],img=new Image();
-img.onload=()=>{try{const c=document.createElement('canvas');c.width=a;c.height=b;c.getContext('2d').drawImage(img,0,0,a,b);c.toBlob(bl=>{const u=URL.createObjectURL(bl),l=document.createElement('a');l.href=u;l.download=`wallora-${w.c}-${w.id+1}-${a}x${b}.png`;document.body.appendChild(l);l.click();l.remove();setTimeout(()=>URL.revokeObjectURL(u),4000);toast(t('dlOk'))},'image/png')}catch(e){toast(t('dlErr'))}};
-img.onerror=()=>toast(t('dlErr'));img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(art(w,'d',a,b))}
-async function fav(id){
-  if(!me){ 
-    toast(t('needLogin')); 
-    mode='login'; 
-    ui(); 
-    show('#mAuth'); 
-    return; 
+function dl(id){
+  open=id;
+  const w=W.find(x=>x.id===id) || Wproc.find(x=>x.id===id);
+  if(!w) return;
+  const on=saves().includes(id);
+  if(w.real && w.image_url){
+    $('#dlPv').innerHTML=`<img src="${w.image_url}" style="width:100%;height:100%;object-fit:cover" alt="">`;
+  } else {
+    $('#dlPv').innerHTML=art(w,'m',1280,720);
   }
+  $('#dlT').textContent=title(w,lang);
+  $('#dlR').innerHTML=RES.map((r,i)=>`<button data-d="${i}"><span>⬇ ${t('download')} · ${t('rs')[i]}</span><small dir="ltr">${r[0]}×${r[1]}</small></button>`).join('');
+  $('#dlS').textContent=(on?'♥ '+t('unsave'):'♡ '+t('save'));
+  $('#mDl').hidden=false;
+}
+function download(i){
+  const w=W.find(x=>x.id===open) || Wproc.find(x=>x.id===open);
+  if(!w) return;
+  const [a,b]=RES[i];
+  if(w.real && w.image_url){
+    // download real image via canvas to respect size
+    const img=new Image();
+    img.crossOrigin='anonymous';
+    img.onload=()=>{
+      try{
+        const c=document.createElement('canvas');c.width=a;c.height=b;
+        const ctx=c.getContext('2d');
+        // cover fit
+        const scale=Math.max(a/img.width,b/img.height);
+        const sw=a/scale,sh=b/scale,sx=(img.width-sw)/2,sy=(img.height-sh)/2;
+        ctx.drawImage(img,sx,sy,sw,sh,0,0,a,b);
+        c.toBlob(bl=>{
+          const u=URL.createObjectURL(bl),l=document.createElement('a');
+          l.href=u;l.download=`wallora-${w.id}-${a}x${b}.png`;
+          document.body.appendChild(l);l.click();l.remove();
+          setTimeout(()=>URL.revokeObjectURL(u),4000);toast(t('dlOk'));
+        },'image/png');
+      }catch(e){toast(t('dlErr'))}
+    };
+    img.onerror=()=>{
+      // fallback: open original
+      const l=document.createElement('a');l.href=w.image_url;l.download=`wallora-${w.id}.jpg`;l.target='_blank';l.click();toast(t('dlOk'));
+    };
+    img.src=w.image_url;
+    return;
+  }
+  const img=new Image();
+  img.onload=()=>{try{const c=document.createElement('canvas');c.width=a;c.height=b;c.getContext('2d').drawImage(img,0,0,a,b);c.toBlob(bl=>{const u=URL.createObjectURL(bl),l=document.createElement('a');l.href=u;l.download=`wallora-${w.c}-${w.id+1}-${a}x${b}.png`;document.body.appendChild(l);l.click();l.remove();setTimeout(()=>URL.revokeObjectURL(u),4000);toast(t('dlOk'))},'image/png')}catch(e){toast(t('dlErr'))}};
+  img.onerror=()=>toast(t('dlErr'));img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(art(w,'d',a,b));
+}
+async function fav(id){
+  if(!me){ toast(t('needLogin')); mode='login'; ui(); show('#mAuth'); return; }
   const isSaved = savedIds.includes(id);
   const token = localStorage.getItem('wl_token');
   try {
     await fetch(API + '/favorites', {
       method: 'POST',
-      headers: { 
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token 
-      },
-      body: JSON.stringify({ 
-        wallpaper_id: id, 
-        action: isSaved ? 'remove' : 'add' 
-      })
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+      body: JSON.stringify({ wallpaper_id: id, action: isSaved ? 'remove' : 'add' })
     });
-    if(isSaved){
-      savedIds = savedIds.filter(x => x !== id);
-      toast(t('unsaved'));
-    } else {
-      savedIds.push(id);
-      toast(t('saved1'));
-    }
-    render();
-    if(open === id) dl(id);
-  } catch(e) {
-    toast('خطا در ذخیره');
-  }
+    if(isSaved){ savedIds = savedIds.filter(x => x !== id); toast(t('unsaved')); }
+    else { savedIds.push(id); toast(t('saved1')); }
+    render(); if(open === id) dl(id);
+  } catch(e) { toast('خطا در ذخیره'); }
 }
-async function hash(s){try{const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode('wl:'+s));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}catch(e){return btoa(unescape(encodeURIComponent(s)))}}
 async function auth(){
   const n = $('#aN').value.trim();
   const e = $('#aE').value.trim().toLowerCase();
   const p = $('#aP').value;
   const er = $('#aErr');
   er.textContent = '';
-
   if(!/^\S+@\S+\.\S+$/.test(e)) return er.textContent = t('eBad');
   if(p.length < 6) return er.textContent = t('pBad');
-
   try {
     if(mode === 'register'){
       if(!n) return er.textContent = t('nBad');
       const res = await fetch(API + '/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: n, email: e, password: p })
       });
       const data = await res.json();
       if(!res.ok) throw new Error(data.error || 'خطا');
-      me = data.user;
-      localStorage.setItem('wl_token', data.token);
+      me = data.user; localStorage.setItem('wl_token', data.token);
       toast(t('hi') + ' ' + n + ' 👋');
     } else {
       const res = await fetch(API + '/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: e, password: p })
       });
       const data = await res.json();
       if(!res.ok) throw new Error(data.error || 'خطا');
-      me = data.user;
-      localStorage.setItem('wl_token', data.token);
+      me = data.user; localStorage.setItem('wl_token', data.token);
       toast(t('hi') + ' ' + data.user.name + ' 👋');
     }
-    hide($('#mAuth'));
-    $('#aP').value = '';
-    await loadSaves();
-    ui();
-  } catch(err) {
-    er.textContent = err.message;
-  }
+    hide($('#mAuth')); $('#aP').value = '';
+    await loadSaves(); ui();
+  } catch(err) { er.textContent = err.message; }
 }
 async function checkUser(){
   const token = localStorage.getItem('wl_token');
@@ -305,15 +339,32 @@ async function checkUser(){
     const decoded = atob(token);
     const [id, email] = decoded.split(':');
     me = { id: parseInt(id), email, name: email.split('@')[0] };
+  } catch(e) { me = null; localStorage.removeItem('wl_token'); }
+}
+async function loadWallpapers(){
+  try {
+    const res = await fetch(API + '/wallpapers');
+    const data = await res.json();
+    const list = data.wallpapers || [];
+    if(list.length){
+      W = list.map(w => ({
+        id: w.id,
+        real: true,
+        title_fa: w.title_fa,
+        title_en: w.title_en,
+        category: w.category,
+        c: w.category || 'other',
+        image_url: w.image_url,
+        likes: w.likes || 0
+      }));
+    }
   } catch(e) {
-    me = null;
-    localStorage.removeItem('wl_token');
+    // keep procedural fallback
+    W = [...Wproc];
   }
 }
-// onboarding
 let ob=0;function obR(){const s=OB[ob];$('#obB').innerHTML=`<b>${s[0]}</b><h3 style="padding:0;margin:8px 0">${s[1]}</h3><p>${s[2]}</p>`;$('#obD').innerHTML=OB.map((_,i)=>`<i class="${i==ob?'on':''}"></i>`).join('');$('#obN').textContent=ob==OB.length-1?'شروع کنید':'بعدی'}
 const obOpen=()=>{ob=0;obR();show('#mOn')},obEnd=()=>{hide($('#mOn'));ls.s('wl_seen',1)};
-// events
 document.addEventListener('click',e=>{const g=s=>e.target.closest(s);let x;
 if(x=g('[data-f]'))return fav(+x.dataset.f);
 if(x=g('[data-o]'))return dl(+x.dataset.o);
@@ -328,16 +379,8 @@ $('#logo').onclick=()=>{cat='all';$('#q').value='';go('home');render()};
 $('#q').oninput=()=>{if(view!='home')go('home');render()};
 $('#cta').onclick=()=>$('#chips').scrollIntoView({behavior:'smooth'});
 $('#bSet').onclick=()=>show('#mSet');
-  $('#bAcc').onclick=()=>me?go('saved'):(mode='login',ui(),show('#mAuth'));
-$('#bAcc').textContent = me ? (me.name || me.email).split(' ')[0] : t('login');
-$('#bOut').onclick=async()=>{
-  localStorage.removeItem('wl_token');
-  me=null;
-  savedIds=[];
-  hide($('#mSet'));
-  ui();
-  go('home');
-};
+$('#bAcc').onclick=()=>me?go('saved'):(mode='login',ui(),show('#mAuth'));
+$('#bOut').onclick=()=>{ me=null; savedIds=[]; localStorage.removeItem('wl_token'); hide($('#mSet')); ui(); go('home'); };
 $('#sT').onclick=()=>{theme=theme=='dark'?'light':'dark';ls.s('wl_theme',theme);ui()};
 $('#sA').onclick=()=>{anim=!anim;ls.s('wl_anim',anim);ui()};
 $('#sQ').onchange=e=>{defq=+e.target.value;ls.s('wl_q',defq)};
@@ -348,11 +391,13 @@ $('#dlS').onclick=()=>fav(open);
 document.addEventListener('click',e=>{if(e.target.id=='svL'){mode='login';ui();show('#mAuth')}});
 $('#obN').onclick=()=>{ob<OB.length-1?(ob++,obR()):obEnd()};$('#obS').onclick=obEnd;
 $('#yr').textContent=new Date().getFullYear();
-checkUser().then(async () => {
+(async()=>{
+  await loadWallpapers();
+  await checkUser();
   await loadSaves();
   ui();
   if(!ls.g('wl_seen',0)) setTimeout(obOpen,600);
-});
+})();
 })();
 </script>
 </body>
