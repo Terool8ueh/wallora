@@ -267,7 +267,9 @@ function dl(id){
     $('#dlPv').innerHTML=art(w,'m',1280,720);
   }
   $('#dlT').textContent=title(w,lang);
-  $('#dlR').innerHTML=RES.map((r,i)=>`<button data-d="${i}"><span>⬇ ${t('download')} · ${t('rs')[i]}</span><small dir="ltr">${r[0]}×${r[1]}</small></button>`).join('');
+  const dt=(w.device_type||'all');
+  const allowed = dt==='mobile'?[0]:dt==='tablet'?[1]:dt==='desktop'?[2,3,4]:[0,1,2,3,4];
+  $('#dlR').innerHTML=allowed.map(i=>{const r=RES[i];return `<button data-d="${i}"><span>⬇ ${t('download')} · ${t('rs')[i]}</span><small dir="ltr">${r[0]}×${r[1]}</small></button>`}).join('');
   $('#dlS').textContent=(on?'♥ '+t('unsave'):'♡ '+t('save'));
   let shareBtn=$('#dlShare');
   if(!shareBtn){shareBtn=document.createElement('button');shareBtn.id='dlShare';shareBtn.className='btn o';shareBtn.style.cssText='margin-top:8px;width:100%';const parent=$('#dlS').parentNode;parent.appendChild(shareBtn);}
@@ -381,7 +383,8 @@ async function loadWallpapers(){
         category: w.category,
         c: w.category || 'other',
         image_url: w.image_url,
-        likes: w.likes || 0
+        likes: w.likes || 0,
+        device_type: w.device_type || 'all'
       }));
     }
   } catch(e) {
