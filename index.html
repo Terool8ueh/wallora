@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Wallora | والورا</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2316182a'/%3E%3Cpath d='M12 42c4-10 8-22 12-22s6 8 8 14 4 14 8 14 8-12 12-22' fill='none' stroke='url(%23g)' stroke-width='7' stroke-linecap='round'/%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%238b7cff'/%3E%3Cstop offset='1' stop-color='%23ff8a5b'/%3E%3C/linearGradient%3E%3C/defs%3E%3C/svg%3E">
 <meta name="description" content="Wallora – curated wallpapers in every resolution / والورا – والپیپرهای منتخب در همه رزولوشن‌ها">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&family=Inter:wght@400;600;800&family=Aref+Ruqaa:wght@700&family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet">
@@ -21,7 +22,9 @@ svg{display:block}
 .wrap{max-width:1180px;margin:auto;padding:0 18px}
 header{position:sticky;top:0;z-index:20;backdrop-filter:blur(16px);background:var(--gl);border-bottom:1px solid var(--bd)}
 .hd{display:flex;align-items:center;gap:12px;padding:10px 0}
-.logo{font-size:1.9rem;font-weight:700;background:linear-gradient(90deg,var(--ac),var(--ac2));-webkit-background-clip:text;background-clip:text;color:transparent;font-family:'Aref Ruqaa',serif;line-height:1.3}
+.logo{display:flex;align-items:center;gap:10px;font-size:1.9rem;font-weight:700;font-family:'Aref Ruqaa',serif;line-height:1.3;cursor:pointer}
+.logo svg{width:36px;height:36px;flex-shrink:0;border-radius:9px}
+.logo span{background:linear-gradient(90deg,var(--ac),var(--ac2));-webkit-background-clip:text;background-clip:text;color:transparent}
 :lang(en) .logo{font-family:'Playfair Display',serif;font-style:italic;letter-spacing:.5px}
 .sb{flex:1;display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--bd);border-radius:99px;padding:0 14px;max-width:420px;margin-inline-start:auto}
 .sb input{flex:1;background:none;border:0;padding:9px 0;outline:0;min-width:0}
@@ -117,7 +120,7 @@ footer{text-align:center;color:var(--mut);padding:30px 0;font-size:.9rem}
 <body>
 <div class="aurora"></div>
 <header><div class="wrap hd">
-<div class="logo" id="logo">والورا</div>
+<div class="logo" id="logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#16182a"/><path d="M12 42c4-10 8-22 12-22s6 8 8 14 4 14 8 14 8-12 12-22" fill="none" stroke="url(#g)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 46c3-8 7-18 10-18s5 6 7 12 4 12 7 12 7-10 10-18" fill="none" stroke="url(#g2)" stroke-width="5" stroke-linecap="round" opacity=".85"/><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#8b7cff"/><stop offset="1" stop-color="#ff8a5b"/></linearGradient><linearGradient id="g2" x1="0" y1="1" x2="1" y2="0"><stop stop-color="#a78bfa"/><stop offset="1" stop-color="#fb7185"/></linearGradient></defs></svg><span id="logoText">والورا</span></div>
 <label class="sb"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input id="q" type="search" data-ph="search" autocomplete="off"></label>
 <button class="ib" id="bSet" data-al="settings"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3h0a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8v0a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
 <button class="btn" id="bAcc"></button>
@@ -133,9 +136,9 @@ footer{text-align:center;color:var(--mut);padding:30px 0;font-size:.9rem}
 </section>
 <section data-v="saved" hidden><h2 data-t="savedT"></h2><div id="sv"></div></section>
 <section data-v="about" hidden class="pg"><h2 data-t="aboutT"></h2><p data-t="aboutP"></p></section>
-<section data-v="contact" hidden class="pg"><h2 data-t="contactT"></h2><p data-t="contactP"></p><div class="cc"><a href="mailto:teroolm@gmail.com">✉️ <span dir="ltr">teroolm@gmail.com</span></a><a href="tel:09913262905">📞 <span dir="ltr">09913262905</span></a></div></section>
+<section data-v="contact" hidden class="pg"><h2 data-t="contactT"></h2><p data-t="contactP"></p><div class="cc"><a href="mailto:Supportwallora.wallpeper@gmail.com">✉️ <span dir="ltr">Supportwallora.wallpeper@gmail.com</span></a></div></section>
 </main>
-<footer>© <span id="yr"></span> Wallora · <span dir="ltr">teroolm@gmail.com</span></footer>
+<footer>© <span id="yr"></span> Wallora · <a href="mailto:Supportwallora.wallpeper@gmail.com" style="color:inherit"><span dir="ltr">Supportwallora.wallpeper@gmail.com</span></a></footer>
 
 <div class="ov" id="mDl" hidden><div class="glass big" role="dialog" aria-modal="true"><button class="ib x" data-close data-al="close">✕</button><div class="pv" id="dlPv"></div><h3 id="dlT"></h3><div class="rs" id="dlR"></div><button class="btn o" id="dlS"></button></div></div>
 
@@ -240,7 +243,7 @@ function renderSaved(){const el=$('#sv');if(!me){el.innerHTML=`<div class="em">$
 const l=W.filter(w=>saves().includes(w.id));el.innerHTML=`<p style="color:var(--mut);margin-bottom:12px">${t('hi')} ${me.name||me.email} 👋</p>`+(l.length?`<div class="grid">${l.map(w=>card(w,'s')).join('')}</div>`:`<div class="em">${t('savedE')}</div>`)}
 function ui(){
 const h=document.documentElement;h.lang=lang;h.dir=lang=='fa'?'rtl':'ltr';h.dataset.theme=theme;document.body.classList.toggle('noan',!anim);
-$('#logo').textContent=lang=='fa'?'والورا':'Wallora';document.title=lang=='fa'?'والورا | Wallora':'Wallora';
+const lt=$('#logoText');if(lt)lt.textContent=lang=='fa'?'والورا':'Wallora';else $('#logo').textContent=lang=='fa'?'والورا':'Wallora';document.title=lang=='fa'?'والورا | Wallora':'Wallora';
 $$('[data-t]').forEach(e=>e.textContent=t(e.dataset.t));$$('[data-ph]').forEach(e=>e.placeholder=t(e.dataset.ph));$$('[data-al]').forEach(e=>e.setAttribute('aria-label',t(e.dataset.al)));
 $('#nav').innerHTML=['home','saved','about','contact'].map(v=>`<button data-v="${v}" class="${v==view?'on':''}">${t(v)}</button>`).join('');
 $('#bAcc').textContent = me ? (me.name || me.email || '').split(' ')[0] : t('login');
