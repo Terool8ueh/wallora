@@ -93,6 +93,15 @@ input:focus, select:focus, textarea:focus { border-color: var(--ac); }
 .item .info { flex: 1; min-width: 0; }
 .item .info b { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .item .info small { color: var(--mut); }
+.tag {
+  display: inline-block;
+  font-size: 0.75rem;
+  padding: 2px 8px;
+  border-radius: 99px;
+  background: rgba(111,92,255,.2);
+  color: #c4b5fd;
+  margin-inline-start: 6px;
+}
 .hidden { display: none !important; }
 .login-box {
   max-width: 380px;
@@ -107,12 +116,13 @@ input:focus, select:focus, textarea:focus { border-color: var(--ac); }
   gap: 12px;
 }
 a { color: var(--ac); }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 600px) { .grid2 { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
 <div class="wrap">
 
-  <!-- صفحه ورود -->
   <div id="loginView" class="login-box card">
     <h1>پنل ادمین</h1>
     <p class="mut" style="margin-bottom:18px">والورا · مدیریت والپیپرها</p>
@@ -123,7 +133,6 @@ a { color: var(--ac); }
     <div class="err" id="loginErr"></div>
   </div>
 
-  <!-- پنل اصلی -->
   <div id="adminView" class="hidden">
     <div class="topbar">
       <div>
@@ -136,7 +145,6 @@ a { color: var(--ac); }
       </div>
     </div>
 
-    <!-- فرم اضافه کردن -->
     <div class="card">
       <h2>➕ اضافه کردن والپیپر جدید</h2>
       <label>عنوان فارسی *
@@ -145,31 +153,39 @@ a { color: var(--ac); }
       <label>عنوان انگلیسی
         <input id="titleEn" placeholder="Mountain Sunset" dir="ltr">
       </label>
-      <label>دسته‌بندی
-        <select id="category">
-          <option value="nature">طبیعت</option>
-          <option value="abstract">انتزاعی</option>
-          <option value="minimal">مینیمال</option>
-          <option value="dark">تیره</option>
-          <option value="anime">انیمه</option>
-          <option value="cars">خودرو</option>
-          <option value="space">فضا</option>
-          <option value="other">سایر</option>
-        </select>
-      </label>
+      <div class="grid2">
+        <label>دسته‌بندی
+          <select id="category">
+            <option value="nature">طبیعت</option>
+            <option value="abstract">انتزاعی</option>
+            <option value="minimal">مینیمال</option>
+            <option value="dark">تیره</option>
+            <option value="anime">انیمه</option>
+            <option value="cars">خودرو</option>
+            <option value="space">فضا</option>
+            <option value="other">سایر</option>
+          </select>
+        </label>
+        <label>مناسب برای *
+          <select id="deviceType">
+            <option value="mobile">موبایل (اندروید / آیفون)</option>
+            <option value="tablet">تبلت</option>
+            <option value="desktop">دسکتاپ</option>
+            <option value="all" selected>همه دستگاه‌ها</option>
+          </select>
+        </label>
+      </div>
       <label>لینک عکس * (مستقیم به فایل تصویر)
         <input id="imageUrl" placeholder="https://example.com/photo.jpg" dir="ltr">
       </label>
       <p class="mut" style="margin-bottom:12px;font-size:0.85rem">
-        فعلاً باید لینک مستقیم عکس را وارد کنید (مثلاً از Imgur، Postimages یا سرور خودتان).
-        آپلود مستقیم فایل در مرحله بعد اضافه می‌شود.
+        لینک مستقیم عکس را وارد کنید. گزینه «مناسب برای» مشخص می‌کند کاربر کدام رزولوشن‌ها را برای دانلود ببیند.
       </p>
       <button class="btn" id="btnAdd">اضافه کردن</button>
       <div class="err" id="addErr"></div>
       <div class="ok hidden" id="addOk">با موفقیت اضافه شد ✓</div>
     </div>
 
-    <!-- لیست والپیپرها -->
     <h2>والپیپرهای موجود</h2>
     <div id="list" class="list">
       <p class="mut">در حال بارگذاری...</p>
@@ -182,6 +198,13 @@ const API = 'https://wollora-api.teroolm.workers.dev';
 let adminToken = localStorage.getItem('wl_admin_token') || null;
 
 const $ = s => document.querySelector(s);
+
+const deviceLabel = {
+  mobile: 'موبایل',
+  tablet: 'تبلت',
+  desktop: 'دسکتاپ',
+  all: 'همه'
+};
 
 function show(id) {
   $('#loginView').classList.toggle('hidden', id !== 'login');
@@ -230,7 +253,7 @@ async function loadList() {
       <div class="item">
         <img src="${w.image_url}" alt="" onerror="this.style.opacity=0.3">
         <div class="info">
-          <b>${w.title_fa}</b>
+          <b>${w.title_fa}<span class="tag">${deviceLabel[w.device_type] || 'همه'}</span></b>
           <small>${w.category || '—'} · ${w.title_en || ''}</small>
         </div>
         <button class="btn danger" data-del="${w.id}">حذف</button>
@@ -245,6 +268,7 @@ async function addWallpaper() {
   const title_fa = $('#titleFa').value.trim();
   const title_en = $('#titleEn').value.trim();
   const category = $('#category').value;
+  const device_type = $('#deviceType').value;
   const image_url = $('#imageUrl').value.trim();
   $('#addErr').textContent = '';
   $('#addOk').classList.add('hidden');
@@ -261,7 +285,7 @@ async function addWallpaper() {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + adminToken
       },
-      body: JSON.stringify({ title_fa, title_en, category, image_url })
+      body: JSON.stringify({ title_fa, title_en, category, image_url, device_type })
     });
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || 'خطا');
@@ -303,7 +327,6 @@ document.addEventListener('click', e => {
   if (btn) deleteWallpaper(+btn.dataset.del);
 });
 
-// اگر قبلاً وارد شده
 if (adminToken) {
   show('admin');
   loadList();
