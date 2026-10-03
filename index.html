@@ -146,7 +146,17 @@ footer{text-align:center;color:var(--mut);padding:30px 0;font-size:.9rem}
 <label class="fld" id="fN" hidden><span data-t="name"></span><input id="aN" autocomplete="name"></label>
 <label class="fld"><span data-t="email"></span><input id="aE" type="email" autocomplete="email" dir="ltr"></label>
 <label class="fld"><span data-t="pass"></span><input id="aP" type="password" autocomplete="current-password" dir="ltr"></label>
-<div class="err" id="aErr" role="alert"></div><button class="btn" style="width:100%" id="aGo"></button></div></div>
+<div class="err" id="aErr" role="alert"></div>
+<button type="button" class="btn o" id="aForgot" style="width:100%;margin-top:8px;background:transparent;border:0;color:var(--mut);font-size:.9rem;cursor:pointer;display:none"></button>
+<div id="forgotBox" hidden style="margin-top:10px">
+  <p class="mut" id="forgotHint" style="font-size:.9rem;margin-bottom:8px"></p>
+  <button class="btn" style="width:100%" id="aForgotGo"></button>
+</div>
+<div id="resetBox" hidden style="margin-top:10px">
+  <label class="fld"><span id="resetLab"></span><input id="aNewP" type="password" dir="ltr" autocomplete="new-password"></label>
+  <button class="btn" style="width:100%;margin-top:8px" id="aResetGo"></button>
+</div>
+<button class="btn" style="width:100%" id="aGo"></button></div></div>
 
 <div class="ov" id="mSet" hidden><div class="glass" role="dialog" aria-modal="true"><button class="ib x" data-close data-al="close">✕</button><h3 data-t="settings"></h3>
 <div class="row"><span data-t="lang"></span><div class="seg" id="sL"><button data-l="fa">فارسی</button><button data-l="en">English</button></div></div>
@@ -164,8 +174,8 @@ footer{text-align:center;color:var(--mut);padding:30px 0;font-size:.9rem}
 const API = 'https://wollora-api.teroolm.workers.dev';
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const ls={g(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},s(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
-const T={fa:{settings:'تنظیمات',login:'ورود',register:'ثبت‌نام',logout:'خروج از حساب',home:'خانه',saved:'ذخیره‌شده‌ها',about:'درباره ما',contact:'تماس',search:'جستجوی والپیپر…',h1:'والپیپر مناسب صفحه‌ات را پیدا کن',h1s:'مجموعه‌ای دست‌چین از تصاویر باکیفیت برای موبایل، دسکتاپ و 4K؛ رایگان و بدون محدودیت.',explore:'کشف والپیپرها',trend:'پرطرفدارها',newest:'تازه‌ترین‌ها',results:'نتایج',none:'والپیپری پیدا نشد. عبارت یا دسته دیگری را امتحان کنید.',all:'همه',download:'دانلود',save:'ذخیره',unsave:'حذف از ذخیره‌ها',close:'بستن',name:'نام',email:'ایمیل',pass:'رمز عبور (حداقل ۶ کاراکتر)',lang:'زبان',dark:'حالت تاریک',anim:'انیمیشن‌ها',defq:'کیفیت پیش‌فرض',tour:'راهنمای شروع',show:'نمایش',savedT:'ذخیره‌شده‌ها',savedE:'هنوز چیزی ذخیره نکرده‌اید. روی قلب هر والپیپر بزنید تا اینجا بماند.',needLogin:'برای ذخیره کردن وارد شوید.',loginFirst:'برای دیدن ذخیره‌شده‌ها وارد شوید.',hi:'سلام',aboutT:'درباره ما',aboutP:'والورا یک گالری رایگان والپیپر برای موبایل، تبلت و دسکتاپ است. هدف ما این است که با چند کلیک تصویر مناسب صفحه نمایش خود را پیدا و دانلود کنید — بدون ثبت‌نام اجباری برای دانلود، بدون تبلیغ مزاحم و با کیفیت بالا. می‌توانید در دسته‌های مختلف بگردید، جستجو کنید، در رزولوشن دلخواه (از موبایل تا 4K) دانلود کنید و با ساخت حساب، موارد موردعلاقه را ذخیره کنید. والورا دو زبانه (فارسی و انگلیسی) است و حالت تاریک و روشن دارد.',contactT:'پشتیبانی و تماس',contactP:'برای پرسش، پیشنهاد یا گزارش مشکل از راه‌های زیر با ما در ارتباط باشید.',eBad:'ایمیل معتبر وارد کنید.',pBad:'رمز عبور باید حداقل ۶ کاراکتر باشد.',nBad:'نام خود را وارد کنید.',eUsed:'این ایمیل قبلاً ثبت شده است. وارد شوید.',eWrong:'ایمیل یا رمز عبور اشتباه است.',dlOk:'دانلود شروع شد',dlErr:'ساخت تصویر ناموفق بود. دوباره تلاش کنید.',saved1:'ذخیره شد',unsaved:'از ذخیره‌ها حذف شد',rs:['موبایل','تبلت','دسکتاپ','2K','4K'],mood:['آرام','غروب','شب','رؤیا'],loading:'در حال بارگذاری…',random:'والپیپر تصادفی',share:'اشتراک‌گذاری',count:'والپیپر',backTop:'بالا'},
-en:{settings:'Settings',login:'Log in',register:'Sign up',logout:'Log out',home:'Home',saved:'Saved',about:'About',contact:'Contact',search:'Search wallpapers…',h1:'Find the wallpaper your screen deserves',h1s:'A hand-picked collection of high-quality images for mobile, desktop and 4K. Free, no limits.',explore:'Explore wallpapers',trend:'Trending',newest:'Newest',results:'Results',none:'No wallpapers found. Try another word or category.',all:'All',download:'Download',save:'Save',unsave:'Remove from saved',close:'Close',name:'Name',email:'Email',pass:'Password (min. 6 characters)',lang:'Language',dark:'Dark mode',anim:'Animations',defq:'Default quality',tour:'Getting started guide',show:'Show',savedT:'Saved',savedE:"You haven't saved anything yet. Tap the heart on any wallpaper to keep it here.",needLogin:'Log in to save wallpapers.',loginFirst:'Log in to see your saved wallpapers.',hi:'Hi',aboutT:'About us',aboutP:'Wallora is a free wallpaper gallery for mobile, tablet and desktop. Find and download the right image for your screen in a few taps — no forced sign-up for downloads, no annoying ads, high quality. Browse categories, search, download in the resolution you need (phone to 4K), and save favorites with a free account. Wallora is bilingual (Persian & English) and supports light and dark mode.',contactT:'Support & contact',contactP:'For questions, suggestions or to report a problem, reach us through the channels below.',eBad:'Enter a valid email address.',pBad:'Password must be at least 6 characters.',nBad:'Enter your name.',eUsed:'This email is already registered. Log in instead.',eWrong:'Incorrect email or password.',dlOk:'Download started',dlErr:'Could not create the image. Please try again.',saved1:'Saved',unsaved:'Removed from saved',rs:['Mobile','Tablet','Desktop','2K','4K'],mood:['Calm','Dusk','Night','Dream'],loading:'Loading…',random:'Random wallpaper',share:'Share',count:'wallpapers',backTop:'Top'}};
+const T={fa:{settings:'تنظیمات',login:'ورود',register:'ثبت‌نام',logout:'خروج از حساب',home:'خانه',saved:'ذخیره‌شده‌ها',about:'درباره ما',contact:'تماس',search:'جستجوی والپیپر…',h1:'والپیپر مناسب صفحه‌ات را پیدا کن',h1s:'مجموعه‌ای دست‌چین از تصاویر باکیفیت برای موبایل، دسکتاپ و 4K؛ رایگان و بدون محدودیت.',explore:'کشف والپیپرها',trend:'پرطرفدارها',newest:'تازه‌ترین‌ها',results:'نتایج',none:'والپیپری پیدا نشد. عبارت یا دسته دیگری را امتحان کنید.',all:'همه',download:'دانلود',save:'ذخیره',unsave:'حذف از ذخیره‌ها',close:'بستن',name:'نام',email:'ایمیل',pass:'رمز عبور (حداقل ۶ کاراکتر)',lang:'زبان',dark:'حالت تاریک',anim:'انیمیشن‌ها',defq:'کیفیت پیش‌فرض',tour:'راهنمای شروع',show:'نمایش',savedT:'ذخیره‌شده‌ها',savedE:'هنوز چیزی ذخیره نکرده‌اید. روی قلب هر والپیپر بزنید تا اینجا بماند.',needLogin:'برای ذخیره کردن وارد شوید.',loginFirst:'برای دیدن ذخیره‌شده‌ها وارد شوید.',hi:'سلام',aboutT:'درباره ما',aboutP:'والورا یک گالری رایگان والپیپر برای موبایل، تبلت و دسکتاپ است. هدف ما این است که با چند کلیک تصویر مناسب صفحه نمایش خود را پیدا و دانلود کنید — بدون ثبت‌نام اجباری برای دانلود، بدون تبلیغ مزاحم و با کیفیت بالا. می‌توانید در دسته‌های مختلف بگردید، جستجو کنید، در رزولوشن دلخواه (از موبایل تا 4K) دانلود کنید و با ساخت حساب، موارد موردعلاقه را ذخیره کنید. والورا دو زبانه (فارسی و انگلیسی) است و حالت تاریک و روشن دارد.',contactT:'پشتیبانی و تماس',contactP:'برای پرسش، پیشنهاد یا گزارش مشکل از راه‌های زیر با ما در ارتباط باشید.',eBad:'ایمیل معتبر وارد کنید.',pBad:'رمز عبور باید حداقل ۶ کاراکتر باشد.',nBad:'نام خود را وارد کنید.',eUsed:'این ایمیل قبلاً ثبت شده است. وارد شوید.',eWrong:'ایمیل یا رمز عبور اشتباه است.',dlOk:'دانلود شروع شد',dlErr:'ساخت تصویر ناموفق بود. دوباره تلاش کنید.',saved1:'ذخیره شد',unsaved:'از ذخیره‌ها حذف شد',rs:['موبایل','تبلت','دسکتاپ','2K','4K'],mood:['آرام','غروب','شب','رؤیا'],loading:'در حال بارگذاری…',random:'والپیپر تصادفی',share:'اشتراک‌گذاری',count:'والپیپر',backTop:'بالا',forgot:'فراموشی رمز؟',forgotTitle:'بازیابی رمز',forgotHint:'ایمیل حساب خود را وارد کنید تا لینک بازیابی برایتان ارسال شود.',sendLink:'ارسال لینک',resetTitle:'رمز جدید',newPass:'رمز جدید',resetGo:'ذخیره رمز جدید',forgotSent:'اگر ایمیل ثبت شده باشد، لینک بازیابی ارسال می‌شود.',resetOk:'رمز با موفقیت تغییر کرد. وارد شوید.'},
+en:{settings:'Settings',login:'Log in',register:'Sign up',logout:'Log out',home:'Home',saved:'Saved',about:'About',contact:'Contact',search:'Search wallpapers…',h1:'Find the wallpaper your screen deserves',h1s:'A hand-picked collection of high-quality images for mobile, desktop and 4K. Free, no limits.',explore:'Explore wallpapers',trend:'Trending',newest:'Newest',results:'Results',none:'No wallpapers found. Try another word or category.',all:'All',download:'Download',save:'Save',unsave:'Remove from saved',close:'Close',name:'Name',email:'Email',pass:'Password (min. 6 characters)',lang:'Language',dark:'Dark mode',anim:'Animations',defq:'Default quality',tour:'Getting started guide',show:'Show',savedT:'Saved',savedE:"You haven't saved anything yet. Tap the heart on any wallpaper to keep it here.",needLogin:'Log in to save wallpapers.',loginFirst:'Log in to see your saved wallpapers.',hi:'Hi',aboutT:'About us',aboutP:'Wallora is a free wallpaper gallery for mobile, tablet and desktop. Find and download the right image for your screen in a few taps — no forced sign-up for downloads, no annoying ads, high quality. Browse categories, search, download in the resolution you need (phone to 4K), and save favorites with a free account. Wallora is bilingual (Persian & English) and supports light and dark mode.',contactT:'Support & contact',contactP:'For questions, suggestions or to report a problem, reach us through the channels below.',eBad:'Enter a valid email address.',pBad:'Password must be at least 6 characters.',nBad:'Enter your name.',eUsed:'This email is already registered. Log in instead.',eWrong:'Incorrect email or password.',dlOk:'Download started',dlErr:'Could not create the image. Please try again.',saved1:'Saved',unsaved:'Removed from saved',rs:['Mobile','Tablet','Desktop','2K','4K'],mood:['Calm','Dusk','Night','Dream'],loading:'Loading…',random:'Random wallpaper',share:'Share',count:'wallpapers',backTop:'Top',forgot:'Forgot password?',forgotTitle:'Reset password',forgotHint:'Enter your account email and we will send a reset link.',sendLink:'Send link',resetTitle:'New password',newPass:'New password',resetGo:'Save new password',forgotSent:'If that email is registered, a reset link will be sent.',resetOk:'Password updated. Please log in.'}};
 const C=[['nature','طبیعت','Nature',140],['abstract','انتزاعی','Abstract',275],['minimal','مینیمال','Minimal',28],['dark','تیره','Dark',235],['anime','انیمه','Anime',330],['cars','خودرو','Cars',8],['space','فضا','Space',255]];
 const RES=[[1080,1920],[1620,2160],[1920,1080],[2560,1440],[3840,2160]];
 const OB=[['👋','به والورا خوش آمدید','در چند ثانیه با امکانات سایت آشنا شوید.'],['⬇️','دانلود رایگان','روی هر تصویر بزنید و رزولوشن دلخواه (موبایل، دسکتاپ، 4K و…) را دانلود کنید.'],['❤️','ذخیره کنید','با ساخت حساب کاربری، والپیپرهای موردعلاقه را با قلب ذخیره کنید و در بخش «ذخیره‌شده‌ها» ببینید.'],['⚙️','زبان و حالت تاریک','از دکمه‌ی تنظیمات، زبان را بین فارسی و انگلیسی و حالت روشن یا تاریک را تغییر دهید.']];
@@ -251,7 +261,20 @@ $('#bOut').hidden=!me;
 $$('#sL button').forEach(b=>b.classList.toggle('on',b.dataset.l==lang));
 $('#sT').classList.toggle('on',theme=='dark');$('#sT').setAttribute('aria-checked',theme=='dark');$('#sA').classList.toggle('on',anim);$('#sA').setAttribute('aria-checked',anim);
 $('#sQ').innerHTML=RES.map((r,i)=>`<option value="${i}" ${i==defq?'selected':''}>${t('rs')[i]} · ${r[0]}×${r[1]}</option>`).join('');
-$('#aGo').textContent=t(mode);$('#fN').hidden=mode!='register';$('#tL').classList.toggle('on',mode=='login');$('#tR').classList.toggle('on',mode=='register');
+$('#aGo').textContent=t(mode=='login'||mode=='register'?mode:'login');
+$('#fN').hidden=mode!='register';
+$('#tL').classList.toggle('on',mode=='login');
+$('#tR').classList.toggle('on',mode=='register');
+const af=$('#aForgot');if(af){af.style.display=mode==='login'?'block':'none';af.textContent=t('forgot');}
+const fb=$('#forgotBox');if(fb)fb.hidden=mode!=='forgot';
+const rb=$('#resetBox');if(rb)rb.hidden=mode!=='reset';
+if($('#forgotHint'))$('#forgotHint').textContent=t('forgotHint');
+if($('#aForgotGo'))$('#aForgotGo').textContent=t('sendLink');
+if($('#resetLab'))$('#resetLab').textContent=t('newPass');
+if($('#aResetGo'))$('#aResetGo').textContent=t('resetGo');
+if(mode==='forgot'||mode==='reset'){$('#aP').closest('label').hidden=true;$('#aGo').hidden=true;}
+else{$('#aP').closest('label').hidden=false;$('#aGo').hidden=false;}
+
 render();if(open!==null)dl(open)}
 function go(v){view=v;$$('[data-v]').forEach(e=>{if(e.tagName=='SECTION')e.hidden=e.dataset.v!=v});$$('#nav button').forEach(b=>b.classList.toggle('on',b.dataset.v==v));scrollTo({top:0});if(v=='saved')renderSaved()}
 const show=id=>{const e=$(id);e.hidden=false;const b=e.querySelector('button,input');b&&b.focus()};
@@ -420,6 +443,33 @@ $('#dlS').onclick=()=>fav(open);
 document.addEventListener('click',e=>{if(e.target.id=='svL'){mode='login';ui();show('#mAuth')}});
 $('#obN').onclick=()=>{ob<OB.length-1?(ob++,obR()):obEnd()};$('#obS').onclick=obEnd;
 $('#yr').textContent=new Date().getFullYear();
+
+if($('#aForgot'))$('#aForgot').onclick=()=>{mode='forgot';$('#aErr').textContent='';ui();};
+if($('#aForgotGo'))$('#aForgotGo').onclick=async()=>{
+  const e=$('#aE').value.trim().toLowerCase();$('#aErr').textContent='';
+  if(!/^\S+@\S+\.\S+$/.test(e))return $('#aErr').textContent=t('eBad');
+  try{
+    const res=await fetch(API+'/forgot-password',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:e})});
+    const data=await res.json();
+    if(!res.ok)throw new Error(data.error||'خطا');
+    toast(t('forgotSent'));
+    mode='login';ui();
+  }catch(err){$('#aErr').textContent=err.message}
+};
+if($('#aResetGo'))$('#aResetGo').onclick=async()=>{
+  const password=$('#aNewP').value;$('#aErr').textContent='';
+  if(password.length<6)return $('#aErr').textContent=t('pBad');
+  const token=new URLSearchParams(location.search).get('reset')||window.__resetToken;
+  try{
+    const res=await fetch(API+'/reset-password',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({token,password})});
+    const data=await res.json();
+    if(!res.ok)throw new Error(data.error||'خطا');
+    toast(t('resetOk'));
+    history.replaceState({},'',location.pathname);
+    mode='login';ui();
+  }catch(err){$('#aErr').textContent=err.message}
+};
+
 if($('#btnRandom'))$('#btnRandom').onclick=()=>{if(!W.length)return;const w=W[Math.floor(Math.random()*W.length)];dl(w.id)};
 const toTop=$('#toTop');
 if(toTop){window.addEventListener('scroll',()=>toTop.classList.toggle('show',scrollY>400),{passive:true});toTop.onclick=()=>scrollTo({top:0,behavior:'smooth'});}
