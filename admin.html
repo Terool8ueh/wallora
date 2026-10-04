@@ -4,211 +4,384 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>پنل ادمین | والورا</title>
-<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #0d0e1d;
-  --fg: #f0eefc;
-  --mut: #9b98b8;
-  --card: #171830;
-  --bd: #272848;
+  --bg: #070812;
+  --bg2: #0d0f1c;
+  --card: rgba(22, 24, 42, 0.85);
+  --card2: #141628;
+  --bd: rgba(111, 92, 255, 0.15);
+  --bd2: #2a2d4a;
+  --fg: #f2f0ff;
+  --mut: #8b88a8;
   --ac: #6f5cff;
   --ac2: #ff8a5b;
-  --danger: #ff5470;
   --ok: #2dd4a8;
+  --danger: #ff5470;
+  --warn: #fbbf24;
+  --info: #38bdf8;
+  --grad: linear-gradient(135deg, #6f5cff 0%, #a78bfa 45%, #ff8a5b 100%);
+  --shadow: 0 20px 50px rgba(0,0,0,.45);
+  --radius: 20px;
 }
 * { box-sizing: border-box; margin: 0; }
 body {
+  font-family: 'Vazirmatn', system-ui, sans-serif;
   background: var(--bg);
   color: var(--fg);
-  font-family: 'Vazirmatn', system-ui, sans-serif;
-  line-height: 1.7;
   min-height: 100vh;
-  padding: 20px;
+  line-height: 1.6;
 }
-.wrap { max-width: 900px; margin: 0 auto; }
-h1 { font-size: 1.8rem; margin-bottom: 8px; }
-h2 { font-size: 1.3rem; margin: 28px 0 14px; }
-.mut { color: var(--mut); font-size: 0.95rem; }
-.card {
+body::before {
+  content: '';
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background:
+    radial-gradient(ellipse 80% 50% at 10% -10%, rgba(111,92,255,.25), transparent 50%),
+    radial-gradient(ellipse 60% 40% at 100% 0%, rgba(255,138,91,.12), transparent 45%),
+    radial-gradient(ellipse 50% 30% at 50% 100%, rgba(45,212,168,.08), transparent 40%);
+}
+.wrap { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 24px 18px 60px; }
+
+/* Login */
+.login-wrap {
+  min-height: 100vh; display: grid; place-items: center; padding: 24px;
+  position: relative; z-index: 1;
+}
+.login-card {
+  width: min(420px, 100%);
   background: var(--card);
+  backdrop-filter: blur(24px);
   border: 1px solid var(--bd);
-  border-radius: 16px;
-  padding: 22px;
-  margin-bottom: 16px;
+  border-radius: 28px;
+  padding: 36px 28px;
+  box-shadow: var(--shadow);
 }
-label { display: block; margin-bottom: 14px; font-size: 0.9rem; color: var(--mut); }
+.brand {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 8px;
+}
+.brand-icon {
+  width: 48px; height: 48px; border-radius: 14px;
+  background: var(--grad); display: grid; place-items: center;
+  font-weight: 800; font-size: 1.3rem; color: #fff;
+  box-shadow: 0 8px 24px rgba(111,92,255,.4);
+}
+.brand h1 { font-size: 1.5rem; font-weight: 800; }
+.brand p, .sub { color: var(--mut); font-size: .92rem; margin-bottom: 22px; }
+
+/* UI */
+label { display: block; margin-bottom: 14px; font-size: .88rem; color: var(--mut); font-weight: 500; }
 input, select, textarea {
-  width: 100%;
-  margin-top: 4px;
-  padding: 11px 14px;
-  border-radius: 12px;
-  border: 1px solid var(--bd);
-  background: rgba(127,127,160,.12);
-  color: var(--fg);
-  font: inherit;
-  outline: none;
+  width: 100%; margin-top: 6px; padding: 12px 14px;
+  border-radius: 14px; border: 1px solid var(--bd2);
+  background: rgba(8,10,20,.6); color: var(--fg);
+  font: inherit; outline: none; transition: border .2s, box-shadow .2s;
 }
-input:focus, select:focus, textarea:focus { border-color: var(--ac); }
+input:focus, select:focus, textarea:focus {
+  border-color: var(--ac);
+  box-shadow: 0 0 0 3px rgba(111,92,255,.2);
+}
 .btn {
-  background: linear-gradient(120deg, var(--ac), var(--ac2));
-  color: #fff;
-  border: 0;
-  padding: 11px 22px;
-  border-radius: 99px;
-  font-weight: 600;
-  font: inherit;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 12px 22px; border-radius: 99px; border: 0;
+  font: inherit; font-weight: 700; cursor: pointer;
+  transition: transform .15s, opacity .15s, box-shadow .2s;
 }
-.btn:hover { opacity: 0.9; }
-.btn.danger { background: var(--danger); }
-.btn.o {
-  background: transparent;
-  border: 1px solid var(--bd);
-  color: var(--fg);
+.btn:hover { transform: translateY(-1px); opacity: .95; }
+.btn:active { transform: scale(.98); }
+.btn-primary {
+  background: var(--grad); color: #fff;
+  box-shadow: 0 8px 28px rgba(111,92,255,.35);
 }
-.err { color: var(--danger); margin-top: 10px; min-height: 1.4em; }
-.ok { color: var(--ok); margin-top: 10px; }
-.row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.btn-ghost {
+  background: rgba(255,255,255,.04); color: var(--fg);
+  border: 1px solid var(--bd2);
+}
+.btn-danger { background: rgba(255,84,112,.15); color: var(--danger); border: 1px solid rgba(255,84,112,.3); }
+.btn-sm { padding: 8px 14px; font-size: .85rem; }
+.btn-block { width: 100%; }
+.err { color: var(--danger); margin-top: 10px; min-height: 1.3em; font-size: .9rem; }
+.ok { color: var(--ok); margin-top: 10px; font-size: .9rem; }
+.hidden { display: none !important; }
+
+/* Header */
+.topbar {
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 16px; flex-wrap: wrap; margin-bottom: 28px;
+}
+.topbar h1 {
+  font-size: 1.6rem; font-weight: 800;
+  background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.topbar .actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+/* Stats */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 28px;
+}
+@media (max-width: 900px) { .stats { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px) { .stats { grid-template-columns: 1fr; } }
+.stat {
+  position: relative; overflow: hidden;
+  background: var(--card); border: 1px solid var(--bd);
+  border-radius: var(--radius); padding: 20px 18px;
+  backdrop-filter: blur(16px);
+  transition: transform .2s, border-color .2s;
+}
+.stat:hover { transform: translateY(-3px); border-color: rgba(111,92,255,.35); }
+.stat::after {
+  content: ''; position: absolute; top: -30%; left: -20%;
+  width: 120px; height: 120px; border-radius: 50%; opacity: .15;
+  background: var(--ac);
+}
+.stat:nth-child(2)::after { background: var(--ok); }
+.stat:nth-child(3)::after { background: var(--ac2); }
+.stat:nth-child(4)::after { background: var(--info); }
+.stat .ico {
+  width: 40px; height: 40px; border-radius: 12px;
+  display: grid; place-items: center; font-size: 1.2rem;
+  background: rgba(111,92,255,.15); margin-bottom: 12px;
+}
+.stat:nth-child(2) .ico { background: rgba(45,212,168,.15); }
+.stat:nth-child(3) .ico { background: rgba(255,138,91,.15); }
+.stat:nth-child(4) .ico { background: rgba(56,189,248,.15); }
+.stat .num { font-size: 1.9rem; font-weight: 800; letter-spacing: -0.5px; }
+.stat .lbl { color: var(--mut); font-size: .85rem; margin-top: 2px; }
+
+/* Cards / sections */
+.panel {
+  background: var(--card); border: 1px solid var(--bd);
+  border-radius: var(--radius); padding: 24px;
+  margin-bottom: 20px; backdrop-filter: blur(16px);
+}
+.panel h2 {
+  font-size: 1.15rem; font-weight: 700; margin-bottom: 16px;
+  display: flex; align-items: center; gap: 10px;
+}
+.panel h2 span.badge {
+  font-size: .75rem; font-weight: 600; padding: 3px 10px;
+  border-radius: 99px; background: rgba(111,92,255,.2); color: #c4b5fd;
+}
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 640px) { .grid2 { grid-template-columns: 1fr; } }
+
+/* Preview */
+.preview-box {
+  margin-top: 12px; border-radius: 16px; overflow: hidden;
+  border: 1px dashed var(--bd2); background: rgba(0,0,0,.25);
+  min-height: 120px; display: none; place-items: center;
+}
+.preview-box.show { display: grid; }
+.preview-box img { max-width: 100%; max-height: 220px; object-fit: contain; display: block; }
+
+/* Toolbar */
+.toolbar {
+  display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; align-items: center;
+}
+.toolbar input { max-width: 260px; margin: 0; }
+.toolbar select { max-width: 160px; margin: 0; }
+
+/* Wallpaper list */
 .list { display: grid; gap: 12px; }
 .item {
-  display: flex;
-  gap: 14px;
-  align-items: center;
-  background: var(--card);
-  border: 1px solid var(--bd);
-  border-radius: 14px;
-  padding: 12px;
+  display: grid; grid-template-columns: 110px 1fr auto;
+  gap: 14px; align-items: center;
+  background: var(--card2); border: 1px solid var(--bd2);
+  border-radius: 16px; padding: 12px;
+  transition: border-color .2s, transform .15s;
 }
+.item:hover { border-color: rgba(111,92,255,.35); }
 .item img {
-  width: 90px;
-  height: 56px;
-  object-fit: cover;
-  border-radius: 8px;
-  background: #222;
+  width: 110px; height: 68px; object-fit: cover; border-radius: 10px;
+  background: #1a1c30;
 }
-.item .info { flex: 1; min-width: 0; }
-.item .info b { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.item .info small { color: var(--mut); }
+.item .info { min-width: 0; }
+.item .info b {
+  display: block; font-size: 1rem;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.item .meta { color: var(--mut); font-size: .8rem; margin-top: 4px; display: flex; flex-wrap: wrap; gap: 6px; }
 .tag {
-  display: inline-block;
-  font-size: 0.75rem;
-  padding: 2px 8px;
-  border-radius: 99px;
-  background: rgba(111,92,255,.2);
-  color: #c4b5fd;
-  margin-inline-start: 6px;
+  display: inline-block; font-size: .72rem; padding: 2px 8px;
+  border-radius: 99px; background: rgba(111,92,255,.18); color: #c4b5fd;
 }
-.hidden { display: none !important; }
-.login-box {
-  max-width: 380px;
-  margin: 80px auto;
+.item .actions { display: flex; gap: 6px; }
+
+/* Category chart bars */
+.bars { display: grid; gap: 10px; }
+.bar-row { display: grid; grid-template-columns: 80px 1fr 40px; gap: 10px; align-items: center; font-size: .85rem; }
+.bar-track {
+  height: 10px; border-radius: 99px; background: rgba(255,255,255,.06); overflow: hidden;
 }
-.topbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 24px;
-  flex-wrap: wrap;
-  gap: 12px;
+.bar-fill {
+  height: 100%; border-radius: 99px; background: var(--grad);
+  transition: width .6s ease;
 }
-a { color: var(--ac); }
-.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-@media (max-width: 600px) { .grid2 { grid-template-columns: 1fr; } }
+.bar-row .cnt { color: var(--mut); text-align: left; direction: ltr; }
+
+.empty { text-align: center; color: var(--mut); padding: 40px 16px; }
+.footer-note { text-align: center; color: var(--mut); font-size: .8rem; margin-top: 28px; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
+}
+.anim { animation: fadeUp .4s ease both; }
 </style>
 </head>
 <body>
-<div class="wrap">
 
-  <div id="loginView" class="login-box card">
-    <h1>پنل ادمین</h1>
-    <p class="mut" style="margin-bottom:18px">والورا · مدیریت والپیپرها</p>
+<!-- LOGIN -->
+<div id="loginView" class="login-wrap">
+  <div class="login-card anim">
+    <div class="brand">
+      <div class="brand-icon">W</div>
+      <div>
+        <h1>والورا</h1>
+        <p style="margin:0;color:var(--mut);font-size:.85rem">پنل مدیریت</p>
+      </div>
+    </div>
+    <p class="sub">ورود فقط برای مدیر سایت</p>
     <label>رمز ادمین
-      <input type="password" id="adminPass" placeholder="رمز را وارد کنید" dir="ltr">
+      <input type="password" id="adminPass" placeholder="••••••••" dir="ltr" autocomplete="current-password">
     </label>
-    <button class="btn" id="btnLogin" style="width:100%">ورود</button>
+    <button class="btn btn-primary btn-block" id="btnLogin">ورود به پنل</button>
     <div class="err" id="loginErr"></div>
   </div>
+</div>
 
-  <div id="adminView" class="hidden">
-    <div class="topbar">
-      <div>
-        <h1>پنل ادمین والورا</h1>
-        <p class="mut">مدیریت والپیپرها</p>
-      </div>
-      <div class="row">
-        <a href="index.html" class="btn o">مشاهده سایت</a>
-        <button class="btn o" id="btnLogout">خروج</button>
-      </div>
+<!-- DASHBOARD -->
+<div id="adminView" class="wrap hidden">
+  <div class="topbar anim">
+    <div>
+      <h1>داشبورد والورا</h1>
+      <p style="color:var(--mut);font-size:.9rem">مدیریت والپیپرها و آمار سایت</p>
     </div>
-
-    <div class="card">
-      <h2>➕ اضافه کردن والپیپر جدید</h2>
-      <label>عنوان فارسی *
-        <input id="titleFa" placeholder="مثلاً غروب کوهستان">
-      </label>
-      <label>عنوان انگلیسی
-        <input id="titleEn" placeholder="Mountain Sunset" dir="ltr">
-      </label>
-      <div class="grid2">
-        <label>دسته‌بندی
-          <select id="category">
-            <option value="nature">طبیعت</option>
-            <option value="abstract">انتزاعی</option>
-            <option value="minimal">مینیمال</option>
-            <option value="dark">تیره</option>
-            <option value="anime">انیمه</option>
-            <option value="cars">خودرو</option>
-            <option value="space">فضا</option>
-            <option value="other">سایر</option>
-          </select>
-        </label>
-        <label>مناسب برای *
-          <select id="deviceType">
-            <option value="mobile">موبایل (اندروید / آیفون)</option>
-            <option value="tablet">تبلت</option>
-            <option value="desktop">دسکتاپ</option>
-            <option value="all" selected>همه دستگاه‌ها</option>
-          </select>
-        </label>
-      </div>
-      <label>لینک عکس * (مستقیم به فایل تصویر)
-        <input id="imageUrl" placeholder="https://example.com/photo.jpg" dir="ltr">
-      </label>
-      <p class="mut" style="margin-bottom:12px;font-size:0.85rem">
-        لینک مستقیم عکس را وارد کنید. گزینه «مناسب برای» مشخص می‌کند کاربر کدام رزولوشن‌ها را برای دانلود ببیند.
-      </p>
-      <button class="btn" id="btnAdd">اضافه کردن</button>
-      <div class="err" id="addErr"></div>
-      <div class="ok hidden" id="addOk">با موفقیت اضافه شد ✓</div>
-    </div>
-
-    <h2>والپیپرهای موجود</h2>
-    <div id="list" class="list">
-      <p class="mut">در حال بارگذاری...</p>
+    <div class="actions">
+      <a class="btn btn-ghost btn-sm" href="https://wallora-wallpaper.ir/" target="_blank" rel="noopener">مشاهده سایت</a>
+      <button class="btn btn-ghost btn-sm" id="btnRefresh">بروزرسانی</button>
+      <button class="btn btn-danger btn-sm" id="btnLogout">خروج</button>
     </div>
   </div>
+
+  <!-- STATS -->
+  <div class="stats anim" id="statsRow">
+    <div class="stat">
+      <div class="ico">🖼️</div>
+      <div class="num" id="stWallpapers">—</div>
+      <div class="lbl">والپیپر</div>
+    </div>
+    <div class="stat">
+      <div class="ico">👥</div>
+      <div class="num" id="stUsers">—</div>
+      <div class="lbl">کاربر ثبت‌نام‌شده</div>
+    </div>
+    <div class="stat">
+      <div class="ico">❤️</div>
+      <div class="num" id="stFavorites">—</div>
+      <div class="lbl">ذخیره (علاقه‌مندی)</div>
+    </div>
+    <div class="stat">
+      <div class="ico">📁</div>
+      <div class="num" id="stCats">—</div>
+      <div class="lbl">دسته فعال</div>
+    </div>
+  </div>
+
+  <div class="grid2 anim" style="margin-bottom:20px">
+    <div class="panel" style="margin:0">
+      <h2>📊 توزیع دسته‌ها</h2>
+      <div class="bars" id="catBars"><p class="empty">در حال بارگذاری...</p></div>
+    </div>
+    <div class="panel" style="margin:0">
+      <h2>⚡ وضعیت سیستم</h2>
+      <div style="display:grid;gap:12px;font-size:.9rem">
+        <div style="display:flex;justify-content:space-between;padding:10px 12px;background:rgba(45,212,168,.08);border-radius:12px;border:1px solid rgba(45,212,168,.2)">
+          <span>API</span><span style="color:var(--ok)" id="stApi">در حال بررسی...</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:10px 12px;background:rgba(111,92,255,.08);border-radius:12px;border:1px solid rgba(111,92,255,.2)">
+          <span>آخرین بروزرسانی</span><span style="color:var(--mut)" id="stTime">—</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:10px 12px;background:rgba(255,138,91,.08);border-radius:12px;border:1px solid rgba(255,138,91,.2)">
+          <span>دامنه سایت</span><span style="color:var(--ac2);direction:ltr;font-size:.8rem">wallora-wallpaper.ir</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADD -->
+  <div class="panel anim">
+    <h2>➕ افزودن والپیپر جدید</h2>
+    <label>عنوان فارسی *
+      <input id="titleFa" placeholder="مثلاً غروب کوهستان">
+    </label>
+    <label>عنوان انگلیسی
+      <input id="titleEn" placeholder="Mountain Sunset" dir="ltr">
+    </label>
+    <label>دسته‌بندی
+      <select id="category">
+        <option value="nature">طبیعت</option>
+        <option value="abstract">انتزاعی</option>
+        <option value="minimal">مینیمال</option>
+        <option value="dark">تیره</option>
+        <option value="anime">انیمه</option>
+        <option value="cars">خودرو</option>
+        <option value="space">فضا</option>
+        <option value="other">سایر</option>
+      </select>
+    </label>
+    <label>لینک مستقیم عکس * (ترجیحاً 4K)
+      <input id="imageUrl" placeholder="https://i.postimg.cc/...." dir="ltr">
+    </label>
+    <div class="preview-box" id="previewBox"><img id="previewImg" alt="preview"></div>
+    <p style="color:var(--mut);font-size:.82rem;margin:10px 0 14px">
+      کاربر هنگام دانلود می‌تواند اندازه موبایل، تبلت، دسکتاپ، 2K و 4K را انتخاب کند. عکس اصلی را تا حد ممکن با کیفیت بالا بگذار.
+    </p>
+    <button class="btn btn-primary" id="btnAdd">انتشار والپیپر</button>
+    <div class="err" id="addErr"></div>
+    <div class="ok hidden" id="addOk">✓ با موفقیت اضافه شد</div>
+  </div>
+
+  <!-- LIST -->
+  <div class="panel anim">
+    <h2>والپیپرهای موجود <span class="badge" id="listCount">0</span></h2>
+    <div class="toolbar">
+      <input id="searchQ" placeholder="جستجو در عناوین..." style="flex:1;max-width:none">
+      <select id="filterCat">
+        <option value="">همه دسته‌ها</option>
+        <option value="nature">طبیعت</option>
+        <option value="abstract">انتزاعی</option>
+        <option value="minimal">مینیمال</option>
+        <option value="dark">تیره</option>
+        <option value="anime">انیمه</option>
+        <option value="cars">خودرو</option>
+        <option value="space">فضا</option>
+        <option value="other">سایر</option>
+      </select>
+    </div>
+    <div id="list" class="list"><p class="empty">در حال بارگذاری...</p></div>
+  </div>
+
+  <p class="footer-note">Wallora Admin · فقط برای استفاده مدیر</p>
 </div>
 
 <script>
 const API = 'https://wollora-api.teroolm.workers.dev';
 let adminToken = localStorage.getItem('wl_admin_token') || null;
+let allItems = [];
 
 const $ = s => document.querySelector(s);
-
-const deviceLabel = {
-  mobile: 'موبایل',
-  tablet: 'تبلت',
-  desktop: 'دسکتاپ',
-  all: 'همه'
+const catFa = {
+  nature: 'طبیعت', abstract: 'انتزاعی', minimal: 'مینیمال', dark: 'تیره',
+  anime: 'انیمه', cars: 'خودرو', space: 'فضا', other: 'سایر'
 };
 
-function show(id) {
-  $('#loginView').classList.toggle('hidden', id !== 'login');
-  $('#adminView').classList.toggle('hidden', id !== 'admin');
+function show(view) {
+  $('#loginView').classList.toggle('hidden', view !== 'login');
+  $('#adminView').classList.toggle('hidden', view !== 'admin');
 }
 
 async function login() {
@@ -221,13 +394,15 @@ async function login() {
       body: JSON.stringify({ password })
     });
     const data = await res.json();
-    if (!res.ok) throw new Error(data.error || 'خطا');
+    if (!res.ok) throw new Error(data.error || 'خطا در ورود');
     adminToken = data.token;
     localStorage.setItem('wl_admin_token', adminToken);
     show('admin');
-    loadList();
+    refreshAll();
   } catch (e) {
-    $('#loginErr').textContent = e.message;
+    $('#loginErr').textContent = e.message === 'Failed to fetch'
+      ? 'اتصال به سرور برقرار نشد (VPN را چک کنید)'
+      : e.message;
   }
 }
 
@@ -238,54 +413,125 @@ function logout() {
   $('#adminPass').value = '';
 }
 
+async function loadStats() {
+  try {
+    const res = await fetch(API + '/admin/stats', {
+      headers: { Authorization: 'Bearer ' + adminToken }
+    });
+    if (res.ok) {
+      const d = await res.json();
+      $('#stWallpapers').textContent = d.wallpapers ?? '—';
+      $('#stUsers').textContent = d.users ?? '—';
+      $('#stFavorites').textContent = d.favorites ?? '—';
+      $('#stApi').textContent = 'متصل ✓';
+      $('#stApi').style.color = 'var(--ok)';
+      return d;
+    }
+  } catch (_) {}
+  // fallback: derive from wallpapers list
+  $('#stApi').textContent = 'محدود';
+  $('#stApi').style.color = 'var(--warn)';
+  return null;
+}
+
+function renderCatBars(items) {
+  const counts = {};
+  items.forEach(w => {
+    const c = w.category || 'other';
+    counts[c] = (counts[c] || 0) + 1;
+  });
+  const entries = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+  $('#stCats').textContent = entries.length;
+  if (!entries.length) {
+    $('#catBars').innerHTML = '<p class="empty">هنوز داده‌ای نیست</p>';
+    return;
+  }
+  const max = entries[0][1] || 1;
+  $('#catBars').innerHTML = entries.map(([k, v]) => `
+    <div class="bar-row">
+      <span>${catFa[k] || k}</span>
+      <div class="bar-track"><div class="bar-fill" style="width:${Math.round(v / max * 100)}%"></div></div>
+      <span class="cnt">${v}</span>
+    </div>
+  `).join('');
+}
+
+function renderList() {
+  const q = ($('#searchQ').value || '').trim().toLowerCase();
+  const cat = $('#filterCat').value;
+  let items = allItems;
+  if (cat) items = items.filter(w => (w.category || '') === cat);
+  if (q) items = items.filter(w =>
+    (w.title_fa || '').toLowerCase().includes(q) ||
+    (w.title_en || '').toLowerCase().includes(q)
+  );
+  $('#listCount').textContent = items.length;
+  if (!items.length) {
+    $('#list').innerHTML = '<p class="empty">موردی پیدا نشد</p>';
+    return;
+  }
+  $('#list').innerHTML = items.map(w => `
+    <div class="item">
+      <img src="${w.image_url}" alt="" loading="lazy" onerror="this.style.opacity=.25">
+      <div class="info">
+        <b>${escapeHtml(w.title_fa || 'بدون عنوان')}</b>
+        <div class="meta">
+          <span class="tag">${catFa[w.category] || w.category || '—'}</span>
+          ${w.title_en ? `<span>${escapeHtml(w.title_en)}</span>` : ''}
+          <span style="direction:ltr">#${w.id}</span>
+        </div>
+      </div>
+      <div class="actions">
+        <a class="btn btn-ghost btn-sm" href="${w.image_url}" target="_blank" rel="noopener">مشاهده</a>
+        <button class="btn btn-danger btn-sm" data-del="${w.id}">حذف</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
 async function loadList() {
-  const el = $('#list');
-  el.innerHTML = '<p class="mut">در حال بارگذاری...</p>';
+  $('#list').innerHTML = '<p class="empty">در حال بارگذاری...</p>';
   try {
     const res = await fetch(API + '/wallpapers');
     const data = await res.json();
-    const items = data.wallpapers || [];
-    if (!items.length) {
-      el.innerHTML = '<p class="mut">هنوز والپیپری اضافه نشده.</p>';
-      return;
-    }
-    el.innerHTML = items.map(w => `
-      <div class="item">
-        <img src="${w.image_url}" alt="" onerror="this.style.opacity=0.3">
-        <div class="info">
-          <b>${w.title_fa}<span class="tag">${deviceLabel[w.device_type] || 'همه'}</span></b>
-          <small>${w.category || '—'} · ${w.title_en || ''}</small>
-        </div>
-        <button class="btn danger" data-del="${w.id}">حذف</button>
-      </div>
-    `).join('');
+    allItems = data.wallpapers || [];
+    $('#stWallpapers').textContent = allItems.length;
+    renderCatBars(allItems);
+    renderList();
   } catch (e) {
-    el.innerHTML = '<p class="err">خطا در بارگذاری لیست</p>';
+    $('#list').innerHTML = '<p class="empty" style="color:var(--danger)">خطا در بارگذاری لیست</p>';
   }
+}
+
+async function refreshAll() {
+  await loadStats();
+  await loadList();
+  $('#stTime').textContent = new Date().toLocaleTimeString('fa-IR');
 }
 
 async function addWallpaper() {
   const title_fa = $('#titleFa').value.trim();
   const title_en = $('#titleEn').value.trim();
   const category = $('#category').value;
-  const device_type = $('#deviceType').value;
   const image_url = $('#imageUrl').value.trim();
   $('#addErr').textContent = '';
   $('#addOk').classList.add('hidden');
-
   if (!title_fa || !image_url) {
     $('#addErr').textContent = 'عنوان فارسی و لینک عکس الزامی است';
     return;
   }
-
   try {
     const res = await fetch(API + '/admin/wallpapers', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + adminToken
+        Authorization: 'Bearer ' + adminToken
       },
-      body: JSON.stringify({ title_fa, title_en, category, image_url, device_type })
+      body: JSON.stringify({ title_fa, title_en, category, image_url })
     });
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || 'خطا');
@@ -293,7 +539,8 @@ async function addWallpaper() {
     $('#titleFa').value = '';
     $('#titleEn').value = '';
     $('#imageUrl').value = '';
-    loadList();
+    $('#previewBox').classList.remove('show');
+    refreshAll();
   } catch (e) {
     $('#addErr').textContent = e.message;
   }
@@ -306,22 +553,36 @@ async function deleteWallpaper(id) {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + adminToken
+        Authorization: 'Bearer ' + adminToken
       },
       body: JSON.stringify({ id })
     });
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || 'خطا');
-    loadList();
+    refreshAll();
   } catch (e) {
     alert(e.message);
   }
 }
 
+// preview
+$('#imageUrl').addEventListener('input', () => {
+  const u = $('#imageUrl').value.trim();
+  if (/^https?:\/\//i.test(u)) {
+    $('#previewImg').src = u;
+    $('#previewBox').classList.add('show');
+  } else {
+    $('#previewBox').classList.remove('show');
+  }
+});
+
 $('#btnLogin').onclick = login;
 $('#adminPass').onkeydown = e => { if (e.key === 'Enter') login(); };
 $('#btnLogout').onclick = logout;
 $('#btnAdd').onclick = addWallpaper;
+$('#btnRefresh').onclick = refreshAll;
+$('#searchQ').oninput = renderList;
+$('#filterCat').onchange = renderList;
 document.addEventListener('click', e => {
   const btn = e.target.closest('[data-del]');
   if (btn) deleteWallpaper(+btn.dataset.del);
@@ -329,7 +590,7 @@ document.addEventListener('click', e => {
 
 if (adminToken) {
   show('admin');
-  loadList();
+  refreshAll();
 } else {
   show('login');
 }
