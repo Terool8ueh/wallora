@@ -234,6 +234,125 @@ footer{text-align:center;color:var(--mut);padding:30px 0;font-size:.9rem}
 #toTop.show{opacity:1;pointer-events:auto}
 #toTop:hover{transform:translateY(-3px)}
 
+
+/* Category slideshow */
+.cat-slide-wrap{position:relative;margin:8px 0 22px;border-radius:22px;overflow:hidden;border:1px solid var(--bd);box-shadow:var(--sh);background:var(--card)}
+.cat-slide{position:relative;height:min(52vw,340px);min-height:220px}
+.cat-slide .slide{
+  position:absolute;inset:0;opacity:0;transform:scale(1.08);
+  transition:opacity .8s ease,transform 6s ease;
+  pointer-events:none;
+}
+.cat-slide .slide.on{opacity:1;transform:scale(1);pointer-events:auto;z-index:1}
+.cat-slide .slide img,.cat-slide .slide .th{
+  width:100%;height:100%;object-fit:cover;display:block;
+}
+.cat-slide .slide .shade{
+  position:absolute;inset:0;
+  background:linear-gradient(180deg,transparent 40%,rgba(6,5,18,.85) 100%);
+  z-index:2;pointer-events:none;
+}
+.cat-slide .slide .cap{
+  position:absolute;bottom:18px;inset-inline-start:18px;inset-inline-end:18px;z-index:3;
+  color:#fff;font-weight:700;font-size:1.15rem;
+  text-shadow:0 2px 12px rgba(0,0,0,.5);
+  transform:translateY(12px);opacity:0;transition:transform .5s ease .15s,opacity .5s ease .15s;
+}
+.cat-slide .slide.on .cap{transform:none;opacity:1}
+.cat-slide .navs{position:absolute;inset-inline:10px;top:50%;transform:translateY(-50%);z-index:4;display:flex;justify-content:space-between;pointer-events:none}
+.cat-slide .navs button{
+  pointer-events:auto;width:40px;height:40px;border-radius:50%;border:0;
+  background:rgba(255,255,255,.15);backdrop-filter:blur(8px);color:#fff;
+  cursor:pointer;font-size:1.1rem;transition:background .2s,transform .2s;
+}
+.cat-slide .navs button:hover{background:rgba(255,255,255,.3);transform:scale(1.05)}
+.cat-dots{display:flex;gap:6px;justify-content:center;padding:10px;position:absolute;bottom:8px;left:0;right:0;z-index:4}
+.cat-dots i{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.35);transition:width .3s,background .3s}
+.cat-dots i.on{width:20px;border-radius:99px;background:#fff}
+.cat-slide-wrap .label{
+  position:absolute;top:14px;inset-inline-start:14px;z-index:4;
+  padding:6px 12px;border-radius:99px;font-size:.8rem;font-weight:600;
+  background:linear-gradient(120deg,var(--ac),var(--ac2));color:#fff;
+  box-shadow:0 6px 20px rgba(111,92,255,.35);
+}
+@keyframes slideInSoft{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+#res .grid{animation:slideInSoft .45s ease both}
+
+</style>
+</head>
+<body>
+<div class="aurora"></div>
+<header><div class="wrap hd">
+<div class="logo" id="logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#16182a"/><path d="M12 42c4-10 8-22 12-22s6 8 8 14 4 14 8 14 8-12 12-22" fill="none" stroke="url(#g)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 46c3-8 7-18 10-18s5 6 7 12 4 12 7 12 7-10 10-18" fill="none" stroke="url(#g2)" stroke-width="5" stroke-linecap="round" opacity=".85"/><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#8b7cff"/><stop offset="1" stop-color="#ff8a5b"/></linearGradient><linearGradient id="g2" x1="0" y1="1" x2="1" y2="0"><stop stop-color="#a78bfa"/><stop offset="1" stop-color="#fb7185"/></linearGradient></defs></svg><span id="logoText">والورا</span></div>
+<label class="sb"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input id="q" type="search" data-ph="search" autocomplete="off"></label>
+<button class="ib" id="bSet" data-al="settings"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3h0a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8v0a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
+<button class="btn" id="bAcc"></button>
+<nav id="nav"></nav>
+</div></header>
+
+<main class="wrap">
+<section data-v="home">
+<div class="hero" id="hero"><div><h1 data-t="h1"></h1><p data-t="h1s"></p><div class="btn-row"><button class="btn" id="cta" data-t="explore"></button><button class="btn o" id="btnRandom" data-t="random"></button></div><div class="stats"><span class="stat" id="statCount"><b>—</b> <span data-t="count"></span></span></div></div><div class="stack" id="stack" aria-hidden="true"></div></div>
+<div class="chips" id="chips" role="tablist"></div>
+<div id="home"><h2 data-t="trend"></h2><div class="grid" id="gT"></div><h2 data-t="newest"></h2><div class="grid" id="gN"></div></div>
+<div id="res" hidden>
+<div class="cat-slide-wrap" id="catSlideWrap" hidden>
+  <div class="label" id="catSlideLabel"></div>
+  <div class="cat-slide" id="catSlide"></div>
+  <div class="navs"><button type="button" id="catPrev" aria-label="prev">‹</button><button type="button" id="catNext" aria-label="next">›</button></div>
+  <div class="cat-dots" id="catDots"></div>
+</div>
+<h2 data-t="results"></h2>
+<div class="grid" id="gR"></div>
+</div>
+</section>
+<section data-v="saved" hidden><h2 data-t="savedT"></h2><div id="sv"></div></section>
+<section data-v="about" hidden class="pg"><h2 data-t="aboutT"></h2><p data-t="aboutP"></p></section>
+<section data-v="contact" hidden class="pg"><h2 data-t="contactT"></h2><p data-t="contactP"></p><div class="cc"><a href="mailto:Supportwallora.wallpeper@gmail.com">✉️ <span dir="ltr">Supportwallora.wallpeper@gmail.com</span></a></div></section>
+</main>
+<footer>© <span id="yr"></span> Wallora · <a href="mailto:Supportwallora.wallpeper@gmail.com" style="color:inherit"><span dir="ltr">Supportwallora.wallpeper@gmail.com</span></a></footer>
+
+<div class="ov" id="mDl" hidden><div class="glass big" role="dialog" aria-modal="true"><button class="ib x" data-close data-al="close">✕</button><div class="pv" id="dlPv"></div><h3 id="dlT"></h3><div class="rs" id="dlR"></div><button class="btn o" id="dlS"></button></div></div>
+
+<div class="ov" id="mAuth" hidden><div class="glass" role="dialog" aria-modal="true"><button class="ib x" data-close data-al="close">✕</button><div class="tabs"><button id="tL" class="on" data-t="login"></button><button id="tR" data-t="register"></button></div>
+<label class="fld" id="fN" hidden><span data-t="name"></span><input id="aN" autocomplete="name"></label>
+<label class="fld"><span data-t="email"></span><input id="aE" type="email" autocomplete="email" dir="ltr"></label>
+<label class="fld"><span data-t="pass"></span><input id="aP" type="password" autocomplete="current-password" dir="ltr"></label>
+<div class="err" id="aErr" role="alert"></div>
+<button type="button" class="btn o" id="aForgot" style="width:100%;margin-top:8px;background:transparent;border:0;color:var(--mut);font-size:.9rem;cursor:pointer;display:none"></button>
+<div id="forgotBox" hidden style="margin-top:10px">
+  <p class="mut" id="forgotHint" style="font-size:.9rem;margin-bottom:8px"></p>
+  <button class="btn" style="width:100%" id="aForgotGo"></button>
+</div>
+<div id="resetBox" hidden style="margin-top:10px">
+  <label class="fld"><span id="resetLab"></span><input id="aNewP" type="password" dir="ltr" autocomplete="new-password"></label>
+  <button class="btn" style="width:100%;margin-top:8px" id="aResetGo"></button>
+</div>
+<button class="btn" style="width:100%" id="aGo"></button></div></div>
+
+<div class="ov" id="mSet" hidden><div class="glass" role="dialog" aria-modal="true"><button class="ib x" data-close data-al="close">✕</button><h3 data-t="settings"></h3>
+<div class="row"><span data-t="lang"></span><div class="seg" id="sL"><button data-l="fa">فارسی</button><button data-l="en">English</button></div></div>
+<div class="row"><span data-t="dark"></span><button class="sw" id="sT" role="switch" data-al="dark"></button></div>
+<div class="row"><span data-t="anim"></span><button class="sw" id="sA" role="switch" data-al="anim"></button></div>
+<div class="row"><span data-t="defq"></span><select id="sQ" class="fld" style="margin:0;padding:8px;border-radius:12px;background:var(--card);border:1px solid var(--bd)"></select></div>
+<div class="row" style="border:0"><span data-t="tour"></span><button class="btn o" id="sTour" data-t="show"></button></div>
+<button class="btn" style="width:100%;margin-top:8px" id="bOut" hidden data-t="logout"></button></div></div>
+
+<div class="ov" id="mOn" hidden><div class="glass" role="dialog" aria-modal="true" dir="rtl" lang="fa"><div class="ob" id="obB"></div><div class="dots" id="obD"></div><div style="diorder:1px solid var(--bd);border-radius:99px;padding:6px 14px;font-size:.9rem;color:var(--mut)}
+.stat b{color:var(--fg);font-weight:700}
+.hero .btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px}
+.badge{position:absolute;top:10px;inset-inline-start:10px;background:rgba(0,0,0,.55);color:#fff;font-size:.72rem;padding:3px 8px;border-radius:99px;backdrop-filter:blur(6px);pointer-events:none;z-index:2}
+.card{position:relative}
+.card .th{overflow:hidden}
+.card:hover .th img,.card:hover .th svg{transform:scale(1.04)}
+.card .th img,.card .th svg{transition:transform .35s ease;width:100%;height:100%;object-fit:cover}
+.fv{transition:transform .2s}
+.fv.on{animation:pop .35s ease}
+@keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.25)}100%{transform:scale(1)}}
+#toTop{position:fixed;bottom:calc(90px + env(safe-area-inset-bottom,0px));inset-inline-end:16px;z-index:15;width:46px;height:46px;border-radius:50%;background:var(--card);border:1px solid var(--bd);box-shadow:var(--sh);display:grid;place-items:center;opacity:0;pointer-events:none;transition:opacity .25s,transform .2s;font-size:1.2rem}
+#toTop.show{opacity:1;pointer-events:auto}
+#toTop:hover{transform:translateY(-3px)}
+
 </style>
 </head>
 <body>
