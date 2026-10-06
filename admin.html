@@ -466,29 +466,48 @@ const catFa = {
 };
 
 function show(view) {
-  $('#loginView').classList.toggle('hidden', view !== 'login');
-  $('#adminView').classList.toggle('hidden', view !== 'admin');
+  const lv = $('#loginView');
+  const av = $('#adminView');
+  if (lv) {
+    if (view === 'login') lv.classList.remove('hidden');
+    else lv.classList.add('hidden');
+  }
+  if (av) {
+    if (view === 'admin') av.classList.remove('hidden');
+    else av.classList.add('hidden');
+  }
 }
 
 async function login() {
-  const password = $('#adminPass').value;
-  $('#loginErr').textContent = '';
+  const password = ($('#adminPass') && $('#adminPass').value) || '';
+  const errEl = $('#loginErr');
+  if (errEl) errEl.textContent = '';
+  if (!password) {
+    if (errEl) errEl.textContent = 'رمز را وارد کنید';
+    return;
+  }
   try {
     const res = await fetch(API + '/admin/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ password })
     });
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.error || 'خطا در ورود');
+    let data = {};
+    try { data = await res.json(); } catch (_) {}
+    if (!res.ok) throw new Error(data.error || ('خطا در ورود (' + res.status + ')'));
+    if (!data.token) throw new Error('پاسخ سرور نامعتبر است');
     adminToken = data.token;
     localStorage.setItem('wl_admin_token', adminToken);
     show('admin');
-    refreshAll();
+    try { await refreshAll(); } catch (e2) { console.warn(e2); }
   } catch (e) {
-    $('#loginErr').textContent = e.message === 'Failed to fetch'
-      ? 'اتصال به سرور برقرار نشد (VPN را چک کنید)'
-      : e.message;
+    const msg = (e && e.message) ? e.message : String(e);
+    if (errEl) {
+      errEl.textContent =
+        (msg === 'Failed to fetch' || msg.includes('NetworkError') || msg.includes('fetch'))
+          ? 'اتصال به سرور برقرار نشد. VPN را روشن کنید یا بعداً دوباره تلاش کنید.'
+          : msg;
+    }
   }
 }
 
@@ -702,7 +721,7 @@ function setFiles(fileList){
   $('#fileErr').textContent='';
   renderFileList();
 }
-$('#fileInput').onchange=e=>setFiles(e.target.files||[]);
+if($('#fileInput'))$('#fileInput').onchange=e=>setFiles(e.target.files||[]);
 const drop=$('#fileDrop');
 if(drop){
   drop.addEventListener('dragover',e=>{e.preventDefault();drop.classList.add('drag')});
@@ -862,12 +881,24 @@ document.addEventListener('click', e => {
   if (btn) deleteWallpaper(+btn.dataset.del);
 });
 
-if (adminToken) {
-  show('admin');
-  refreshAll();
-} else {
-  show('login');
-}
+(async function boot() {
+  if (adminToken) {
+    try {
+      const res = await fetch(API + '/admin/stats', {
+        headers: { Authorization: 'Bearer ' + adminToken }
+      });
+      if (!res.ok) throw new Error('bad token');
+      show('admin');
+      await refreshAll();
+    } catch (e) {
+      adminToken = null;
+      localStorage.removeItem('wl_admin_token');
+      show('login');
+    }
+  } else {
+    show('login');
+  }
+})();
 </script>
 </body>
 </html>
