@@ -230,6 +230,24 @@ input:focus, select:focus, textarea:focus {
   to { opacity: 1; transform: none; }
 }
 .anim { animation: fadeUp .4s ease both; }
+
+.file-drop{
+  display:block;margin-top:8px;border:2px dashed var(--bd2);border-radius:16px;
+  background:rgba(111,92,255,.06);cursor:pointer;transition:border-color .2s,background .2s;
+}
+.file-drop:hover,.file-drop.drag{
+  border-color:var(--ac);background:rgba(111,92,255,.12);
+}
+.file-drop-inner{padding:28px 16px;text-align:center}
+.file-item{
+  display:flex;align-items:center;gap:10px;padding:8px 10px;
+  background:var(--card2);border-radius:12px;border:1px solid var(--bd2);font-size:.85rem;
+}
+.file-item img{width:48px;height:36px;object-fit:cover;border-radius:8px}
+.file-item .name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.file-item .st{color:var(--mut);font-size:.78rem}
+.file-item .st.ok{color:var(--ok)}
+.file-item .st.err{color:var(--danger)}
 </style>
 </head>
 <body>
@@ -343,6 +361,74 @@ input:focus, select:focus, textarea:focus {
     <button class="btn btn-primary" id="btnAdd">انتشار والپیپر</button>
     <div class="err" id="addErr"></div>
     <div class="ok hidden" id="addOk">✓ با موفقیت اضافه شد</div>
+  </div>
+
+
+  
+  <!-- FILE UPLOAD -->
+  <div class="panel anim">
+    <h2>📁 آپلود مستقیم از دستگاه</h2>
+    <p style="color:var(--mut);font-size:.88rem;margin-bottom:12px">
+      چند عکس را یکجا انتخاب کن. نیازی به لینک نیست — فایل از همین‌جا ارسال می‌شود.
+    </p>
+    <label>دسته‌بندی پیش‌فرض برای این محموله
+      <select id="fileCat">
+        <option value="auto">تشخیص خودکار از اسم فایل</option>
+        <option value="nature">طبیعت</option>
+        <option value="abstract">انتزاعی</option>
+        <option value="minimal">مینیمال</option>
+        <option value="dark">تیره</option>
+        <option value="anime">انیمه</option>
+        <option value="cars">خودرو</option>
+        <option value="space">فضا</option>
+        <option value="other">سایر</option>
+      </select>
+    </label>
+    <label class="file-drop" id="fileDrop">
+      <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp,image/jpg" multiple hidden>
+      <div class="file-drop-inner">
+        <div style="font-size:2rem;margin-bottom:8px">🖼️</div>
+        <b>کلیک کن یا عکس‌ها را اینجا رها کن</b>
+        <p style="color:var(--mut);font-size:.85rem;margin-top:6px">JPG / PNG / WEBP — می‌توانی چند فایل یکجا انتخاب کنی</p>
+      </div>
+    </label>
+    <div id="fileList" style="margin-top:12px;display:grid;gap:8px"></div>
+    <button class="btn btn-primary" id="btnFileUp" style="margin-top:12px" disabled>شروع آپلود</button>
+    <div class="err" id="fileErr"></div>
+    <div class="ok hidden" id="fileOk"></div>
+    <div id="fileProgress" style="margin-top:10px;color:var(--mut);font-size:.88rem"></div>
+  </div>
+
+  <!-- BULK -->
+  <div class="panel anim">
+    <h2>📦 افزودن دسته‌جمعی</h2>
+    <p style="color:var(--mut);font-size:.88rem;margin-bottom:12px">
+      هر خط یک والپیپر. فرمت‌ها:
+    </p>
+    <pre style="background:rgba(0,0,0,.35);padding:12px 14px;border-radius:12px;font-size:.78rem;direction:ltr;text-align:left;overflow:auto;margin-bottom:12px;border:1px solid var(--bd2);color:#c4b5fd">لینک-عکس
+عنوان فارسی | لینک-عکس
+عنوان فارسی | عنوان انگلیسی | دسته | لینک-عکس</pre>
+    <p style="color:var(--mut);font-size:.8rem;margin-bottom:10px">
+      دسته‌های مجاز: nature, abstract, minimal, dark, anime, cars, space, other
+    </p>
+    <label>لیست والپیپرها
+      <textarea id="bulkText" rows="8" placeholder="https://i.postimg.cc/....jpg&#10;غروب دریا | https://i.postimg.cc/....png&#10;زنیتسو | Zenitsu | anime | https://i.postimg.cc/....png" style="resize:vertical;min-height:140px;font-family:ui-monospace,monospace;direction:ltr;text-align:left"></label>
+    <label style="margin-top:8px">دسته پیش‌فرض (اگر در خط نوشته نشود)
+      <select id="bulkCat">
+        <option value="nature">طبیعت</option>
+        <option value="abstract">انتزاعی</option>
+        <option value="minimal">مینیمال</option>
+        <option value="dark">تیره</option>
+        <option value="anime">انیمه</option>
+        <option value="cars">خودرو</option>
+        <option value="space">فضا</option>
+        <option value="other" selected>سایر</option>
+      </select>
+    </label>
+    <button class="btn btn-primary" id="btnBulk" style="margin-top:8px">شروع افزودن دسته‌جمعی</button>
+    <div class="err" id="bulkErr"></div>
+    <div class="ok hidden" id="bulkOk"></div>
+    <div id="bulkProgress" style="margin-top:10px;color:var(--mut);font-size:.88rem"></div>
   </div>
 
   <!-- LIST -->
@@ -580,6 +666,194 @@ $('#btnLogin').onclick = login;
 $('#adminPass').onkeydown = e => { if (e.key === 'Enter') login(); };
 $('#btnLogout').onclick = logout;
 $('#btnAdd').onclick = addWallpaper;
+
+function guessCat(name){
+  const n=(name||'').toLowerCase();
+  if(/anime|manga|naruto|demon|zenitsu|waifu/.test(n)) return 'anime';
+  if(/nature|forest|mountain|sea|ocean|sunset|tree|flower|sky|lake/.test(n)) return 'nature';
+  if(/car|bmw|mercedes|auto|vehicle|motor/.test(n)) return 'cars';
+  if(/space|galaxy|nebula|planet|astro|cosmos/.test(n)) return 'space';
+  if(/dark|night|noir|black/.test(n)) return 'dark';
+  if(/minimal|simple|clean/.test(n)) return 'minimal';
+  if(/abstract|art|paint|fluid/.test(n)) return 'abstract';
+  return 'other';
+}
+function titleFromFile(name){
+  return (name||'wallpaper').replace(/\.[^.]+$/,'')
+    .replace(/[-_]+/g,' ')
+    .replace(/\s+/g,' ')
+    .trim() || 'والپیپر';
+}
+let selectedFiles=[];
+function renderFileList(){
+  const box=$('#fileList');
+  if(!selectedFiles.length){box.innerHTML='';$('#btnFileUp').disabled=true;return}
+  $('#btnFileUp').disabled=false;
+  box.innerHTML=selectedFiles.map((f,i)=>`
+    <div class="file-item" data-fi="${i}">
+      <img src="${URL.createObjectURL(f)}" alt="">
+      <span class="name">${f.name}</span>
+      <span class="st" id="fst${i}">آماده</span>
+    </div>`).join('');
+}
+function setFiles(fileList){
+  selectedFiles=[...fileList].filter(f=>/^image\//.test(f.type));
+  if(!selectedFiles.length){$('#fileErr').textContent='فایل تصویری معتبری انتخاب نشد';return}
+  $('#fileErr').textContent='';
+  renderFileList();
+}
+$('#fileInput').onchange=e=>setFiles(e.target.files||[]);
+const drop=$('#fileDrop');
+if(drop){
+  drop.addEventListener('dragover',e=>{e.preventDefault();drop.classList.add('drag')});
+  drop.addEventListener('dragleave',()=>drop.classList.remove('drag'));
+  drop.addEventListener('drop',e=>{
+    e.preventDefault();drop.classList.remove('drag');
+    setFiles(e.dataTransfer.files||[]);
+  });
+}
+async function fileToBase64(file){
+  const buf=await file.arrayBuffer();
+  const bytes=new Uint8Array(buf);
+  let bin='';
+  for(let i=0;i<bytes.length;i+=0x8000){
+    bin+=String.fromCharCode.apply(null, bytes.subarray(i,i+0x8000));
+  }
+  return btoa(bin);
+}
+async function uploadFiles(){
+  if(!selectedFiles.length)return;
+  if(!confirm(selectedFiles.length+' عکس آپلود شود؟'))return;
+  $('#btnFileUp').disabled=true;
+  $('#fileErr').textContent='';
+  $('#fileOk').classList.add('hidden');
+  const defCat=$('#fileCat').value;
+  let ok=0,fail=0;
+  for(let i=0;i<selectedFiles.length;i++){
+    const f=selectedFiles[i];
+    const st=$('#fst'+i);
+    if(st)st.textContent='در حال ارسال...';
+    $('#fileProgress').textContent=`آپلود ${i+1} از ${selectedFiles.length}: ${f.name}`;
+    try{
+      if(f.size>12*1024*1024) throw new Error('حجم بیش از ۱۲ مگابایت');
+      const b64=await fileToBase64(f);
+      const category=defCat==='auto'?guessCat(f.name):defCat;
+      const title_fa=titleFromFile(f.name);
+      const res=await fetch(API+'/admin/upload',{
+        method:'POST',
+        headers:{
+          'Content-Type':'application/json',
+          Authorization:'Bearer '+adminToken
+        },
+        body:JSON.stringify({
+          filename:f.name,
+          content_type:f.type||'image/jpeg',
+          image_base64:b64,
+          title_fa,
+          title_en:title_fa,
+          category
+        })
+      });
+      const data=await res.json();
+      if(!res.ok) throw new Error(data.error||'خطا در آپلود');
+      if(st){st.textContent='✓ ذخیره شد';st.className='st ok'}
+      ok++;
+    }catch(err){
+      if(st){st.textContent='✗ '+(err.message||'خطا');st.className='st err'}
+      fail++;
+    }
+  }
+  $('#btnFileUp').disabled=false;
+  $('#fileProgress').textContent='';
+  $('#fileOk').classList.remove('hidden');
+  $('#fileOk').textContent=`✓ تمام: ${ok} موفق`+(fail?`، ${fail} ناموفق`:'');
+  if(ok) refreshAll();
+}
+if($('#btnFileUp'))$('#btnFileUp').onclick=uploadFiles;
+
+
+function parseBulkLine(line, defaultCat) {
+  line = line.trim();
+  if (!line || line.startsWith('#')) return null;
+  const parts = line.split('|').map(s => s.trim()).filter(Boolean);
+  if (parts.length === 1) {
+    if (!/^https?:\/\//i.test(parts[0])) return null;
+    return { title_fa: 'والپیپر', title_en: '', category: defaultCat, image_url: parts[0] };
+  }
+  if (parts.length === 2) {
+    return { title_fa: parts[0], title_en: '', category: defaultCat, image_url: parts[1] };
+  }
+  // 3+: fa | en | cat | url  OR fa | cat | url
+  if (parts.length === 3) {
+    if (/^https?:\/\//i.test(parts[2])) {
+      const cat = ['nature','abstract','minimal','dark','anime','cars','space','other'].includes(parts[1]) ? parts[1] : defaultCat;
+      return { title_fa: parts[0], title_en: cat === parts[1] ? '' : parts[1], category: cat === parts[1] ? parts[1] : defaultCat, image_url: parts[2] };
+    }
+  }
+  const url = parts[parts.length - 1];
+  if (!/^https?:\/\//i.test(url)) return null;
+  const title_fa = parts[0] || 'والپیپر';
+  let title_en = '';
+  let category = defaultCat;
+  if (parts.length >= 4) {
+    title_en = parts[1] || '';
+    if (['nature','abstract','minimal','dark','anime','cars','space','other'].includes(parts[2])) category = parts[2];
+  } else if (parts.length === 3) {
+    if (['nature','abstract','minimal','dark','anime','cars','space','other'].includes(parts[1])) category = parts[1];
+    else title_en = parts[1];
+  }
+  return { title_fa, title_en, category, image_url: url };
+}
+
+async function bulkAdd() {
+  const text = $('#bulkText').value || '';
+  const defaultCat = $('#bulkCat').value;
+  const lines = text.split(/\r?\n/);
+  const items = [];
+  for (const line of lines) {
+    const row = parseBulkLine(line, defaultCat);
+    if (row) items.push(row);
+  }
+  $('#bulkErr').textContent = '';
+  $('#bulkOk').classList.add('hidden');
+  if (!items.length) {
+    $('#bulkErr').textContent = 'هیچ خط معتبری پیدا نشد';
+    return;
+  }
+  if (!confirm(items.length + ' والپیپر اضافه شود؟')) return;
+  const btn = $('#btnBulk');
+  btn.disabled = true;
+  let ok = 0, fail = 0;
+  for (let i = 0; i < items.length; i++) {
+    $('#bulkProgress').textContent = `در حال افزودن ${i + 1} از ${items.length} ...`;
+    try {
+      const res = await fetch(API + '/admin/wallpapers', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + adminToken
+        },
+        body: JSON.stringify(items[i])
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'خطا');
+      ok++;
+    } catch (e) {
+      fail++;
+    }
+    await new Promise(r => setTimeout(r, 150));
+  }
+  btn.disabled = false;
+  $('#bulkProgress').textContent = '';
+  $('#bulkOk').classList.remove('hidden');
+  $('#bulkOk').textContent = `✓ انجام شد: ${ok} موفق` + (fail ? `، ${fail} ناموفق` : '');
+  if (ok) {
+    $('#bulkText').value = '';
+    refreshAll();
+  }
+}
+
+$('#btnBulk').onclick = bulkAdd;
 $('#btnRefresh').onclick = refreshAll;
 $('#searchQ').oninput = renderList;
 $('#filterCat').onchange = renderList;
