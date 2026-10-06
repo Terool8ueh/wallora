@@ -202,16 +202,44 @@ footer{text-align:center;color:var(--mut);padding:30px 0;font-size:.9rem}
 }
 .reel .side{
   position:absolute;inset-inline-end:12px;bottom:120px;z-index:3;
-  display:flex;flex-direction:column;gap:16px;align-items:center;
+  display:flex;flex-direction:column;gap:14px;align-items:center;
 }
 .reel .side button{
-  width:48px;height:48px;border-radius:50%;border:0;
-  background:rgba(0,0,0,.35);backdrop-filter:blur(8px);
+  width:48px;height:48px;border-radius:50%;border:0;outline:none!important;
+  -webkit-tap-highlight-color:transparent;
+  background:rgba(0,0,0,.4);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
   color:#fff;font-size:1.25rem;cursor:pointer;
-  display:grid;place-items:center;transition:transform .15s;
+  display:grid;place-items:center;
+  box-shadow:0 4px 14px rgba(0,0,0,.25);
+  transition:transform .2s cubic-bezier(.2,.8,.2,1),background .2s,box-shadow .25s;
 }
-.reel .side button:active{transform:scale(.9)}
-.reel .side span{color:#fff;font-size:.7rem;margin-top:-10px}
+.reel .side button:focus,.reel .side button:focus-visible{outline:none!important;box-shadow:0 4px 14px rgba(0,0,0,.25)}
+.reel .side button:hover{transform:scale(1.08);background:rgba(255,255,255,.18)}
+.reel .side button:active{transform:scale(.88)}
+.reel .side button.pop{animation:reelPop .45s cubic-bezier(.2,.9,.3,1.4)}
+.reel .side button.heart-on{color:#ff4d6d;background:rgba(255,77,109,.2)}
+.reel .side button.heart-burst{animation:heartBurst .6s ease}
+.reel .side span{color:#fff;font-size:.7rem;margin-top:-8px;text-shadow:0 1px 4px rgba(0,0,0,.5);pointer-events:none}
+@keyframes reelPop{0%{transform:scale(1)}40%{transform:scale(1.25)}100%{transform:scale(1)}}
+@keyframes heartBurst{0%{transform:scale(1)}25%{transform:scale(1.35)}50%{transform:scale(.9)}100%{transform:scale(1)}}
+.reel-heart-fx{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) scale(0);
+  font-size:5rem;color:#ff4d6d;pointer-events:none;z-index:6;
+  animation:bigHeart .7s ease forwards;
+  text-shadow:0 0 30px rgba(255,77,109,.6);
+}
+@keyframes bigHeart{
+  0%{opacity:0;transform:translate(-50%,-50%) scale(0)}
+  30%{opacity:1;transform:translate(-50%,-50%) scale(1.2)}
+  100%{opacity:0;transform:translate(-50%,-60%) scale(1.4)}
+}
+.reels-top button,.reels-top button:focus{
+  outline:none!important;-webkit-tap-highlight-color:transparent;
+  transition:transform .2s,background .2s;
+}
+.reels-top button:hover{transform:scale(1.08);background:rgba(255,255,255,.25)}
+.reels-top button:active{transform:scale(.92)}
+
 .reel .bottom{
   position:absolute;left:0;right:0;bottom:0;z-index:3;
   padding:20px 16px calc(88px + env(safe-area-inset-bottom,0px));
@@ -489,16 +517,44 @@ nav button:hover{transform:translateY(-2px)}
 }
 .reel .side{
   position:absolute;inset-inline-end:12px;bottom:120px;z-index:3;
-  display:flex;flex-direction:column;gap:16px;align-items:center;
+  display:flex;flex-direction:column;gap:14px;align-items:center;
 }
 .reel .side button{
-  width:48px;height:48px;border-radius:50%;border:0;
-  background:rgba(0,0,0,.35);backdrop-filter:blur(8px);
+  width:48px;height:48px;border-radius:50%;border:0;outline:none!important;
+  -webkit-tap-highlight-color:transparent;
+  background:rgba(0,0,0,.4);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
   color:#fff;font-size:1.25rem;cursor:pointer;
-  display:grid;place-items:center;transition:transform .15s;
+  display:grid;place-items:center;
+  box-shadow:0 4px 14px rgba(0,0,0,.25);
+  transition:transform .2s cubic-bezier(.2,.8,.2,1),background .2s,box-shadow .25s;
 }
-.reel .side button:active{transform:scale(.9)}
-.reel .side span{color:#fff;font-size:.7rem;margin-top:-10px}
+.reel .side button:focus,.reel .side button:focus-visible{outline:none!important;box-shadow:0 4px 14px rgba(0,0,0,.25)}
+.reel .side button:hover{transform:scale(1.08);background:rgba(255,255,255,.18)}
+.reel .side button:active{transform:scale(.88)}
+.reel .side button.pop{animation:reelPop .45s cubic-bezier(.2,.9,.3,1.4)}
+.reel .side button.heart-on{color:#ff4d6d;background:rgba(255,77,109,.2)}
+.reel .side button.heart-burst{animation:heartBurst .6s ease}
+.reel .side span{color:#fff;font-size:.7rem;margin-top:-8px;text-shadow:0 1px 4px rgba(0,0,0,.5);pointer-events:none}
+@keyframes reelPop{0%{transform:scale(1)}40%{transform:scale(1.25)}100%{transform:scale(1)}}
+@keyframes heartBurst{0%{transform:scale(1)}25%{transform:scale(1.35)}50%{transform:scale(.9)}100%{transform:scale(1)}}
+.reel-heart-fx{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) scale(0);
+  font-size:5rem;color:#ff4d6d;pointer-events:none;z-index:6;
+  animation:bigHeart .7s ease forwards;
+  text-shadow:0 0 30px rgba(255,77,109,.6);
+}
+@keyframes bigHeart{
+  0%{opacity:0;transform:translate(-50%,-50%) scale(0)}
+  30%{opacity:1;transform:translate(-50%,-50%) scale(1.2)}
+  100%{opacity:0;transform:translate(-50%,-60%) scale(1.4)}
+}
+.reels-top button,.reels-top button:focus{
+  outline:none!important;-webkit-tap-highlight-color:transparent;
+  transition:transform .2s,background .2s;
+}
+.reels-top button:hover{transform:scale(1.08);background:rgba(255,255,255,.25)}
+.reels-top button:active{transform:scale(.92)}
+
 .reel .bottom{
   position:absolute;left:0;right:0;bottom:0;z-index:3;
   padding:20px 16px calc(88px + env(safe-area-inset-bottom,0px));
@@ -732,16 +788,44 @@ nav button:hover{transform:translateY(-2px)}
 }
 .reel .side{
   position:absolute;inset-inline-end:12px;bottom:120px;z-index:3;
-  display:flex;flex-direction:column;gap:16px;align-items:center;
+  display:flex;flex-direction:column;gap:14px;align-items:center;
 }
 .reel .side button{
-  width:48px;height:48px;border-radius:50%;border:0;
-  background:rgba(0,0,0,.35);backdrop-filter:blur(8px);
+  width:48px;height:48px;border-radius:50%;border:0;outline:none!important;
+  -webkit-tap-highlight-color:transparent;
+  background:rgba(0,0,0,.4);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
   color:#fff;font-size:1.25rem;cursor:pointer;
-  display:grid;place-items:center;transition:transform .15s;
+  display:grid;place-items:center;
+  box-shadow:0 4px 14px rgba(0,0,0,.25);
+  transition:transform .2s cubic-bezier(.2,.8,.2,1),background .2s,box-shadow .25s;
 }
-.reel .side button:active{transform:scale(.9)}
-.reel .side span{color:#fff;font-size:.7rem;margin-top:-10px}
+.reel .side button:focus,.reel .side button:focus-visible{outline:none!important;box-shadow:0 4px 14px rgba(0,0,0,.25)}
+.reel .side button:hover{transform:scale(1.08);background:rgba(255,255,255,.18)}
+.reel .side button:active{transform:scale(.88)}
+.reel .side button.pop{animation:reelPop .45s cubic-bezier(.2,.9,.3,1.4)}
+.reel .side button.heart-on{color:#ff4d6d;background:rgba(255,77,109,.2)}
+.reel .side button.heart-burst{animation:heartBurst .6s ease}
+.reel .side span{color:#fff;font-size:.7rem;margin-top:-8px;text-shadow:0 1px 4px rgba(0,0,0,.5);pointer-events:none}
+@keyframes reelPop{0%{transform:scale(1)}40%{transform:scale(1.25)}100%{transform:scale(1)}}
+@keyframes heartBurst{0%{transform:scale(1)}25%{transform:scale(1.35)}50%{transform:scale(.9)}100%{transform:scale(1)}}
+.reel-heart-fx{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) scale(0);
+  font-size:5rem;color:#ff4d6d;pointer-events:none;z-index:6;
+  animation:bigHeart .7s ease forwards;
+  text-shadow:0 0 30px rgba(255,77,109,.6);
+}
+@keyframes bigHeart{
+  0%{opacity:0;transform:translate(-50%,-50%) scale(0)}
+  30%{opacity:1;transform:translate(-50%,-50%) scale(1.2)}
+  100%{opacity:0;transform:translate(-50%,-60%) scale(1.4)}
+}
+.reels-top button,.reels-top button:focus{
+  outline:none!important;-webkit-tap-highlight-color:transparent;
+  transition:transform .2s,background .2s;
+}
+.reels-top button:hover{transform:scale(1.08);background:rgba(255,255,255,.25)}
+.reels-top button:active{transform:scale(.92)}
+
 .reel .bottom{
   position:absolute;left:0;right:0;bottom:0;z-index:3;
   padding:20px 16px calc(88px + env(safe-area-inset-bottom,0px));
@@ -1028,12 +1112,12 @@ function openReels(startId){
     return `<div class="reel" data-id="${w.id}">
       <img src="${w.image_url}" alt="" loading="lazy" draggable="false">
       <div class="side">
-        <button type="button" data-rf="${w.id}">${on?'♥':'♡'}</button>
-        <span>ذخیره</span>
-        <button type="button" data-rd="${w.id}">⬇</button>
-        <span>دانلود</span>
-        <button type="button" data-rs="${w.id}">↗</button>
-        <span>اشتراک</span>
+        <button type="button" class="${on?'heart-on':''}" data-rf="${w.id}" aria-label="save">${on?'♥':'♡'}</button>
+        <span>${lang==='fa'?'ذخیره':'Save'}</span>
+        <button type="button" data-rd="${w.id}" aria-label="download">⬇</button>
+        <span>${lang==='fa'?'دانلود':'Download'}</span>
+        <button type="button" data-rs="${w.id}" aria-label="share">↗</button>
+        <span>${lang==='fa'?'اشتراک':'Share'}</span>
       </div>
       <div class="bottom">
         <h3>${title(w,lang)}</h3>
@@ -1295,18 +1379,64 @@ $('#obN').onclick=()=>{ob<OB.length-1?(ob++,obR()):obEnd()};$('#obS').onclick=ob
 
 if($('#btnReels'))$('#btnReels').onclick=()=>openReels();
 if($('#reelsClose'))$('#reelsClose').onclick=closeReels;
+function pulseBtn(btn, cls){
+  if(!btn)return;
+  btn.classList.remove(cls);
+  void btn.offsetWidth;
+  btn.classList.add(cls);
+  setTimeout(()=>btn.classList.remove(cls),600);
+}
+function toggleReelSave(id, btn){
+  fav(id);
+  const on=saves().includes(id);
+  if(btn){
+    btn.textContent=on?'♥':'♡';
+    btn.classList.toggle('heart-on', on);
+    pulseBtn(btn, on?'heart-burst':'reelPop');
+  }
+}
+function showBigHeart(reel){
+  if(!reel)return;
+  const fx=document.createElement('div');
+  fx.className='reel-heart-fx';
+  fx.textContent='♥';
+  reel.appendChild(fx);
+  setTimeout(()=>fx.remove(),700);
+}
 document.addEventListener('click',e=>{
   const rf=e.target.closest('[data-rf]');
-  if(rf){e.stopPropagation();fav(+rf.dataset.rf);rf.textContent=saves().includes(+rf.dataset.rf)?'♥':'♡';return}
+  if(rf){e.stopPropagation();toggleReelSave(+rf.dataset.rf, rf);return}
   const rd=e.target.closest('[data-rd]');
-  if(rd){e.stopPropagation();dl(+rd.dataset.rd);return}
+  if(rd){e.stopPropagation();pulseBtn(rd,'reelPop');dl(+rd.dataset.rd);return}
   const rs=e.target.closest('[data-rs]');
   if(rs){
     e.stopPropagation();
+    pulseBtn(rs,'reelPop');
     const id=+rs.dataset.rs;
     const w=W.find(x=>x.id===id);
     const url=location.href.split('?')[0].split('#')[0]+'?w='+id;
     (async()=>{try{if(navigator.share)await navigator.share({title:title(w,lang),url});else{await navigator.clipboard.writeText(url);toast(lang=='fa'?'لینک کپی شد':'Link copied')}}catch(err){}})();
+  }
+});
+/* double-tap to save in reels */
+let lastTap=0, lastTapId=null;
+document.addEventListener('click',e=>{
+  const reel=e.target.closest('#reelsScroller .reel');
+  if(!reel||e.target.closest('.side')||e.target.closest('.reels-top'))return;
+  const id=+reel.dataset.id;
+  const now=Date.now();
+  if(lastTapId===id && now-lastTap<320){
+    lastTap=0; lastTapId=null;
+    const btn=reel.querySelector('[data-rf]');
+    if(!saves().includes(id)){
+      toggleReelSave(id, btn);
+      showBigHeart(reel);
+    } else {
+      pulseBtn(btn,'heart-burst');
+      showBigHeart(reel);
+    }
+  } else {
+    lastTap=now; lastTapId=id;
   }
 });
 document.addEventListener('keydown',e=>{
