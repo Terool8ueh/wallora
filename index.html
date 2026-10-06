@@ -159,6 +159,66 @@ footer{text-align:center;color:var(--mut);padding:30px 0;font-size:.9rem}
 @keyframes slideInSoft{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
 #res .grid{animation:slideInSoft .45s ease both}
 
+
+/* Instagram-like Reels */
+#reelsView{
+  position:fixed;inset:0;z-index:40;background:#000;
+  display:none;flex-direction:column;
+}
+#reelsView.on{display:flex}
+.reels-top{
+  position:absolute;top:0;left:0;right:0;z-index:5;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 14px;padding-top:calc(12px + env(safe-area-inset-top,0px));
+  background:linear-gradient(180deg,rgba(0,0,0,.55),transparent);
+}
+.reels-top b{color:#fff;font-size:1rem}
+.reels-top button{
+  width:40px;height:40px;border-radius:50%;border:0;
+  background:rgba(255,255,255,.15);color:#fff;font-size:1.2rem;cursor:pointer;
+}
+.reels-scroller{
+  flex:1;overflow-y:scroll;scroll-snap-type:y mandatory;
+  -webkit-overflow-scrolling:touch;scrollbar-width:none;
+}
+.reels-scroller::-webkit-scrollbar{display:none}
+.reel{
+  scroll-snap-align:start;scroll-snap-stop:always;
+  height:100%;height:100dvh;position:relative;
+  display:flex;align-items:center;justify-content:center;
+  background:#0a0a12;
+}
+.reel img,.reel .ph{
+  width:100%;height:100%;object-fit:cover;display:block;
+}
+.reel .side{
+  position:absolute;inset-inline-end:12px;bottom:120px;z-index:3;
+  display:flex;flex-direction:column;gap:16px;align-items:center;
+}
+.reel .side button{
+  width:48px;height:48px;border-radius:50%;border:0;
+  background:rgba(0,0,0,.35);backdrop-filter:blur(8px);
+  color:#fff;font-size:1.25rem;cursor:pointer;
+  display:grid;place-items:center;transition:transform .15s;
+}
+.reel .side button:active{transform:scale(.9)}
+.reel .side span{color:#fff;font-size:.7rem;margin-top:-10px}
+.reel .bottom{
+  position:absolute;left:0;right:0;bottom:0;z-index:3;
+  padding:20px 16px calc(88px + env(safe-area-inset-bottom,0px));
+  background:linear-gradient(0deg,rgba(0,0,0,.75),transparent);
+  color:#fff;
+}
+.reel .bottom h3{font-size:1.1rem;margin-bottom:4px}
+.reel .bottom p{font-size:.85rem;opacity:.85}
+.reels-hint{
+  position:absolute;bottom:calc(70px + env(safe-area-inset-bottom,0px));
+  left:0;right:0;text-align:center;color:rgba(255,255,255,.7);
+  font-size:.8rem;z-index:4;pointer-events:none;
+  animation:reelsPulse 2s ease infinite;
+}
+@keyframes reelsPulse{0%,100%{opacity:.5;transform:translateY(0)}50%{opacity:1;transform:translateY(-6px)}}
+
 </style>
 </head>
 <body>
@@ -173,7 +233,7 @@ footer{text-align:center;color:var(--mut);padding:30px 0;font-size:.9rem}
 
 <main class="wrap">
 <section data-v="home">
-<div class="hero" id="hero"><div><h1 data-t="h1"></h1><p data-t="h1s"></p><div class="btn-row"><button class="btn" id="cta" data-t="explore"></button><button class="btn o" id="btnRandom" data-t="random"></button></div><div class="stats"><span class="stat" id="statCount"><b>—</b> <span data-t="count"></span></span></div></div><div class="stack" id="stack" aria-hidden="true"></div></div>
+<div class="hero" id="hero"><div><h1 data-t="h1"></h1><p data-t="h1s"></p><div class="btn-row"><button class="btn" id="cta" data-t="explore"></button><button class="btn o" id="btnRandom" data-t="random"></button><button class="btn o" id="btnReels" data-t="reels"></button></div><div class="stats"><span class="stat" id="statCount"><b>—</b> <span data-t="count"></span></span></div></div><div class="stack" id="stack" aria-hidden="true"></div></div>
 <div class="chips" id="chips" role="tablist"></div>
 <div id="home"><h2 data-t="trend"></h2><div class="grid" id="gT"></div><h2 data-t="newest"></h2><div class="grid" id="gN"></div></div>
 <div id="res" hidden>
@@ -191,6 +251,16 @@ footer{text-align:center;color:var(--mut);padding:30px 0;font-size:.9rem}
 <section data-v="about" hidden class="pg"><h2 data-t="aboutT"></h2><p data-t="aboutP"></p></section>
 <section data-v="contact" hidden class="pg"><h2 data-t="contactT"></h2><p data-t="contactP"></p><div class="cc"><a href="mailto:Supportwallora.wallpeper@gmail.com">✉️ <span dir="ltr">Supportwallora.wallpeper@gmail.com</span></a></div></section>
 </main>
+
+<div id="reelsView" aria-hidden="true">
+  <div class="reels-top">
+    <b id="reelsTitle">ریلز</b>
+    <button type="button" id="reelsClose" aria-label="close">✕</button>
+  </div>
+  <div class="reels-scroller" id="reelsScroller"></div>
+  <div class="reels-hint" id="reelsHint">↑ بکش برای بعدی</div>
+</div>
+
 <footer>© <span id="yr"></span> Wallora · <a href="mailto:Supportwallora.wallpeper@gmail.com" style="color:inherit"><span dir="ltr">Supportwallora.wallpeper@gmail.com</span></a></footer>
 
 <div class="ov" id="mDl" hidden><div class="glass big" role="dialog" aria-modal="true"><button class="ib x" data-close data-al="close">✕</button><div class="pv" id="dlPv"></div><h3 id="dlT"></h3><div class="rs" id="dlR"></div><button class="btn o" id="dlS"></button></div></div>
@@ -278,6 +348,66 @@ footer{text-align:center;color:var(--mut);padding:30px 0;font-size:.9rem}
 @keyframes slideInSoft{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
 #res .grid{animation:slideInSoft .45s ease both}
 
+
+/* Instagram-like Reels */
+#reelsView{
+  position:fixed;inset:0;z-index:40;background:#000;
+  display:none;flex-direction:column;
+}
+#reelsView.on{display:flex}
+.reels-top{
+  position:absolute;top:0;left:0;right:0;z-index:5;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 14px;padding-top:calc(12px + env(safe-area-inset-top,0px));
+  background:linear-gradient(180deg,rgba(0,0,0,.55),transparent);
+}
+.reels-top b{color:#fff;font-size:1rem}
+.reels-top button{
+  width:40px;height:40px;border-radius:50%;border:0;
+  background:rgba(255,255,255,.15);color:#fff;font-size:1.2rem;cursor:pointer;
+}
+.reels-scroller{
+  flex:1;overflow-y:scroll;scroll-snap-type:y mandatory;
+  -webkit-overflow-scrolling:touch;scrollbar-width:none;
+}
+.reels-scroller::-webkit-scrollbar{display:none}
+.reel{
+  scroll-snap-align:start;scroll-snap-stop:always;
+  height:100%;height:100dvh;position:relative;
+  display:flex;align-items:center;justify-content:center;
+  background:#0a0a12;
+}
+.reel img,.reel .ph{
+  width:100%;height:100%;object-fit:cover;display:block;
+}
+.reel .side{
+  position:absolute;inset-inline-end:12px;bottom:120px;z-index:3;
+  display:flex;flex-direction:column;gap:16px;align-items:center;
+}
+.reel .side button{
+  width:48px;height:48px;border-radius:50%;border:0;
+  background:rgba(0,0,0,.35);backdrop-filter:blur(8px);
+  color:#fff;font-size:1.25rem;cursor:pointer;
+  display:grid;place-items:center;transition:transform .15s;
+}
+.reel .side button:active{transform:scale(.9)}
+.reel .side span{color:#fff;font-size:.7rem;margin-top:-10px}
+.reel .bottom{
+  position:absolute;left:0;right:0;bottom:0;z-index:3;
+  padding:20px 16px calc(88px + env(safe-area-inset-bottom,0px));
+  background:linear-gradient(0deg,rgba(0,0,0,.75),transparent);
+  color:#fff;
+}
+.reel .bottom h3{font-size:1.1rem;margin-bottom:4px}
+.reel .bottom p{font-size:.85rem;opacity:.85}
+.reels-hint{
+  position:absolute;bottom:calc(70px + env(safe-area-inset-bottom,0px));
+  left:0;right:0;text-align:center;color:rgba(255,255,255,.7);
+  font-size:.8rem;z-index:4;pointer-events:none;
+  animation:reelsPulse 2s ease infinite;
+}
+@keyframes reelsPulse{0%,100%{opacity:.5;transform:translateY(0)}50%{opacity:1;transform:translateY(-6px)}}
+
 </style>
 </head>
 <body>
@@ -292,7 +422,7 @@ footer{text-align:center;color:var(--mut);padding:30px 0;font-size:.9rem}
 
 <main class="wrap">
 <section data-v="home">
-<div class="hero" id="hero"><div><h1 data-t="h1"></h1><p data-t="h1s"></p><div class="btn-row"><button class="btn" id="cta" data-t="explore"></button><button class="btn o" id="btnRandom" data-t="random"></button></div><div class="stats"><span class="stat" id="statCount"><b>—</b> <span data-t="count"></span></span></div></div><div class="stack" id="stack" aria-hidden="true"></div></div>
+<div class="hero" id="hero"><div><h1 data-t="h1"></h1><p data-t="h1s"></p><div class="btn-row"><button class="btn" id="cta" data-t="explore"></button><button class="btn o" id="btnRandom" data-t="random"></button><button class="btn o" id="btnReels" data-t="reels"></button></div><div class="stats"><span class="stat" id="statCount"><b>—</b> <span data-t="count"></span></span></div></div><div class="stack" id="stack" aria-hidden="true"></div></div>
 <div class="chips" id="chips" role="tablist"></div>
 <div id="home"><h2 data-t="trend"></h2><div class="grid" id="gT"></div><h2 data-t="newest"></h2><div class="grid" id="gN"></div></div>
 <div id="res" hidden>
@@ -310,6 +440,16 @@ footer{text-align:center;color:var(--mut);padding:30px 0;font-size:.9rem}
 <section data-v="about" hidden class="pg"><h2 data-t="aboutT"></h2><p data-t="aboutP"></p></section>
 <section data-v="contact" hidden class="pg"><h2 data-t="contactT"></h2><p data-t="contactP"></p><div class="cc"><a href="mailto:Supportwallora.wallpeper@gmail.com">✉️ <span dir="ltr">Supportwallora.wallpeper@gmail.com</span></a></div></section>
 </main>
+
+<div id="reelsView" aria-hidden="true">
+  <div class="reels-top">
+    <b id="reelsTitle">ریلز</b>
+    <button type="button" id="reelsClose" aria-label="close">✕</button>
+  </div>
+  <div class="reels-scroller" id="reelsScroller"></div>
+  <div class="reels-hint" id="reelsHint">↑ بکش برای بعدی</div>
+</div>
+
 <footer>© <span id="yr"></span> Wallora · <a href="mailto:Supportwallora.wallpeper@gmail.com" style="color:inherit"><span dir="ltr">Supportwallora.wallpeper@gmail.com</span></a></footer>
 
 <div class="ov" id="mDl" hidden><div class="glass big" role="dialog" aria-modal="true"><button class="ib x" data-close data-al="close">✕</button><div class="pv" id="dlPv"></div><h3 id="dlT"></h3><div class="rs" id="dlR"></div><button class="btn o" id="dlS"></button></div></div>
@@ -353,6 +493,66 @@ footer{text-align:center;color:var(--mut);padding:30px 0;font-size:.9rem}
 #toTop.show{opacity:1;pointer-events:auto}
 #toTop:hover{transform:translateY(-3px)}
 
+
+/* Instagram-like Reels */
+#reelsView{
+  position:fixed;inset:0;z-index:40;background:#000;
+  display:none;flex-direction:column;
+}
+#reelsView.on{display:flex}
+.reels-top{
+  position:absolute;top:0;left:0;right:0;z-index:5;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 14px;padding-top:calc(12px + env(safe-area-inset-top,0px));
+  background:linear-gradient(180deg,rgba(0,0,0,.55),transparent);
+}
+.reels-top b{color:#fff;font-size:1rem}
+.reels-top button{
+  width:40px;height:40px;border-radius:50%;border:0;
+  background:rgba(255,255,255,.15);color:#fff;font-size:1.2rem;cursor:pointer;
+}
+.reels-scroller{
+  flex:1;overflow-y:scroll;scroll-snap-type:y mandatory;
+  -webkit-overflow-scrolling:touch;scrollbar-width:none;
+}
+.reels-scroller::-webkit-scrollbar{display:none}
+.reel{
+  scroll-snap-align:start;scroll-snap-stop:always;
+  height:100%;height:100dvh;position:relative;
+  display:flex;align-items:center;justify-content:center;
+  background:#0a0a12;
+}
+.reel img,.reel .ph{
+  width:100%;height:100%;object-fit:cover;display:block;
+}
+.reel .side{
+  position:absolute;inset-inline-end:12px;bottom:120px;z-index:3;
+  display:flex;flex-direction:column;gap:16px;align-items:center;
+}
+.reel .side button{
+  width:48px;height:48px;border-radius:50%;border:0;
+  background:rgba(0,0,0,.35);backdrop-filter:blur(8px);
+  color:#fff;font-size:1.25rem;cursor:pointer;
+  display:grid;place-items:center;transition:transform .15s;
+}
+.reel .side button:active{transform:scale(.9)}
+.reel .side span{color:#fff;font-size:.7rem;margin-top:-10px}
+.reel .bottom{
+  position:absolute;left:0;right:0;bottom:0;z-index:3;
+  padding:20px 16px calc(88px + env(safe-area-inset-bottom,0px));
+  background:linear-gradient(0deg,rgba(0,0,0,.75),transparent);
+  color:#fff;
+}
+.reel .bottom h3{font-size:1.1rem;margin-bottom:4px}
+.reel .bottom p{font-size:.85rem;opacity:.85}
+.reels-hint{
+  position:absolute;bottom:calc(70px + env(safe-area-inset-bottom,0px));
+  left:0;right:0;text-align:center;color:rgba(255,255,255,.7);
+  font-size:.8rem;z-index:4;pointer-events:none;
+  animation:reelsPulse 2s ease infinite;
+}
+@keyframes reelsPulse{0%,100%{opacity:.5;transform:translateY(0)}50%{opacity:1;transform:translateY(-6px)}}
+
 </style>
 </head>
 <body>
@@ -367,7 +567,7 @@ footer{text-align:center;color:var(--mut);padding:30px 0;font-size:.9rem}
 
 <main class="wrap">
 <section data-v="home">
-<div class="hero" id="hero"><div><h1 data-t="h1"></h1><p data-t="h1s"></p><div class="btn-row"><button class="btn" id="cta" data-t="explore"></button><button class="btn o" id="btnRandom" data-t="random"></button></div><div class="stats"><span class="stat" id="statCount"><b>—</b> <span data-t="count"></span></span></div></div><div class="stack" id="stack" aria-hidden="true"></div></div>
+<div class="hero" id="hero"><div><h1 data-t="h1"></h1><p data-t="h1s"></p><div class="btn-row"><button class="btn" id="cta" data-t="explore"></button><button class="btn o" id="btnRandom" data-t="random"></button><button class="btn o" id="btnReels" data-t="reels"></button></div><div class="stats"><span class="stat" id="statCount"><b>—</b> <span data-t="count"></span></span></div></div><div class="stack" id="stack" aria-hidden="true"></div></div>
 <div class="chips" id="chips" role="tablist"></div>
 <div id="home"><h2 data-t="trend"></h2><div class="grid" id="gT"></div><h2 data-t="newest"></h2><div class="grid" id="gN"></div></div>
 <div id="res" hidden><h2 data-t="results"></h2><div class="grid" id="gR"></div></div>
@@ -376,6 +576,16 @@ footer{text-align:center;color:var(--mut);padding:30px 0;font-size:.9rem}
 <section data-v="about" hidden class="pg"><h2 data-t="aboutT"></h2><p data-t="aboutP"></p></section>
 <section data-v="contact" hidden class="pg"><h2 data-t="contactT"></h2><p data-t="contactP"></p><div class="cc"><a href="mailto:Supportwallora.wallpeper@gmail.com">✉️ <span dir="ltr">Supportwallora.wallpeper@gmail.com</span></a></div></section>
 </main>
+
+<div id="reelsView" aria-hidden="true">
+  <div class="reels-top">
+    <b id="reelsTitle">ریلز</b>
+    <button type="button" id="reelsClose" aria-label="close">✕</button>
+  </div>
+  <div class="reels-scroller" id="reelsScroller"></div>
+  <div class="reels-hint" id="reelsHint">↑ بکش برای بعدی</div>
+</div>
+
 <footer>© <span id="yr"></span> Wallora · <a href="mailto:Supportwallora.wallpeper@gmail.com" style="color:inherit"><span dir="ltr">Supportwallora.wallpeper@gmail.com</span></a></footer>
 
 <div class="ov" id="mDl" hidden><div class="glass big" role="dialog" aria-modal="true"><button class="ib x" data-close data-al="close">✕</button><div class="pv" id="dlPv"></div><h3 id="dlT"></h3><div class="rs" id="dlR"></div><button class="btn o" id="dlS"></button></div></div>
@@ -412,8 +622,8 @@ footer{text-align:center;color:var(--mut);padding:30px 0;font-size:.9rem}
 const API = 'https://wollora-api.teroolm.workers.dev';
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const ls={g(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},s(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
-const T={fa:{settings:'تنظیمات',login:'ورود',register:'ثبت‌نام',logout:'خروج از حساب',home:'خانه',saved:'ذخیره‌شده‌ها',about:'درباره ما',contact:'تماس',search:'جستجوی والپیپر…',h1:'والپیپر مناسب صفحه‌ات را پیدا کن',h1s:'مجموعه‌ای دست‌چین از تصاویر باکیفیت برای موبایل، دسکتاپ و 4K؛ رایگان و بدون محدودیت.',explore:'کشف والپیپرها',trend:'پرطرفدارها',newest:'تازه‌ترین‌ها',results:'نتایج',none:'والپیپری پیدا نشد. عبارت یا دسته دیگری را امتحان کنید.',all:'همه',download:'دانلود',save:'ذخیره',unsave:'حذف از ذخیره‌ها',close:'بستن',name:'نام',email:'ایمیل',pass:'رمز عبور (حداقل ۶ کاراکتر)',lang:'زبان',dark:'حالت تاریک',anim:'انیمیشن‌ها',defq:'کیفیت پیش‌فرض',tour:'راهنمای شروع',show:'نمایش',savedT:'ذخیره‌شده‌ها',savedE:'هنوز چیزی ذخیره نکرده‌اید. روی قلب هر والپیپر بزنید تا اینجا بماند.',needLogin:'برای ذخیره کردن وارد شوید.',loginFirst:'برای دیدن ذخیره‌شده‌ها وارد شوید.',hi:'سلام',aboutT:'درباره ما',aboutP:'والورا یک گالری رایگان والپیپر برای موبایل، تبلت و دسکتاپ است. هدف ما این است که با چند کلیک تصویر مناسب صفحه نمایش خود را پیدا و دانلود کنید — بدون ثبت‌نام اجباری برای دانلود، بدون تبلیغ مزاحم و با کیفیت بالا. می‌توانید در دسته‌های مختلف بگردید، جستجو کنید، در رزولوشن دلخواه (از موبایل تا 4K) دانلود کنید و با ساخت حساب، موارد موردعلاقه را ذخیره کنید. والورا دو زبانه (فارسی و انگلیسی) است و حالت تاریک و روشن دارد.',contactT:'پشتیبانی و تماس',contactP:'برای پرسش، پیشنهاد یا گزارش مشکل از راه‌های زیر با ما در ارتباط باشید.',eBad:'ایمیل معتبر وارد کنید.',pBad:'رمز عبور باید حداقل ۶ کاراکتر باشد.',nBad:'نام خود را وارد کنید.',eUsed:'این ایمیل قبلاً ثبت شده است. وارد شوید.',eWrong:'ایمیل یا رمز عبور اشتباه است.',dlOk:'دانلود شروع شد',dlErr:'ساخت تصویر ناموفق بود. دوباره تلاش کنید.',saved1:'ذخیره شد',unsaved:'از ذخیره‌ها حذف شد',rs:['موبایل','تبلت','دسکتاپ','2K','4K'],mood:['آرام','غروب','شب','رؤیا'],loading:'در حال بارگذاری…',random:'والپیپر تصادفی',share:'اشتراک‌گذاری',count:'والپیپر',backTop:'بالا',forgot:'فراموشی رمز؟',forgotTitle:'بازیابی رمز',forgotHint:'ایمیل حساب خود را وارد کنید تا لینک بازیابی برایتان ارسال شود.',sendLink:'ارسال لینک',resetTitle:'رمز جدید',newPass:'رمز جدید',resetGo:'ذخیره رمز جدید',forgotSent:'اگر ایمیل ثبت شده باشد، لینک بازیابی ارسال می‌شود.',resetOk:'رمز با موفقیت تغییر کرد. وارد شوید.'},
-en:{settings:'Settings',login:'Log in',register:'Sign up',logout:'Log out',home:'Home',saved:'Saved',about:'About',contact:'Contact',search:'Search wallpapers…',h1:'Find the wallpaper your screen deserves',h1s:'A hand-picked collection of high-quality images for mobile, desktop and 4K. Free, no limits.',explore:'Explore wallpapers',trend:'Trending',newest:'Newest',results:'Results',none:'No wallpapers found. Try another word or category.',all:'All',download:'Download',save:'Save',unsave:'Remove from saved',close:'Close',name:'Name',email:'Email',pass:'Password (min. 6 characters)',lang:'Language',dark:'Dark mode',anim:'Animations',defq:'Default quality',tour:'Getting started guide',show:'Show',savedT:'Saved',savedE:"You haven't saved anything yet. Tap the heart on any wallpaper to keep it here.",needLogin:'Log in to save wallpapers.',loginFirst:'Log in to see your saved wallpapers.',hi:'Hi',aboutT:'About us',aboutP:'Wallora is a free wallpaper gallery for mobile, tablet and desktop. Find and download the right image for your screen in a few taps — no forced sign-up for downloads, no annoying ads, high quality. Browse categories, search, download in the resolution you need (phone to 4K), and save favorites with a free account. Wallora is bilingual (Persian & English) and supports light and dark mode.',contactT:'Support & contact',contactP:'For questions, suggestions or to report a problem, reach us through the channels below.',eBad:'Enter a valid email address.',pBad:'Password must be at least 6 characters.',nBad:'Enter your name.',eUsed:'This email is already registered. Log in instead.',eWrong:'Incorrect email or password.',dlOk:'Download started',dlErr:'Could not create the image. Please try again.',saved1:'Saved',unsaved:'Removed from saved',rs:['Mobile','Tablet','Desktop','2K','4K'],mood:['Calm','Dusk','Night','Dream'],loading:'Loading…',random:'Random wallpaper',share:'Share',count:'wallpapers',backTop:'Top',forgot:'Forgot password?',forgotTitle:'Reset password',forgotHint:'Enter your account email and we will send a reset link.',sendLink:'Send link',resetTitle:'New password',newPass:'New password',resetGo:'Save new password',forgotSent:'If that email is registered, a reset link will be sent.',resetOk:'Password updated. Please log in.'}};
+const T={fa:{settings:'تنظیمات',login:'ورود',register:'ثبت‌نام',logout:'خروج از حساب',home:'خانه',saved:'ذخیره‌شده‌ها',about:'درباره ما',contact:'تماس',search:'جستجوی والپیپر…',h1:'والپیپر مناسب صفحه‌ات را پیدا کن',h1s:'مجموعه‌ای دست‌چین از تصاویر باکیفیت برای موبایل، دسکتاپ و 4K؛ رایگان و بدون محدودیت.',explore:'کشف والپیپرها',trend:'پرطرفدارها',newest:'تازه‌ترین‌ها',results:'نتایج',none:'والپیپری پیدا نشد. عبارت یا دسته دیگری را امتحان کنید.',all:'همه',download:'دانلود',save:'ذخیره',unsave:'حذف از ذخیره‌ها',close:'بستن',name:'نام',email:'ایمیل',pass:'رمز عبور (حداقل ۶ کاراکتر)',lang:'زبان',dark:'حالت تاریک',anim:'انیمیشن‌ها',defq:'کیفیت پیش‌فرض',tour:'راهنمای شروع',show:'نمایش',savedT:'ذخیره‌شده‌ها',savedE:'هنوز چیزی ذخیره نکرده‌اید. روی قلب هر والپیپر بزنید تا اینجا بماند.',needLogin:'برای ذخیره کردن وارد شوید.',loginFirst:'برای دیدن ذخیره‌شده‌ها وارد شوید.',hi:'سلام',aboutT:'درباره ما',aboutP:'والورا یک گالری رایگان والپیپر برای موبایل، تبلت و دسکتاپ است. هدف ما این است که با چند کلیک تصویر مناسب صفحه نمایش خود را پیدا و دانلود کنید — بدون ثبت‌نام اجباری برای دانلود، بدون تبلیغ مزاحم و با کیفیت بالا. می‌توانید در دسته‌های مختلف بگردید، جستجو کنید، در رزولوشن دلخواه (از موبایل تا 4K) دانلود کنید و با ساخت حساب، موارد موردعلاقه را ذخیره کنید. والورا دو زبانه (فارسی و انگلیسی) است و حالت تاریک و روشن دارد.',contactT:'پشتیبانی و تماس',contactP:'برای پرسش، پیشنهاد یا گزارش مشکل از راه‌های زیر با ما در ارتباط باشید.',eBad:'ایمیل معتبر وارد کنید.',pBad:'رمز عبور باید حداقل ۶ کاراکتر باشد.',nBad:'نام خود را وارد کنید.',eUsed:'این ایمیل قبلاً ثبت شده است. وارد شوید.',eWrong:'ایمیل یا رمز عبور اشتباه است.',dlOk:'دانلود شروع شد',dlErr:'ساخت تصویر ناموفق بود. دوباره تلاش کنید.',saved1:'ذخیره شد',unsaved:'از ذخیره‌ها حذف شد',rs:['موبایل','تبلت','دسکتاپ','2K','4K'],mood:['آرام','غروب','شب','رؤیا'],loading:'در حال بارگذاری…',random:'والپیپر تصادفی',share:'اشتراک‌گذاری',count:'والپیپر',backTop:'بالا',reels:'ریلز',reelsHint:'↑ بکش برای بعدی',reelsEmpty:'والپیپری برای ریلز نیست',forgot:'فراموشی رمز؟',forgotTitle:'بازیابی رمز',forgotHint:'ایمیل حساب خود را وارد کنید تا لینک بازیابی برایتان ارسال شود.',sendLink:'ارسال لینک',resetTitle:'رمز جدید',newPass:'رمز جدید',resetGo:'ذخیره رمز جدید',forgotSent:'اگر ایمیل ثبت شده باشد، لینک بازیابی ارسال می‌شود.',resetOk:'رمز با موفقیت تغییر کرد. وارد شوید.'},
+en:{settings:'Settings',login:'Log in',register:'Sign up',logout:'Log out',home:'Home',saved:'Saved',about:'About',contact:'Contact',search:'Search wallpapers…',h1:'Find the wallpaper your screen deserves',h1s:'A hand-picked collection of high-quality images for mobile, desktop and 4K. Free, no limits.',explore:'Explore wallpapers',trend:'Trending',newest:'Newest',results:'Results',none:'No wallpapers found. Try another word or category.',all:'All',download:'Download',save:'Save',unsave:'Remove from saved',close:'Close',name:'Name',email:'Email',pass:'Password (min. 6 characters)',lang:'Language',dark:'Dark mode',anim:'Animations',defq:'Default quality',tour:'Getting started guide',show:'Show',savedT:'Saved',savedE:"You haven't saved anything yet. Tap the heart on any wallpaper to keep it here.",needLogin:'Log in to save wallpapers.',loginFirst:'Log in to see your saved wallpapers.',hi:'Hi',aboutT:'About us',aboutP:'Wallora is a free wallpaper gallery for mobile, tablet and desktop. Find and download the right image for your screen in a few taps — no forced sign-up for downloads, no annoying ads, high quality. Browse categories, search, download in the resolution you need (phone to 4K), and save favorites with a free account. Wallora is bilingual (Persian & English) and supports light and dark mode.',contactT:'Support & contact',contactP:'For questions, suggestions or to report a problem, reach us through the channels below.',eBad:'Enter a valid email address.',pBad:'Password must be at least 6 characters.',nBad:'Enter your name.',eUsed:'This email is already registered. Log in instead.',eWrong:'Incorrect email or password.',dlOk:'Download started',dlErr:'Could not create the image. Please try again.',saved1:'Saved',unsaved:'Removed from saved',rs:['Mobile','Tablet','Desktop','2K','4K'],mood:['Calm','Dusk','Night','Dream'],loading:'Loading…',random:'Random wallpaper',share:'Share',count:'wallpapers',backTop:'Top',reels:'Reels',reelsHint:'↑ Swipe for next',reelsEmpty:'No wallpapers for reels',forgot:'Forgot password?',forgotTitle:'Reset password',forgotHint:'Enter your account email and we will send a reset link.',sendLink:'Send link',resetTitle:'New password',newPass:'New password',resetGo:'Save new password',forgotSent:'If that email is registered, a reset link will be sent.',resetOk:'Password updated. Please log in.'}};
 const C=[['nature','طبیعت','Nature',140],['abstract','انتزاعی','Abstract',275],['minimal','مینیمال','Minimal',28],['dark','تیره','Dark',235],['anime','انیمه','Anime',330],['cars','خودرو','Cars',8],['space','فضا','Space',255]];
 const RES=[[1080,1920],[1620,2160],[1920,1080],[2560,1440],[3840,2160]];
 const OB=[['👋','به والورا خوش آمدید','در چند ثانیه با امکانات سایت آشنا شوید.'],['⬇️','دانلود رایگان','روی هر تصویر بزنید و رزولوشن دلخواه (موبایل، دسکتاپ، 4K و…) را دانلود کنید.'],['❤️','ذخیره کنید','با ساخت حساب کاربری، والپیپرهای موردعلاقه را با قلب ذخیره کنید و در بخش «ذخیره‌شده‌ها» ببینید.'],['⚙️','زبان و حالت تاریک','از دکمه‌ی تنظیمات، زبان را بین فارسی و انگلیسی و حالت روشن یا تاریک را تغییر دهید.']];
@@ -490,6 +700,52 @@ function startCatSlide(list, label){
   document.getElementById('catDots').innerHTML=items.map((_,i)=>'<i class="'+(i===0?'on':'')+'"></i>').join('');
   wrap.hidden=false; paintCatSlide();
   catSlideTimer=setInterval(function(){goCatSlide(1)},4500);
+}
+
+
+function openReels(startId){
+  const sc=$('#reelsScroller');
+  const list=W.filter(w=>w.real&&w.image_url);
+  if(!list.length){toast(t('reelsEmpty'));return}
+  let order=list.slice();
+  if(startId){
+    const i=order.findIndex(w=>w.id===startId);
+    if(i>0)order=order.slice(i).concat(order.slice(0,i));
+  }
+  $('#reelsTitle').textContent=t('reels');
+  $('#reelsHint').textContent=t('reelsHint');
+  sc.innerHTML=order.map(w=>{
+    const on=saves().includes(w.id);
+    return `<div class="reel" data-id="${w.id}">
+      <img src="${w.image_url}" alt="" loading="lazy" draggable="false">
+      <div class="side">
+        <button type="button" data-rf="${w.id}">${on?'♥':'♡'}</button>
+        <span>ذخیره</span>
+        <button type="button" data-rd="${w.id}">⬇</button>
+        <span>دانلود</span>
+        <button type="button" data-rs="${w.id}">↗</button>
+        <span>اشتراک</span>
+      </div>
+      <div class="bottom">
+        <h3>${title(w,lang)}</h3>
+        <p>${(C.find(c=>c[0]===(w.c||w.category))||[])[lang==='fa'?1:2]||w.category||''}</p>
+      </div>
+    </div>`;
+  }).join('');
+  const rv=$('#reelsView');
+  rv.classList.add('on');
+  rv.setAttribute('aria-hidden','false');
+  document.body.style.overflow='hidden';
+  sc.scrollTop=0;
+  setTimeout(()=>{$('#reelsHint').style.display='none'},3500);
+}
+function closeReels(){
+  const rv=$('#reelsView');
+  if(!rv)return;
+  rv.classList.remove('on');
+  rv.setAttribute('aria-hidden','true');
+  document.body.style.overflow='';
+  stopCatSlide();
 }
 
 function render(){
@@ -726,6 +982,27 @@ $('#obN').onclick=()=>{ob<OB.length-1?(ob++,obR()):obEnd()};$('#obS').onclick=ob
     if(sl&&sl.dataset.o)dl(+sl.dataset.o);
   });
 })();
+
+
+if($('#btnReels'))$('#btnReels').onclick=()=>openReels();
+if($('#reelsClose'))$('#reelsClose').onclick=closeReels;
+document.addEventListener('click',e=>{
+  const rf=e.target.closest('[data-rf]');
+  if(rf){e.stopPropagation();fav(+rf.dataset.rf);rf.textContent=saves().includes(+rf.dataset.rf)?'♥':'♡';return}
+  const rd=e.target.closest('[data-rd]');
+  if(rd){e.stopPropagation();dl(+rd.dataset.rd);return}
+  const rs=e.target.closest('[data-rs]');
+  if(rs){
+    e.stopPropagation();
+    const id=+rs.dataset.rs;
+    const w=W.find(x=>x.id===id);
+    const url=location.href.split('?')[0].split('#')[0]+'?w='+id;
+    (async()=>{try{if(navigator.share)await navigator.share({title:title(w,lang),url});else{await navigator.clipboard.writeText(url);toast(lang=='fa'?'لینک کپی شد':'Link copied')}}catch(err){}})();
+  }
+});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'&&$('#reelsView')&&$('#reelsView').classList.contains('on'))closeReels();
+});
 
 $('#yr').textContent=new Date().getFullYear();
 
